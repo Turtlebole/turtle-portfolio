@@ -125,7 +125,7 @@ export const projects = [
     title: "Laplacia",
     date: "2023 - XX",
     description:
-      "Web application used to assist writers in visualizing and structuring their stories",
+      "Web application used to assist writers in visualizing and structuring their stories, its utilizing the .NET framework and Angular. The project is created using domain-driven design.",
     image:
       "https://i.imgur.com/um67xkT.png",
     tags: [
@@ -141,21 +141,21 @@ export const projects = [
   },
   {
     id: 2,
-    title: "Laplacia",
-    date: "2023 - XX",
+    title: "Airbnb Clone",
+    date: "2023 - 2023",
     description:
-      "Web application used to assist writers in visualizing and structuring their stories",
+      "Fullstack web clone of Airbnb written as a school project",
     image:
-      "https://i.imgur.com/um67xkT.png",
+      "https://cdn.discordapp.com/attachments/980177687924580423/1189090733626511391/image.png?ex=666c8a4b&is=666b38cb&hm=3d5c241385b87557f9fb492c40227ee89ede0395cba3f00029f7b8fc6da35249&",
     tags: [
-      "C#",
-      ".NET",
-      "PostgreSQL",
+      "Go",
       "Angular",
-      "Docker",
+      "MongoDB",
+      "CassandraDB",
+      "Docker"
     ],
     category: "web",
-    github: "https://github.com/ProjectLaplacia",
+    github: "https://github.com/Turtlebole/airbnb-msa-mockup",
     webapp: "#",
   },
   {

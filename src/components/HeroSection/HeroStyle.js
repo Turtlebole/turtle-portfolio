@@ -96,7 +96,9 @@ export const Img = styled.img`
   border-radius: 50%;
   border: 2px solid ${({ theme }) => theme.orange_detail};
   animation: glow 1.5s infinite alternate;
-
+  user-select: none;
+  -moz-user-select: -moz-none;
+  -webkit-user-select: none;
   @media (max-width: 768px) {
     max-width: 400px;
     max-height: 400px;

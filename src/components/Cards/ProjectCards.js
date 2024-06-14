@@ -28,6 +28,9 @@ const Image = styled.img`
     border: 1px solid ${({ theme }) => theme.primary + 80};
     border-radius: 10px;
     box-shadow: 0 0 16px 2px rgba(0,0,0,0.3);
+    user-select: none;
+    -moz-user-select: -moz-none;
+    -webkit-user-select: none;
 `;
 
 const Tags = styled.div`
