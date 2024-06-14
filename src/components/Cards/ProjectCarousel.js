@@ -11,7 +11,7 @@ const CarouselContainer = styled.div`
     padding: 20px;
 `;
 
-const ProjectCarousel = ({ projects }) => {
+const ProjectCarousel = ({ projects, handleProjectClick }) => {
     const [startIndex, setStartIndex] = useState(0);
 
     const handleNext = () => {
@@ -28,8 +28,7 @@ const ProjectCarousel = ({ projects }) => {
                 <ProjectCards
                     key={index}
                     project={project}
-                    isOpenModal={false} 
-                    setOpenModal={() => {}} 
+                    handleProjectClick={handleProjectClick} // Pass the handler here
                 />
             ))}
             {startIndex > 0 && (
