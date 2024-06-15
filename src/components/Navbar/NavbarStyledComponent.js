@@ -101,6 +101,28 @@ export const GitHubButton = styled.a`
     }
 `;
 
+export const ThemeButton = styled.button`
+  padding: 5px 10px;
+  background: none;
+  color: white;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+
+  svg {
+    width: 25px;
+    height: 25px;
+    fill: ${({theme}) => theme.orange_detail}
+  }
+
+  &:hover svg {
+    fill: #FFA500;
+`;
+
+export const LightBulbIcon = styled.i`
+`
+
 export const ButtonContainer = styled.div`
   width: 80%;  
   height: 100%;

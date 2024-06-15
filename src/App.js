@@ -21,10 +21,14 @@ function App() {
   const [darkMode, setDarkMode] = useState(true);
   const [openModal, setOpenModal] = useState({ state: false, project: null });
 
+  const toggleTheme = () => {
+    setDarkMode(prevMode => !prevMode);
+  };
+
   return (
     <ThemeProvider theme={darkMode ? darkTheme : lightTheme}>
       <Router>
-        <Navbar />
+        <Navbar toggleTheme={toggleTheme} />
         <Body>
           <Routes>
             <Route path="/" element={

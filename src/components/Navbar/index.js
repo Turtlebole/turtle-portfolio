@@ -1,12 +1,13 @@
 import React from 'react'
 //removed MobileNavLogo
-import { Nav, NavLink, NavbarContainer, Span, ColoredSpan, NavLogo, NavItems, GitHubButton, ButtonContainer, MobileIcon, MobileMenu, MobileLink } from './NavbarStyledComponent'
+import { Nav, NavLink, NavbarContainer, Span, ColoredSpan, NavLogo, NavItems, GitHubButton, ButtonContainer, MobileIcon, MobileMenu, MobileLink, ThemeButton } from './NavbarStyledComponent'
 import { FaBars } from 'react-icons/fa';
 import { Bio } from '../../data/constants';
 // import { CloseRounded } from '@mui/icons-material';
 import { useTheme } from 'styled-components';
+import { ReactComponent as LightBulbIcon } from '../../images/light-bulb-svgrepo-com.svg';
 
-const Navbar = () => {
+const Navbar = ({toggleTheme}) => {
   const [isOpen, setIsOpen] = React.useState(false);
   const theme = useTheme()
   return (
@@ -34,6 +35,7 @@ const Navbar = () => {
           <NavLink href='#skills'>Skills</NavLink>
           <NavLink href='#projects'>Projects</NavLink>
           <GitHubButton href={Bio.github} target="_blank">Github</GitHubButton>
+          <ThemeButton onClick={toggleTheme}><LightBulbIcon></LightBulbIcon></ThemeButton>
           </NavItems>
         </ButtonContainer>
         {
