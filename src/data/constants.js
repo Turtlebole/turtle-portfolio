@@ -1,8 +1,9 @@
 export const Bio = {
   title: "Greetings, I am Bojan",
   roles: [
-    "Frontend Developer",
-    "Tech Enthusiast"
+    "Web Developement",
+    "Learning about Tech",
+    "Gaming"
   ],
   description:
     "Passionate software and web developer from Serbia\nInterested in Frontend development, embedded and AI",

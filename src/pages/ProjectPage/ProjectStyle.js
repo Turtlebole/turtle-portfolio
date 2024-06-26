@@ -133,7 +133,7 @@ export const SubTitle = styled.div`
 `;
 
 export const Highlight = styled.span`
-  color: ${({ theme }) => theme.orange_detail};
+  color: ${({ theme }) => theme.colored_detail};
 `;
 
 
@@ -151,7 +151,7 @@ export const Tag = styled.span`
     font-size: 18px;
     font-weight: 400;
     color: ${({ theme }) => theme.text_secondary};
-    background-color: ${({ theme }) => theme.orange_detail + 20};
+    background-color: ${({ theme }) => theme.colored_detail + 20};
     padding: 2px 8px;
     border-radius: 10px;
 `

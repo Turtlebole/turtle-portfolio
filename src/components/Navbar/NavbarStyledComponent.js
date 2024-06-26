@@ -46,7 +46,7 @@ export const Span = styled.div`
 `;
 
 export const ColoredSpan = styled.span`
-  color: ${({ theme }) => theme.orange_detail};
+  color: ${({ theme }) => theme.colored_detail};
 `;
 
 export const NavItems = styled.ul`
@@ -113,11 +113,11 @@ export const ThemeButton = styled.button`
   svg {
     width: 25px;
     height: 25px;
-    fill: ${({theme}) => theme.orange_detail}
+    fill: ${({theme}) => theme.colored_detail}
   }
 
   &:hover svg {
-    fill: #FFA500;
+    fill: #2B1E1E;
 `;
 
 export const LightBulbIcon = styled.i`

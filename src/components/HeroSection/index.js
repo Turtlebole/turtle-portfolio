@@ -14,7 +14,7 @@ const HeroSection = () => {
                     <HeroLeftContainer id="Left">
                         <Title>{Bio.title}</Title>
                         <TextLoop>
-                            I am a
+                            I enjoy
                             <Span>
                                 <Typewriter
                                     options={{

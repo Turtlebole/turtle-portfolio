@@ -91,11 +91,12 @@ export const Img = styled.img`
   position: relative;
   width: 100%;
   height: 100%;
-  max-width: 400px;
-  max-height: 400px;
+  max-width: 450px;
+  max-height: 450px;
   border-radius: 50%;
-  border: 2px solid ${({ theme }) => theme.orange_detail};
+  border: 2px solid ${({ theme }) => theme.colored_detail};
   animation: glow 1.5s infinite alternate;
+  object-fit: cover;
   user-select: none;
   -moz-user-select: -moz-none;
   -webkit-user-select: none;
@@ -111,10 +112,10 @@ export const Img = styled.img`
 
   @keyframes glow {
     0% {
-      box-shadow: 0 0 15px 0 ${({ theme }) => theme.orange_detail};
+      box-shadow: 0 0 15px 0 ${({ theme }) => theme.colored_detail};
     }
     100% {
-      box-shadow: 0 0 20px 10px ${({ theme }) => theme.orange_detail};
+      box-shadow: 0 0 20px 10px ${({ theme }) => theme.colored_detail};
     }
   }
 `;
@@ -177,9 +178,9 @@ export const ResumeButton = styled.a`
   width: 100%;
   text-decoration: none;
   text-align: center;
-  background: linear-gradient(0deg, hsla(30, 66%, 48%, 1) 0%, hsla(17, 74%, 12%, 1) 100%);
-  background: -moz-linear-gradient(0deg, hsla(30, 66%, 48%, 1) 0%, hsla(17, 74%, 12%, 1) 100%);
-  background: -webkit-linear-gradient(0deg, hsla(30, 66%, 48%, 1) 0%, hsla(17, 74%, 12%, 1) 100%);
+  background: linear-gradient(270deg, hsla(0, 15%, 25%, 1) 0%, hsla(30, 29%, 43%, 1) 100%);
+  background: -moz-linear-gradient(270deg, hsla(0, 15%, 25%, 1) 0%, hsla(30, 29%, 43%, 1) 100%);
+  background: -webkit-linear-gradient(270deg, hsla(0, 15%, 25%, 1) 0%, hsla(30, 29%, 43%, 1) 100%);
   padding: 13px 16px;
   margin-top: 2px;
   border-radius: 12px;

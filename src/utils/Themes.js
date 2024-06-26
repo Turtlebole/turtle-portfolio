@@ -1,29 +1,30 @@
 export const darkTheme = {
-    bg: "#1C1C27", // Background
-    bgLight: "#1C1E27", // Light Background
-    primary: "#4C516D", // Himeno's Hair Color
-    text_primary: "#FFFFFF", // Text Primary (White)
-    text_secondary: "#B1B2B3", // Text Secondary
-    text_skills: "#8790A5", // Himeno's Eye Color
-    card: "#171721", // Card Background
-    card_light: '#191924', // Light Card Background
-    button: "#BE98FF", // Button (Keeping original primary color)
-    white: "#FFFFFF", // White
-    black: "#000000", // Black
-    orange_detail: "#CC7F29" // Orange Detail
+    bg: "#2B1E1E",
+    bgLight: "#3C2A2A",
+    primary: "#D4A373",
+    text_primary: "#E6C89C",
+    text_secondary: "#BFA48B",
+    text_skills: "#8E6E4F",
+    card: "#3A2A2A",
+    card_light: "#4A3737",
+    button: "#D4A373",
+    white: "#FFFFFF",
+    black: "#000000",
+    colored_detail: "#E89242",
+    highlighted_svg: ""
 }
 
 export const lightTheme = {
-    bg: "#FFFFFF", // Background
-    bgLight: "#F5F5F5", // Light Background
-    primary: "#B0B3D6", // Opposite of Himeno's Hair Color
-    text_primary: "#1C1C27", // Text Primary (Dark)
-    text_secondary: "#4E4F50", // Text Secondary
-    text_skills: "#76899B", // Opposite of Himeno's Eye Color
-    card: "#F2F2F2", // Card Background
-    card_light: '#E5E5E5', // Light Card Background
-    button: "#BE98FF", // Button (Keeping original primary color)
-    white: "#FFFFFF", // White
-    black: "#000000", // Black
-    orange_detail: "#CC7F29" // Orange Detail
+    bg: "#FFF8E7",
+    bgLight: "#FFF1D6",
+    primary: "#D4A373",
+    text_primary: "#3C2A2A",
+    text_secondary: "#5C4A4A",
+    text_skills: "#8E6E4F",
+    card: "#FFE7C1",
+    card_light: "#FFDBA8",
+    button: "#D4A373",
+    white: "#FFFFFF",
+    black: "#000000",
+    colored_detail: "#E89242"
 }

@@ -47,7 +47,7 @@ export const Desc = styled.div`
   text-align: center;
   max-width: 600px;
   margin-top: 40px;
-  color: ${({ theme }) => theme.orange_detail};
+  color: ${({ theme }) => theme.colored_detail};
   @media (max-width: 768px) {
     font-size: 16px;
   }
@@ -66,7 +66,7 @@ const Skill = styled.div`
   width: 100%;
   max-width: 500px;
   background: ${({ theme }) => theme.card};
-  border: 0.1px solid ${({ theme }) => theme.orange_detail};
+  border: 0.1px solid ${({ theme }) => theme.colored_detail};
   box-shadow: rgba(76, 81, 109, 0.15) 0px 4px 18px;
   border-radius: 16px;
   padding: 18px 36px;
@@ -107,7 +107,7 @@ const SkillList = styled.div`
 const SkillItem = styled.div`
   font-size: 16px;
   font-weight: 400;
-  color: ${({ theme }) => theme.orange_detail + 80};
+  color: ${({ theme }) => theme.colored_detail + 80};
   border: 1px solid ${({ theme }) => theme.text_primary + 80};
   border-radius: 12px;
   padding: 12px 16px;

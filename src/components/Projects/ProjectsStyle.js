@@ -29,7 +29,7 @@ font-size: 38px;
 text-align: center;
 font-weight: 400;
 margin-top: 20px;
-  color: ${({ theme }) => theme.orange_detail};
+  color: ${({ theme }) => theme.colored_detail};
   @media (max-width: 768px) {
       margin-top: 12px;
       font-size: 32px;
@@ -50,7 +50,7 @@ export const Desc = styled.div`
 export const ToggleButtonGroup = styled.div`
     display: flex;
     border: 1.5px solid ${({ theme }) => theme.primary};
-    color: ${({ theme }) => theme.orange_detail};
+    color: ${({ theme }) => theme.colored_detail};
     font-size: 16px;
     border-radius: 12px;
     font-weight: 500;
