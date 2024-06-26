@@ -17,11 +17,11 @@ const Navbar = ({toggleTheme}) => {
           {/* <a style={{ display: "flex", alignItems: "center", color: "white", marginBottom: '20;', cursor: 'pointer' }}>
             <Span>DualStab</Span>
           </a> */}
-        <a href style={{ display: "flex", alignItems: "center", color: "white", cursor: 'pointer' }}>
+        <div style={{ display: "flex", alignItems: "center", color: "white", cursor: 'pointer' }}>
           <Span>
-            Turtle<ColoredSpan>Bole.</ColoredSpan>
+            Turtle<ColoredSpan>Bole</ColoredSpan>
           </Span>
-        </a>
+        </div>
         </NavLogo>
         <MobileIcon>
           <FaBars onClick={() => {

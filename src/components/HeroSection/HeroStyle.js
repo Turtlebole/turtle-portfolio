@@ -193,3 +193,32 @@ export const ResumeButton = styled.a`
     transform: scale(1.2);
     filter: brightness(1.2);
 `;
+
+export const ResumeButtonComponent = () => {
+    const handleDownload = (event) => {
+        event.preventDefault();
+        // URL of the file you want to download
+        const fileUrl = '/CV/CV.pdf'; // Replace with your local file path or URL
+        const fileName = 'CV.pdf'; // Replace with the desired file name
+
+        // Create a new anchor element
+        const link = document.createElement('a');
+        link.href = fileUrl;
+        link.download = fileName;
+
+        // Append the anchor to the body
+        document.body.appendChild(link);
+
+        // Programmatically click the anchor
+        link.click();
+
+        // Remove the anchor from the body
+        document.body.removeChild(link);
+    };
+
+    return (
+        <ResumeButton href="#" onClick={handleDownload}>
+            Download CV
+        </ResumeButton>
+    );
+};
