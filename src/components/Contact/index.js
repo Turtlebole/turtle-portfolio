@@ -138,7 +138,15 @@ const Contact = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    emailjs.sendForm('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', form.current, 'YOUR_USER_ID')
+    const formData = new FormData(form.current);
+    const templateParams = {
+      email: formData.get('from_email'),
+      from_name: formData.get('from_name'),
+      subject: formData.get('subject'),
+      message_html: formData.get('message')
+    }
+
+    emailjs.sendForm('service_k30muxq', 'template_gu037w9', form.current, 'XsWPbbFVnpPn0h2_S')
       .then((result) => {
         setOpen(true);
         form.current.reset();

@@ -11,11 +11,14 @@ const CarouselContainer = styled.div`
     padding: 20px;
 `;
 
-const ProjectCarousel = ({ projects, handleProjectClick }) => {
+const ProjectCarousel = ({ numberOfProjects,projects, handleProjectClick }) => {
     const [startIndex, setStartIndex] = useState(0);
 
     const handleNext = () => {
-        setStartIndex(startIndex + 3);
+        if(numberOfProjects.length > startIndex + 3){
+            console.log(numberOfProjects.length)
+            setStartIndex(startIndex + 3);
+        }
     };
 
     const handlePrev = () => {
@@ -31,12 +34,12 @@ const ProjectCarousel = ({ projects, handleProjectClick }) => {
                     handleProjectClick={handleProjectClick} // Pass the handler here
                 />
             ))}
-            {startIndex > 0 && (
-                <button onClick={handlePrev}>{'<'}</button>
-            )}
-            {startIndex + 3 < projects.length && (
-                <button onClick={handleNext}>{'>'}</button>
-            )}
+            {/*{startIndex > 0 && (*/}
+            {/*    <button onClick={handlePrev}>{'<'}</button>*/}
+            {/*)}*/}
+            {/*{startIndex + 3 < projects.length && (*/}
+            {/*    <button onClick={handleNext}>{'>'}</button>*/}
+            {/*)}*/}
         </CarouselContainer>
     );
 };

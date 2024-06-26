@@ -22,7 +22,11 @@ const Projects = ({ setOpenModal }) => {
     }, []);
 
     const handleNext = () => {
-        setStartIndex(startIndex + (isMobileView ? 1 : 3));
+        if(projects.length > startIndex+3){
+            setStartIndex(startIndex + (isMobileView ? 1 : 3));
+        } else {
+            setStartIndex(0);
+        }
     };
 
     const handlePrev = () => {
@@ -38,6 +42,7 @@ const Projects = ({ setOpenModal }) => {
             <Wrapper>
                 <Title>Projects</Title>
                 <ProjectCarousel
+                    numberOfProjects = {projects}
                     projects={projects.slice(startIndex, startIndex + (isMobileView ? 1 : 3))}
                     handleProjectClick={handleProjectClick} // Pass the handler here
                 />
