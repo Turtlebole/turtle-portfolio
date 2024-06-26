@@ -19,7 +19,7 @@ const Navbar = ({toggleTheme}) => {
           </a> */}
         <a href style={{ display: "flex", alignItems: "center", color: "white", cursor: 'pointer' }}>
           <Span>
-            Turtle<ColoredSpan>Bole</ColoredSpan>
+            Turtle<ColoredSpan>Bole.</ColoredSpan>
           </Span>
         </a>
         </NavLogo>
