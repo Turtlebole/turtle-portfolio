@@ -155,3 +155,25 @@ export const Tag = styled.span`
     padding: 2px 8px;
     border-radius: 10px;
 `
+export const GitHubLink = styled.a`
+  align-items: center;
+`;
+
+export const GitHubIcon = styled.button`
+    padding: 5px 10px;
+    background: none;
+    color: white;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+
+    svg {
+        width: 40px;
+        height: 40px;
+        fill: ${({theme}) => theme.colored_detail}
+    }
+
+    &:hover svg {
+        fill: ${({theme}) => theme.primary};
+`;

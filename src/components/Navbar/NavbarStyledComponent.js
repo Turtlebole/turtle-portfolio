@@ -117,7 +117,7 @@ export const ThemeButton = styled.button`
   }
 
   &:hover svg {
-    fill: #2B1E1E;
+    fill: ${({theme}) => theme.bg};
 `;
 
 export const LightBulbIcon = styled.i`

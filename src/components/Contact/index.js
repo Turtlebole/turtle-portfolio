@@ -146,7 +146,7 @@ const Contact = () => {
       message_html: formData.get('message')
     }
 
-    emailjs.sendForm('service_k30muxq', 'template_gu037w9', form.current, 'XsWPbbFVnpPn0h2_S')
+    emailjs.sendForm('service_ta9bofd', 'template_uynwfeq', form.current, '7ob0JqA_SdDIyYJOa')
       .then((result) => {
         setOpen(true);
         form.current.reset();

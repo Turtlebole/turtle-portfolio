@@ -1,7 +1,7 @@
 export const Bio = {
   title: "Greetings, I am Bojan",
   roles: [
-    "Web Developement",
+    "Web Development",
     "Learning about Tech",
     "Gaming"
   ],
@@ -147,7 +147,7 @@ export const projects = [
     description:
       "Fullstack web clone of Airbnb written as a school project",
     image:
-      "https://cdn.discordapp.com/attachments/980177687924580423/1189090733626511391/image.png?ex=666c8a4b&is=666b38cb&hm=3d5c241385b87557f9fb492c40227ee89ede0395cba3f00029f7b8fc6da35249&",
+      "https://i.imgur.com/um67xkT.png",
     tags: [
       "Go",
       "Angular",
@@ -161,21 +161,20 @@ export const projects = [
   },
   {
     id: 3,
-    title: "Laplacia",
-    date: "2023 - XX",
+    title: "Fitness Manager",
+    date: "2023 - 2023",
     description:
-      "Web application used to assist writers in visualizing and structuring their stories",
+      "A small desktop application used to simulate fitness center management. Users have a graphical interfacte for tracking their appointments as well as their progress, After the sessions are completed the users can review their mentor.",
     image:
       "https://i.imgur.com/um67xkT.png",
     tags: [
       "C#",
       ".NET",
-      "PostgreSQL",
-      "Angular",
-      "Docker",
+      "MicrosoftSQL",
+      "Windows Forms",
     ],
-    category: "web",
-    github: "https://github.com/ProjectLaplacia",
+    category: "desktop",
+    github: "https://github.com/Turtlebole/fitness-center-manager",
     webapp: "#",
   },
   {
