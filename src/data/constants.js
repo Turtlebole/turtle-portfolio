@@ -1,7 +1,7 @@
 export const Bio = {
   title: "Greetings, I am Bojan",
   roles: [
-    "Web Developement",
+    "Web Development",
     "Learning about Tech",
     "Gaming"
   ],
