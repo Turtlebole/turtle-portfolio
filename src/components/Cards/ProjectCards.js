@@ -9,6 +9,7 @@ const Card = styled.div`
     border: 1px solid ${({ theme }) => theme.text_primary + 80};
     border-radius: 12px;
     box-shadow: 0 0 12px 4px rgba(0,0,0,0.4);
+    user-select: none;
     overflow: hidden;
     padding: 26px 20px;
     display: flex;

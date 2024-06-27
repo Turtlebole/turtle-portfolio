@@ -7,6 +7,7 @@ export const Nav = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
+    user-select: none;
     font-size: 1rem;
     position: sticky;
     top: 0;

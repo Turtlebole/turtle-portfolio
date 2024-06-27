@@ -51,6 +51,7 @@ export const ToggleButtonGroup = styled.div`
     display: flex;
     border: 1.5px solid ${({ theme }) => theme.primary};
     color: ${({ theme }) => theme.colored_detail};
+    user-select: none;
     font-size: 16px;
     border-radius: 12px;
     font-weight: 500;

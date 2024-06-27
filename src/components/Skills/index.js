@@ -17,6 +17,7 @@ const Wrapper = styled.div`
   justify-content: space-between;
   align-items: center;
   flex-direction: column;
+  user-select: none;
   width: 100%;
   height: 100%;
   max-width: 1100px;
