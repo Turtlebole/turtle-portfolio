@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import styled from 'styled-components';
+import gsap from 'gsap';
 import ProjectCards from './ProjectCards';
 
 const CarouselContainer = styled.div`
@@ -11,12 +12,23 @@ const CarouselContainer = styled.div`
     padding: 20px;
 `;
 
-const ProjectCarousel = ({ numberOfProjects,projects, handleProjectClick }) => {
+const ProjectCarousel = ({ numberOfProjects, projects, handleProjectClick }) => {
     const [startIndex, setStartIndex] = useState(0);
+    const carouselRef = useRef(null); // Ref to target the carousel container
+
+    useEffect(() => {
+        // Apply fade animation when projects change
+        if (carouselRef.current) {
+            gsap.fromTo(
+                carouselRef.current,
+                { opacity: 0 },
+                { opacity: 1, duration: 0.5, ease: 'power2.inOut' }
+            );
+        }
+    }, [projects]); // Trigger animation when projects update
 
     const handleNext = () => {
-        if(numberOfProjects.length > startIndex + 3){
-            console.log(numberOfProjects.length)
+        if (numberOfProjects.length > startIndex + 3) {
             setStartIndex(startIndex + 3);
         }
     };
@@ -26,7 +38,7 @@ const ProjectCarousel = ({ numberOfProjects,projects, handleProjectClick }) => {
     };
 
     return (
-        <CarouselContainer>
+        <CarouselContainer ref={carouselRef}>
             {projects.slice(startIndex, startIndex + 3).map((project, index) => (
                 <ProjectCards
                     key={index}
@@ -34,12 +46,6 @@ const ProjectCarousel = ({ numberOfProjects,projects, handleProjectClick }) => {
                     handleProjectClick={handleProjectClick} // Pass the handler here
                 />
             ))}
-            {/*{startIndex > 0 && (*/}
-            {/*    <button onClick={handlePrev}>{'<'}</button>*/}
-            {/*)}*/}
-            {/*{startIndex + 3 < projects.length && (*/}
-            {/*    <button onClick={handleNext}>{'>'}</button>*/}
-            {/*)}*/}
         </CarouselContainer>
     );
 };

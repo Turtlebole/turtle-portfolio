@@ -10,6 +10,7 @@ const Container = styled.div`
   align-items: center;
   position: relative;
   z-index: 1;
+  margin-top: 0; /* Ensure there's no extra margin causing space between Hero and Skills */
 `;
 
 const Wrapper = styled.div`
@@ -26,12 +27,9 @@ export const Title = styled.div`
   font-size: 28px;
   text-align: center;
   font-weight: 600;
-  margin-top: 52px;
+  margin-top: 52px; /* Adjust this margin if necessary */
   color: ${({ theme }) => theme.primary};
-  position: absolute;
-  top: 2px;
-  left: 50%;
-  transform: translateX(-50%);
+  position: relative; /* Ensure it’s positioned relative within the Container */
   @media (max-width: 768px) {
     margin-top: 12px;
     font-size: 32px;
@@ -168,7 +166,6 @@ const Skills = () => {
   return (
       <Container id="skills">
         <Wrapper>
-          <Title>SKILLS</Title>
           <Desc>TECH STACK</Desc>
           <ButtonContainer>
             <Button active={activeButton === 'frontend'} onClick={() => handleButtonClick('frontend')}>
