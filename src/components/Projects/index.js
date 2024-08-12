@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Container, Wrapper, Title, ToggleButtonGroup, ToggleButton, Divider } from './ProjectsStyle';
+import { Container, Wrapper, Title, CarouselWrapper, ToggleButtonGroup, ToggleButton, Divider, LeftArrowSVG, RightArrowSVG, LeftArrowPath, RightArrowPath } from './ProjectsStyle';
 import ProjectCarousel from '../Cards/ProjectCarousel';
 import { projects } from '../../data/constants';
 
@@ -10,19 +10,19 @@ const Projects = ({ setOpenModal }) => {
     const navigate = useNavigate();
 
     const handleResize = () => {
-        setIsMobileView(window.innerWidth <= 768); 
+        setIsMobileView(window.innerWidth <= 768);
     };
 
     useEffect(() => {
         window.addEventListener('resize', handleResize);
-        handleResize(); // Call this function to set the initial state
+        handleResize();
         return () => {
             window.removeEventListener('resize', handleResize);
         };
     }, []);
 
     const handleNext = () => {
-        if(projects.length > startIndex+3){
+        if(projects.length > startIndex + (isMobileView ? 1 : 3)) {
             setStartIndex(startIndex + (isMobileView ? 1 : 3));
         } else {
             setStartIndex(0);
@@ -41,15 +41,25 @@ const Projects = ({ setOpenModal }) => {
         <Container id="projects">
             <Wrapper>
                 <Title>Projects</Title>
-                <ProjectCarousel
-                    numberOfProjects = {projects}
-                    projects={projects.slice(startIndex, startIndex + (isMobileView ? 1 : 3))}
-                    handleProjectClick={handleProjectClick} // Pass the handler here
-                />
-                <ToggleButtonGroup>
-                    <ToggleButton onClick={handlePrev} disabled={startIndex === 0}>{'<'}</ToggleButton>
-                    <ToggleButton onClick={handleNext} disabled={startIndex + (isMobileView ? 1 : 3) >= projects.length}>{'>'}</ToggleButton>
-                </ToggleButtonGroup>
+                <CarouselWrapper>
+                    <ProjectCarousel
+                        numberOfProjects={projects}
+                        projects={projects.slice(startIndex, startIndex + (isMobileView ? 1 : 3))}
+                        handleProjectClick={handleProjectClick}
+                    />
+                    <ToggleButtonGroup>
+                        <ToggleButton onClick={handlePrev} disabled={startIndex === 0}>
+                            <LeftArrowSVG>
+                                <LeftArrowPath />
+                            </LeftArrowSVG>
+                        </ToggleButton>
+                        <ToggleButton onClick={handleNext} disabled={startIndex + (isMobileView ? 1 : 3) >= projects.length}>
+                            <RightArrowSVG>
+                                <RightArrowPath />
+                            </RightArrowSVG>
+                        </ToggleButton>
+                    </ToggleButtonGroup>
+                </CarouselWrapper>
                 <Divider />
             </Wrapper>
         </Container>

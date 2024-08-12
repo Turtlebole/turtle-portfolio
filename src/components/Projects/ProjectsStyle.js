@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 
 export const Container = styled.div`
-    background: linear-gradient(343.07deg, hsla(231, 17%, 36%, 0.06) 5.71%, hsla(231, 17%, 36%, 0) 64.83%);
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -25,15 +24,15 @@ export const Wrapper = styled.div`
 `;
 
 export const Title = styled.div`
-font-size: 38px;
-text-align: center;
-font-weight: 400;
-margin-top: 20px;
-  color: ${({ theme }) => theme.colored_detail};
-  @media (max-width: 768px) {
-      margin-top: 12px;
-      font-size: 32px;
-  }
+    font-size: 38px;
+    text-align: center;
+    font-weight: 400;
+    margin-top: 20px;
+    color: ${({ theme }) => theme.colored_detail};
+    @media (max-width: 768px) {
+        margin-top: 12px;
+        font-size: 32px;
+    }
 `;
 
 export const Desc = styled.div`
@@ -47,49 +46,87 @@ export const Desc = styled.div`
     }
 `;
 
+export const CarouselWrapper = styled.div`
+    position: relative;
+    width: 100%;
+    max-width: 1350px;
+    overflow: hidden;
+
+    @media (max-width: 768px) {
+        overflow-x: auto;
+        white-space: nowrap;
+        padding: 0 20px;
+    }
+`;
+
 export const ToggleButtonGroup = styled.div`
     display: flex;
-    border: 1.5px solid ${({ theme }) => theme.primary};
-    color: ${({ theme }) => theme.colored_detail};
-    user-select: none;
-    font-size: 16px;
-    border-radius: 12px;
-    font-weight: 500;
-    margin: 22px 0px;
-    @media (max-width: 768px) {
-        font-size: 12px;
+    justify-content: space-between;
+    position: absolute;
+    top: 50%;
+    width: calc(100% - 40px);
+    max-width: 1350px;
+    transform: translateY(-50%);
+    pointer-events: none;
+    gap: 16px;
+
+    & > div:first-child {
+        margin-left: 20px;
     }
-`
+    & > div:last-child {
+        margin-right: -20px;
+    }
+
+    @media (max-width: 1200px) {
+        position: static;
+        top: auto;
+        transform: none;
+        margin-top: 20px;
+        width: 100%;
+        justify-content: center;
+        gap: 12px;
+    }
+
+    @media (max-width: 768px) {
+        display: none;
+    }
+`;
 
 export const ToggleButton = styled.div`
-    padding: 8px 18px;
-    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    border-radius: 50%;
     cursor: pointer;
-    ${({ active, theme }) =>
-        active && `
-    background: ${theme.primary + 20};
-    `
-    }
+    user-select: none;
+    background: ${({ theme }) => theme.primary + '20'};
+    color: ${({ theme }) => theme.darkMode ? '#FFFFFF' : '#000000'};
+    pointer-events: all;
+    transition: background 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+
     &:hover {
-        background: ${({ theme }) => theme.primary + 8};
+        background: ${({ theme }) => theme.primary + '60'};
+        transform: scale(1.1);
     }
+
+    @media (max-width: 1200px) {
+        font-size: 20px;
+        padding: 12px;
+    }
+
     @media (max-width: 768px) {
-        padding: 6px 8px;
-        border-radius: 4px;
+        padding: 14px;
+        font-size: 24px;
     }
-`
+`;
 
 export const Divider = styled.div`
     width: 1.5px;
     background: ${({ theme }) => theme.primary};
-`
+`;
 
 export const CardContainer = styled.div`
-    // display: flex;
-    // justify-content: center;
-    // align-items: center;
-    // gap: 28px;
-    // flex-wrap: wrap;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-gap: 32px;
@@ -101,3 +138,35 @@ export const CardContainer = styled.div`
         grid-template-columns: repeat(1, 1fr);
     }
 `;
+
+export const LeftArrowSVG = styled.svg.attrs({
+    width: '24',
+    height: '24',
+    viewBox: '0 0 24 24',
+    fill: 'none',
+    xmlns: 'http://www.w3.org/2000/svg',
+})`
+    path {
+        stroke: ${({ theme }) => theme.highlighted_svg};
+    }
+`;
+
+export const RightArrowSVG = styled.svg.attrs({
+    width: '24',
+    height: '24',
+    viewBox: '0 0 24 24',
+    fill: 'none',
+    xmlns: 'http://www.w3.org/2000/svg',
+})`
+    path {
+        stroke: ${({ theme }) => theme.highlighted_svg};
+    }
+`;
+
+export const LeftArrowPath = () => (
+    <path d="M15 18l-6-6 6-6" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+);
+
+export const RightArrowPath = () => (
+    <path d="M9 18l6-6-6-6" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+);

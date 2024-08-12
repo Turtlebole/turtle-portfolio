@@ -27,7 +27,16 @@ export const skills = [
         image:
           "https://camo.githubusercontent.com/ff077b866cdc3fc2b0fa50ca6f8fa395451ffa625bc9c1133643b40e8afa2e2c/68747470733a2f2f736b696c6c69636f6e732e6465762f69636f6e733f693d7265616374",
       },
-   
+      {
+        name: "Vue Js",
+        image:
+            "https://camo.githubusercontent.com/fca59a5a96d304d533795c7a6b78ad67a6ea3f43a0be9759f73980ec50d2cf41/68747470733a2f2f736b696c6c69636f6e732e6465762f69636f6e733f693d767565",
+      },
+      {
+        name: "Nuxt Js",
+        image:
+            "https://camo.githubusercontent.com/307e6e7b2379792d2b380257583304154ac84c80ef9a20e5c33acf4c7f2b240b/68747470733a2f2f736b696c6c69636f6e732e6465762f69636f6e733f693d6e757874",
+      },
       {
         name: "Next Js",
         image:

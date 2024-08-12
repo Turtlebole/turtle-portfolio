@@ -111,9 +111,7 @@ const ContactButton = styled.input`
   width: 100%;
   text-decoration: none;
   text-align: center;
-  background: linear-gradient(270deg, hsla(0, 15%, 25%, 1) 0%, hsla(30, 29%, 43%, 1) 100%);
-  background: -moz-linear-gradient(270deg, hsla(0, 15%, 25%, 1) 0%, hsla(30, 29%, 43%, 1) 100%);
-  background: -webkit-linear-gradient(270deg, hsla(0, 15%, 25%, 1) 0%, hsla(30, 29%, 43%, 1) 100%);
+  background: ${({ theme }) => theme.buttonGradient};
   padding: 13px 16px;
   margin-top: 2px;
   border-radius: 12px;
