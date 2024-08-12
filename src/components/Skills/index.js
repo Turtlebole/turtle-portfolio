@@ -1,6 +1,7 @@
-import React, { useState } from 'react'
-import styled from 'styled-components'
-import { skills } from '../../data/constants'
+import React, { useState, useEffect, useRef } from 'react';
+import styled from 'styled-components';
+import { skills } from '../../data/constants';
+import { gsap } from 'gsap';
 
 const Container = styled.div`
   display: flex;
@@ -9,7 +10,7 @@ const Container = styled.div`
   align-items: center;
   position: relative;
   z-index: 1;
-`
+`;
 
 const Wrapper = styled.div`
   position: relative;
@@ -19,7 +20,7 @@ const Wrapper = styled.div`
   width: 100%;
   max-width: 1100px;
   padding: 0 20px;
-`
+`;
 
 export const Title = styled.div`
   font-size: 28px;
@@ -35,7 +36,7 @@ export const Title = styled.div`
     margin-top: 12px;
     font-size: 32px;
   }
-`
+`;
 
 export const Desc = styled.div`
   font-size: 48px;
@@ -46,14 +47,14 @@ export const Desc = styled.div`
   @media (max-width: 768px) {
     font-size: 16px;
   }
-`
+`;
 
 const ButtonContainer = styled.div`
   display: flex;
   justify-content: center;
   gap: 20px;
   margin-bottom: 20px;
-`
+`;
 
 const Button = styled.button`
   font-size: 16px;
@@ -67,7 +68,7 @@ const Button = styled.button`
   &:hover {
     background-color: ${({ theme }) => theme.primary_hover};
   }
-`
+`;
 
 const SkillsContainer = styled.div`
   display: ${({ showSkills }) => (showSkills ? 'flex' : 'none')};
@@ -82,6 +83,7 @@ const SkillsContainer = styled.div`
     gap: 15px;
   }
 `
+
 
 const Skill = styled.div`
   display: flex;
@@ -126,17 +128,18 @@ const SkillName = styled.span`
   font-weight: 400;
   color: ${({ theme }) => theme.colored_detail + 80};
   @media (max-width: 768px) {
-    display: none;
+    display: none; /* Hide skill name on mobile */
   }
-`
+`;
 
 const Skills = () => {
   const [activeButton, setActiveButton] = useState('');
   const [showSkills, setShowSkills] = useState(false);
+  const skillsRef = useRef(null);
 
   const handleButtonClick = (buttonName) => {
     setActiveButton(buttonName);
-    setShowSkills(true);
+    setShowSkills(false);
   };
 
   const filterSkills = () => {
@@ -145,6 +148,22 @@ const Skills = () => {
     }
     return skills.filter(skill => skill.title.toLowerCase() === activeButton.toLowerCase());
   };
+
+  useEffect(() => {
+    if (activeButton) {
+      setShowSkills(true);
+    }
+  }, [activeButton]);
+
+  useEffect(() => {
+    if (showSkills) {
+      gsap.fromTo(
+          skillsRef.current,
+          { opacity: 0, y: 20 },
+          { opacity: 1, y: 0, duration: 1, ease: 'power2.out' }
+      );
+    }
+  }, [showSkills]);
 
   return (
       <Container id="skills">
@@ -162,7 +181,11 @@ const Skills = () => {
               Database
             </Button>
           </ButtonContainer>
-          <SkillsContainer showSkills={showSkills}>
+          <SkillsContainer
+              ref={skillsRef}
+              showSkills={showSkills}
+              key={activeButton}  // Added key to trigger re-render
+          >
             {filterSkills().map((skill) => (
                 skill.skills.map((item) => (
                     <Skill key={item.name}>
@@ -174,7 +197,7 @@ const Skills = () => {
           </SkillsContainer>
         </Wrapper>
       </Container>
-  )
-}
+  );
+};
 
-export default Skills
+export default Skills;
