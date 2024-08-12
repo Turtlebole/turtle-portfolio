@@ -30,10 +30,18 @@ export const HeroBg = styled.div`
     padding: 0 30px;
     top: 50%;
     left: 50%;
-    -webkit-transform: translateX(-50%) translateY(-50%);
+    transform: translateX(-50%) translateY(-50%);
+    z-index: -1; /* Ensures it's behind other content */
+    canvas {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
     @media (max-width: 960px) {
         justify-content: center;
-        padding: 0 0px;
+        padding: 0;
     }
 `;
 

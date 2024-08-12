@@ -19,31 +19,30 @@ const Body = styled.div`
 
 function App() {
   const [darkMode, setDarkMode] = useState(true);
-  const [openModal, setOpenModal] = useState({ state: false, project: null });
 
   const toggleTheme = () => {
     setDarkMode(prevMode => !prevMode);
   };
 
   return (
-    <ThemeProvider theme={darkMode ? darkTheme : lightTheme}>
-      <Router>
-        <Navbar toggleTheme={toggleTheme} />
-        <Body>
-          <Routes>
-            <Route path="/" element={
-              <>
-                <HeroSection />
-                <Skills />
-                <Projects setOpenModal={setOpenModal} />
-                <Contact />
-              </>
-            } />
-            <Route path="/project/:id" element={<ProjectPage />} />
-          </Routes>
-        </Body>
-      </Router>
-    </ThemeProvider>
+      <ThemeProvider theme={darkMode ? darkTheme : lightTheme}>
+        <Router>
+          <Navbar toggleTheme={toggleTheme} />
+          <Body>
+            <Routes>
+              <Route path="/" element={
+                <>
+                  <HeroSection theme={darkMode ? 'dark' : 'light'} />
+                  <Skills />
+                  <Projects />
+                  <Contact />
+                </>
+              } />
+              <Route path="/project/:id" element={<ProjectPage />} />
+            </Routes>
+          </Body>
+        </Router>
+      </ThemeProvider>
   );
 }
 
