@@ -36,6 +36,10 @@ export const InnerContainer = styled.div`
 export const LeftContainer = styled.div`
   width: 100%;
   order: 1;
+    background-color: ${({ theme }) => theme.card};
+    border-radius: 12px; 
+    padding: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
   @media (max-width: 960px) {
     order: 2;
     margin-bottom: 30px;
