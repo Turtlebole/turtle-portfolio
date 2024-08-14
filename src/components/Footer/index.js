@@ -48,11 +48,6 @@ const SocialIcon = styled.a`
 const Footer = ({ toggleTheme }) => {
     return (
         <FooterContainer>
-            <FooterLinks>
-                <FooterLink to="/">Home</FooterLink>
-                <FooterLink to="/">About</FooterLink>
-                <FooterLink to="/">Contact</FooterLink>
-            </FooterLinks>
             <SocialIcons>
                 <SocialIcon href="https://github.com/Turtlebole" target="_blank" rel="noopener noreferrer">
                     <FaGithub />
@@ -65,7 +60,7 @@ const Footer = ({ toggleTheme }) => {
                 </SocialIcon>
             </SocialIcons>
             <div>
-                <ColoredSpan>© 2024 Turtle</ColoredSpan>
+                <ColoredSpan>© 2024</ColoredSpan>
             </div>
         </FooterContainer>
     );
