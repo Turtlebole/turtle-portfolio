@@ -1,145 +1,151 @@
-import styled from 'styled-components'
+import styled from 'styled-components';
 
 export const PageContainer = styled.div`
-  display: flex;
-  flex-direction: row;
-  width: 100vw;
-  height: 100vh;
-  background: linear-gradient(343.07deg, hsla(231, 17%, 36%, 0.06) 5.71%, hsla(231, 17%, 36%, 0) 64.83%);
-  justify-content: center;
-  align-items: center;
-  position: relative;
-  padding: 80px 30px;
-  @media (max-width: 960px) {
-    padding: 66px 16px;
-  }
-  @media (max-width: 640px) {
-    padding: 32px 16px;
+    display: flex;
     flex-direction: column;
-  }
-  z-index: 1;
+    width: 100vw;
+    height: 100vh;
+    background: linear-gradient(343.07deg, hsla(231, 17%, 36%, 0.06) 5.71%, hsla(231, 17%, 36%, 0) 64.83%);
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    box-sizing: border-box;
+    @media (min-width: 961px) {
+        padding: 40px;
+    }
 `;
 
 export const InnerContainer = styled.div`
-  position: relative;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-  max-width: 1400px;
-
-  @media (max-width: 960px) {
+    display: flex;
     flex-direction: column;
-  }
+    align-items: center;
+    max-width: 1200px;
+    width: 100%;
+    gap: 20px;
+
+    @media (min-width: 641px) and (max-width: 960px) {
+        flex-direction: column;
+    }
+
+    @media (min-width: 961px) {
+        flex-direction: row;
+        gap: 40px;
+    }
 `;
 
 export const LeftContainer = styled.div`
-  width: 100%;
-  order: 1;
+    flex: 1;
     background-color: ${({ theme }) => theme.card};
-    border-radius: 12px; 
-    padding: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
-  @media (max-width: 960px) {
-    order: 2;
-    margin-bottom: 30px;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     display: flex;
     flex-direction: column;
     align-items: center;
-  }
 
-  @media (max-width: 640px) {
-    order: 2;
-    margin-bottom: 30px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
+    @media (min-width: 641px) and (max-width: 960px) {
+        order: 2;
+        align-items: center;
+    }
+
+    @media (max-width: 640px) {
+        order: 2;
+        align-items: center;
+        margin-bottom: 20px;
+    }
 `;
 
 export const RightContainer = styled.div`
-  width: 50%;
-  display: flex;
-  order: 2;
-  justify-content: end;
-  gap: 12px;
-  @media (max-width: 960px) {
-    order: 1;
+    flex: 1;
+    display: flex;
     justify-content: center;
     align-items: center;
-    margin-bottom: 80px;
-  }
 
-  @media (max-width: 640px) {
-    margin-bottom: 30px;
-  }
+    @media (min-width: 641px) and (max-width: 960px) {
+        order: 1;
+        justify-content: center;
+    }
+
+    @media (max-width: 640px) {
+        order: 1;
+        justify-content: center;
+    }
 `;
 
 export const ImageContainer = styled.div`
-  flex: 1;
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  @media (max-width: 640px) {
-    padding: 10px;
-  }
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 500px;
+
+    @media (max-width: 960px) {
+        padding: 10px;
+        max-width: 400px;
+    }
+
+    @media (max-width: 640px) {
+        padding: 5px;
+        max-width: 280px;
+    }
 `;
 
 export const Img = styled.img`
-  position: relative;
-  width: 100%;
-  height: 100%;
-  max-width: 500px;
-  max-height: 500px;
-  border: 2px solid ${({ theme }) => theme.primary};
-  border-radius: 12px;
-  user-select: none;
-  -moz-user-select: -moz-none;
-  -webkit-user-select: none;
-  @media (max-width: 768px) {
-    max-width: 400px;
-    max-height: 400px;
-  }
+    width: 100%;
+    border: 2px solid ${({ theme }) => theme.primary};
+    border-radius: 12px;
 
-  @media (max-width: 640px) {
-    max-width: 280px;
-    max-height: 280px;
-  }
+    @media (max-width: 960px) {
+        max-width: 100%;
+        height: auto;
+    }
 
+    @media (max-width: 640px) {
+        max-width: 100%;
+        height: auto;
+    }
 `;
 
 export const ProjectTitle = styled.h2`
-  margin-bottom: 20px;
-  text-align: center;
-  font-weight: 400;
-  color: ${({ theme }) => theme.text_primary};
-  @media (max-width: 640px) {
-    margin-bottom: 10px;
-  }
+    margin-bottom: 20px;
+    text-align: center;
+    font-weight: 600;
+    color: ${({ theme }) => theme.text_primary};
+    font-size: 24px;
+
+    @media (max-width: 960px) {
+        font-size: 20px;
+        margin-bottom: 10px;
+    }
+
+    @media (max-width: 640px) {
+        font-size: 18px;
+        margin-bottom: 5px;
+    }
 `;
 
-export const SubTitle = styled.div`
-  font-size: 20px;
-  line-height: 32px;
-  margin-bottom: 30px;
-  padding: 20px;
-  color: ${({ theme }) => theme.text_primary + 95};
-
-  @media (max-width: 960px) {
+export const SubTitle = styled.p`
+    font-size: 18px;
+    line-height: 1.5;
+    margin-bottom: 30px;
     text-align: center;
-  }
+    color: ${({ theme }) => theme.text_primary};
+    padding: 0 20px;
 
-  @media (max-width: 640px) {
-    font-size: 16px;
-    line-height: 32px;
-  }
+    @media (max-width: 960px) {
+        font-size: 16px;
+    }
+
+    @media (max-width: 640px) {
+        font-size: 14px;
+        margin-bottom: 20px;
+    }
 `;
 
 export const Highlight = styled.span`
-  color: ${({ theme }) => theme.colored_detail};
+    color: ${({ theme }) => theme.colored_detail};
 `;
-
 
 export const Tags = styled.div`
     width: 100%;
@@ -149,7 +155,8 @@ export const Tags = styled.div`
     gap: 8px;
     margin-top: 4px;
     padding: 20px;
-`
+    justify-content: center;
+`;
 
 export const Tag = styled.span`
     font-size: 18px;
@@ -158,26 +165,29 @@ export const Tag = styled.span`
     background-color: ${({ theme }) => theme.colored_detail + 20};
     padding: 2px 8px;
     border-radius: 10px;
-`
+`;
+
 export const GitHubLink = styled.a`
-  align-items: center;
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
 `;
 
 export const GitHubIcon = styled.button`
-    padding: 5px 10px;
+    padding: 5px;
     background: none;
-    color: white;
     border: none;
     cursor: pointer;
     display: flex;
     align-items: center;
 
     svg {
-        width: 40px;
-        height: 40px;
-        fill: ${({theme}) => theme.colored_detail}
+        width: 32px;
+        height: 32px;
+        fill: ${({ theme }) => theme.colored_detail};
     }
 
     &:hover svg {
-        fill: ${({theme}) => theme.primary};
+        fill: ${({ theme }) => theme.primary};
+    }
 `;
