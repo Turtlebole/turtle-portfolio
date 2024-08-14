@@ -2,6 +2,7 @@ import { ThemeProvider } from "styled-components";
 import { useState, useEffect, useRef } from "react";
 import { darkTheme, lightTheme } from './utils/Themes.js';
 import Navbar from "./components/Navbar";
+import Footer from "./components/Footer"; // Import the Footer component
 import './App.css';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import HeroSection from "./components/HeroSection";
@@ -16,9 +17,9 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 gsap.registerPlugin(ScrollTrigger);
 
 const Body = styled.div`
-  background-color: ${({ theme }) => theme.bg};
-  width: 100%;
-  overflow-x: hidden;
+    background-color: ${({ theme }) => theme.bg};
+    width: 100%;
+    overflow-x: hidden;
 `;
 
 const Section = styled.div`
@@ -73,6 +74,7 @@ function App() {
                                 <Section ref={el => sectionsRef.current[2] = el}>
                                     <Contact />
                                 </Section>
+                                <Footer toggleTheme={toggleTheme}/> {/* Include the Footer component here */}
                             </>
                         } />
                         <Route path="/project/:id" element={<ProjectPage />} />
