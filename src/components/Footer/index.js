@@ -1,8 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Link as LinkR } from 'react-router-dom';
-import { FaGithub, FaTwitter, FaReddit } from 'react-icons/fa';
-import { ColoredSpan } from '../Navbar/NavbarStyledComponent'; // Import ColoredSpan if it is defined there
+import { FaGithub, FaTwitter, FaReddit, FaLinkedin, FaDiscord } from 'react-icons/fa';
+import { ColoredSpan } from '../Navbar/NavbarStyledComponent';
 
 const FooterContainer = styled.footer`
     background-color: ${({ theme }) => theme.card_light};
@@ -57,6 +57,12 @@ const Footer = ({ toggleTheme }) => {
                 </SocialIcon>
                 <SocialIcon href="#" target="_blank" rel="noopener noreferrer">
                     <FaReddit />
+                </SocialIcon>
+                <SocialIcon href="https://discord.com/users/686681599894618144" target="_blank" rel="noopener noreferrer">
+                    <FaDiscord />
+                </SocialIcon>
+                <SocialIcon href="https://www.linkedin.com/in/babicbojan/" target="_blank" rel="noopener noreferrer">
+                    <FaLinkedin />
                 </SocialIcon>
             </SocialIcons>
             <div>
