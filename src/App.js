@@ -11,6 +11,7 @@ import Contact from "./components/Contact";
 import styled from "styled-components";
 import Projects from "./components/Projects";
 import ProjectPage from "./pages/ProjectPage/ProjectPage.js";
+import BlogPage from "./pages/BlogPage/BlogPage";
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
@@ -78,6 +79,7 @@ function App() {
                             </>
                         } />
                         <Route path="/project/:id" element={<ProjectPage />} />
+                        <Route path="/blog" element={<BlogPage />} />
                     </Routes>
                 </Body>
             </Router>
