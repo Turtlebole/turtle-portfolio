@@ -2,9 +2,10 @@ import React, { useEffect, useState } from 'react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import styled from 'styled-components';
-import avatar from '../../images/avatar.jpg';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
-import { materialDark} from "react-syntax-highlighter/src/styles/prism";
+import { materialDark, materialLight } from 'react-syntax-highlighter/src/styles/prism';
+import avatar from '../../images/avatar.jpg';
+import { useParams } from 'react-router-dom';
 
 const Container = styled.div`
     display: flex;
@@ -46,6 +47,7 @@ const Meta = styled.div`
     align-items: center;
     font-size: 0.9rem;
     color: ${({ theme }) => theme.text_secondary};
+    margin-bottom: 20px;
 `;
 
 const Avatar = styled.img`
@@ -53,6 +55,7 @@ const Avatar = styled.img`
     height: 40px;
     border-radius: 50%;
     margin-right: 10px;
+    object-fit: cover;
 `;
 
 const Divider = styled.hr`
@@ -101,39 +104,37 @@ const Loader = styled.div`
     margin-top: 20px;
 `;
 
-const BlogPage = () => {
-    const [contents, setContents] = useState([]);
+const PostPage = ({ theme }) => {
+    const { postName } = useParams();
+    const [content, setContent] = useState('');
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
     useEffect(() => {
-        const fetchMarkdownFiles = async () => {
-            const fileNames = ['post1.md'];
+        const fetchMarkdownFile = async () => {
             try {
-                const fileContents = await Promise.all(
-                    fileNames.map(async (fileName) => {
-                        const response = await fetch(`/content/${fileName}`);
-                        if (!response.ok) {
-                            throw new Error(`Failed to fetch ${fileName}: ${response.statusText}`);
-                        }
-                        return response.text();
-                    })
-                );
-                setContents(fileContents);
+                const response = await fetch(`/content/${postName}`);
+                if (!response.ok) {
+                    throw new Error(`Failed to fetch ${postName}: ${response.statusText}`);
+                }
+                const text = await response.text();
+                setContent(text);
             } catch (error) {
-                setError(`Failed to fetch markdown files: ${error.message}`);
+                setError(`Failed to fetch markdown file: ${error.message}`);
             } finally {
                 setLoading(false);
             }
         };
 
-        fetchMarkdownFiles();
-    }, []);
+        fetchMarkdownFile();
+    }, [postName]);
+
+    const syntaxStyle = theme === 'light' ? materialLight : materialDark;
 
     return (
         <Container>
             <Header>
-                <Title>Turtle's Blog</Title>
+                <Title>Post Page</Title>
             </Header>
             <Wrapper>
                 <Meta>
@@ -145,41 +146,39 @@ const BlogPage = () => {
                 ) : error ? (
                     <Loader>Error loading content: {error}</Loader>
                 ) : (
-                    contents.map((content, index) => (
-                        <div key={index}>
-                            <Divider />
-                            <Content>
-                                <ReactMarkdown
-                                    remarkPlugins={[remarkGfm]}
-                                    components={{
-                                        code: ({ node, inline, className, children, ...props }) => {
-                                            const match = /language-(\w+)/.exec(className || '');
-                                            return !inline && match ? (
-                                                <SyntaxHighlighter
-                                                    language={match[1]}
-                                                    PreTag="div"
-                                                    style={materialDark}
-                                                    {...props}
-                                                >
-                                                    {String(children).replace(/\n$/, '')}
-                                                </SyntaxHighlighter>
-                                            ) : (
-                                                <code className={className} {...props}>
-                                                    {children}
-                                                </code>
-                                            );
-                                        }
-                                    }}
-                                >
-                                    {content}
-                                </ReactMarkdown>
-                            </Content>
-                        </div>
-                    ))
+                    <>
+                        <Divider />
+                        <Content>
+                            <ReactMarkdown
+                                remarkPlugins={[remarkGfm]}
+                                components={{
+                                    code: ({ node, inline, className, children, ...props }) => {
+                                        const match = /language-(\w+)/.exec(className || '');
+                                        return !inline && match ? (
+                                            <SyntaxHighlighter
+                                                language={match[1]}
+                                                PreTag="div"
+                                                style={syntaxStyle}
+                                                {...props}
+                                            >
+                                                {String(children).replace(/\n$/, '')}
+                                            </SyntaxHighlighter>
+                                        ) : (
+                                            <code className={className} {...props}>
+                                                {children}
+                                            </code>
+                                        );
+                                    }
+                                }}
+                            >
+                                {content}
+                            </ReactMarkdown>
+                        </Content>
+                    </>
                 )}
             </Wrapper>
         </Container>
     );
 };
 
-export default BlogPage;
+export default PostPage;

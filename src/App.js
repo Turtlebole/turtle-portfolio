@@ -11,7 +11,8 @@ import Contact from "./components/Contact";
 import styled from "styled-components";
 import Projects from "./components/Projects";
 import ProjectPage from "./pages/ProjectPage/ProjectPage.js";
-import BlogPage from "./pages/BlogPage/BlogPage";
+import PostList from "./pages/BlogPage/PostList";
+import PostPage from "./pages/BlogPage/PostPage";
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
@@ -93,7 +94,8 @@ function App() {
                             </>
                         } />
                         <Route path="/project/:id" element={<ProjectPage theme={darkMode ? 'dark' : 'light'} />} />
-                        <Route path="/blog" element={<BlogPage theme={darkMode ? 'dark' : 'light'} />} />
+                        <Route path="/blog" element={<PostList />} /> {/* Updated route */}
+                        <Route path="/blog/:postName" element={<PostPage theme={darkMode ? 'dark' : 'light'} />} /> {/* Updated route */}
                     </Routes>
                 </Body>
             </Router>
