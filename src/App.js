@@ -2,7 +2,7 @@ import { ThemeProvider } from "styled-components";
 import { useState, useEffect, useRef } from "react";
 import { darkTheme, lightTheme } from './utils/Themes.js';
 import Navbar from "./components/Navbar";
-import Footer from "./components/Footer"; // Import the Footer component
+import Footer from "./components/Footer";
 import './App.css';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import HeroSection from "./components/HeroSection";
@@ -30,7 +30,12 @@ const Section = styled.div`
 `;
 
 function App() {
-    const [darkMode, setDarkMode] = useState(true);
+    const [darkMode, setDarkMode] = useState(() => {
+        // Load the initial theme from localStorage
+        const savedTheme = localStorage.getItem('darkMode');
+        return savedTheme ? JSON.parse(savedTheme) : true;
+    });
+
     const sectionsRef = useRef([]);
 
     const toggleTheme = () => {
@@ -38,23 +43,32 @@ function App() {
     };
 
     useEffect(() => {
-        sectionsRef.current.forEach(section => {
-            gsap.fromTo(section,
-                { opacity: 0, filter: 'blur(10px)' },
-                {
-                    opacity: 1,
-                    filter: 'blur(0px)',
-                    duration: 1.5,
-                    ease: 'power1.out',
-                    scrollTrigger: {
-                        trigger: section,
-                        start: 'top 80%',
-                        end: 'top 50%',
-                        scrub: 0.5,
-                    },
+        // Save the current theme to localStorage
+        localStorage.setItem('darkMode', JSON.stringify(darkMode));
+    }, [darkMode]);
+
+    useEffect(() => {
+        if (sectionsRef.current) {
+            sectionsRef.current.forEach(section => {
+                if (section) {
+                    gsap.fromTo(section,
+                        { opacity: 0, filter: 'blur(10px)' },
+                        {
+                            opacity: 1,
+                            filter: 'blur(0px)',
+                            duration: 1.5,
+                            ease: 'power1.out',
+                            scrollTrigger: {
+                                trigger: section,
+                                start: 'top 80%',
+                                end: 'top 50%',
+                                scrub: 0.5,
+                            },
+                        }
+                    );
                 }
-            );
-        });
+            });
+        }
     }, []);
 
     return (
@@ -75,11 +89,11 @@ function App() {
                                 <Section ref={el => sectionsRef.current[2] = el}>
                                     <Contact />
                                 </Section>
-                                <Footer toggleTheme={toggleTheme}/> {/* Include the Footer component here */}
+                                <Footer toggleTheme={toggleTheme} />
                             </>
                         } />
-                        <Route path="/project/:id" element={<ProjectPage />} />
-                        <Route path="/blog" element={<BlogPage />} />
+                        <Route path="/project/:id" element={<ProjectPage theme={darkMode ? 'dark' : 'light'} />} />
+                        <Route path="/blog" element={<BlogPage theme={darkMode ? 'dark' : 'light'} />} />
                     </Routes>
                 </Body>
             </Router>
