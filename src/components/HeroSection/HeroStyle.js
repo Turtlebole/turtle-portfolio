@@ -1,7 +1,6 @@
 import styled from "styled-components";
 
 export const HeroContainer = styled.div`
-    background: linear-gradient(343.07deg, hsla(231, 17%, 36%, 0.06) 5.71%, hsla(231, 17%, 36%, 0) 64.83%);
     display: flex;
     justify-content: center;
     position: relative;

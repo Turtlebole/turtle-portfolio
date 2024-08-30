@@ -14,9 +14,6 @@ const Navbar = ({toggleTheme}) => {
     <Nav>
       <NavbarContainer>
         <NavLogo to='/'>
-          {/* <a style={{ display: "flex", alignItems: "center", color: "white", marginBottom: '20;', cursor: 'pointer' }}>
-            <Span>DualStab</Span>
-          </a> */}
         <div style={{ display: "flex", alignItems: "center", color: "white", cursor: 'pointer' }}>
           <Span>
             Turtle<ColoredSpan>Bole</ColoredSpan>

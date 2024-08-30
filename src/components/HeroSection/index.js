@@ -2,7 +2,6 @@ import React from 'react';
 import HeroAnimation from './HeroAnimation';
 import {
     HeroContainer,
-    HeroBg,
     HeroLeftContainer,
     Img,
     HeroRightContainer,
@@ -21,9 +20,7 @@ const HeroSection = ({ theme }) => {
     return (
         <div id="about">
             <HeroContainer>
-                <HeroBg>
                     <HeroAnimation theme={theme} />
-                </HeroBg>
                 <HeroInnerContainer>
                     <HeroLeftContainer id="Left">
                         <Title>{Bio.title}</Title>

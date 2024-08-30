@@ -13,6 +13,7 @@ export const Nav = styled.div`
     top: 0;
     z-index: 10;
     transition: 0.8s all ease;
+    border-bottom: 1px solid ${({ theme }) => theme.text_secondary};
 `;
 
 export const NavbarContainer = styled.div`
@@ -38,6 +39,7 @@ export const NavLogo = styled(LinkR)`
 `;
 
 export const Span = styled.div`
+    color: ${({ theme }) => theme.text_primary};
     padding: 0 4px;
     font-weight: bold;
     font-size: 16px;
@@ -88,12 +90,13 @@ export const GitHubButton = styled.a`
     transition: all 0.6s ease-in-out;
     :hover {
         background: ${({ theme }) => theme.primary};
-        color: ${({ theme }) => theme.white};
+        color: ${({ theme }) => theme.bgLight};  
     }
     @media screen and (max-width: 768px) {
         font-size: 12px;
     }
 `;
+
 
 export const ThemeButton = styled.button`
     padding: 5px 10px;
