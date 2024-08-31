@@ -30,24 +30,7 @@ const Section = styled.div`
     transition: opacity 0.1s, filter 0.1s;
 `;
 
-function App() {
-    const [darkMode, setDarkMode] = useState(() => {
-        // Load the initial theme from localStorage
-        const savedTheme = localStorage.getItem('darkMode');
-        return savedTheme ? JSON.parse(savedTheme) : true;
-    });
-
-    const sectionsRef = useRef([]);
-
-    const toggleTheme = () => {
-        setDarkMode(prevMode => !prevMode);
-    };
-
-    useEffect(() => {
-        // Save the current theme to localStorage
-        localStorage.setItem('darkMode', JSON.stringify(darkMode));
-    }, [darkMode]);
-
+function Home({ darkMode, toggleTheme, sectionsRef }) {
     useEffect(() => {
         if (sectionsRef.current) {
             sectionsRef.current.forEach(section => {
@@ -70,7 +53,45 @@ function App() {
                 }
             });
         }
-    }, []);
+
+        // Clean up ScrollTrigger on unmount
+        return () => {
+            ScrollTrigger.getAll().forEach(trigger => trigger.kill());
+        };
+    }, [sectionsRef]);
+
+    return (
+        <>
+            <HeroSection theme={darkMode ? 'dark' : 'light'} />
+            <Section ref={el => sectionsRef.current[0] = el}>
+                <Skills />
+            </Section>
+            <Section ref={el => sectionsRef.current[1] = el}>
+                <Projects />
+            </Section>
+            <Section ref={el => sectionsRef.current[2] = el}>
+                <Contact />
+            </Section>
+            <Footer toggleTheme={toggleTheme} />
+        </>
+    );
+}
+
+function App() {
+    const [darkMode, setDarkMode] = useState(() => {
+        const savedTheme = localStorage.getItem('darkMode');
+        return savedTheme ? JSON.parse(savedTheme) : true;
+    });
+
+    const sectionsRef = useRef([]);
+
+    const toggleTheme = () => {
+        setDarkMode(prevMode => !prevMode);
+    };
+
+    useEffect(() => {
+        localStorage.setItem('darkMode', JSON.stringify(darkMode));
+    }, [darkMode]);
 
     return (
         <ThemeProvider theme={darkMode ? darkTheme : lightTheme}>
@@ -79,23 +100,11 @@ function App() {
                 <Body>
                     <Routes>
                         <Route path="/" element={
-                            <>
-                                <HeroSection theme={darkMode ? 'dark' : 'light'} />
-                                <Section ref={el => sectionsRef.current[0] = el}>
-                                    <Skills />
-                                </Section>
-                                <Section ref={el => sectionsRef.current[1] = el}>
-                                    <Projects />
-                                </Section>
-                                <Section ref={el => sectionsRef.current[2] = el}>
-                                    <Contact />
-                                </Section>
-                                <Footer toggleTheme={toggleTheme} />
-                            </>
+                            <Home darkMode={darkMode} toggleTheme={toggleTheme} sectionsRef={sectionsRef} />
                         } />
                         <Route path="/project/:id" element={<ProjectPage theme={darkMode ? 'dark' : 'light'} />} />
-                        <Route path="/blog" element={<PostList />} /> {/* Updated route */}
-                        <Route path="/blog/:postName" element={<PostPage theme={darkMode ? 'dark' : 'light'} />} /> {/* Updated route */}
+                        <Route path="/blog" element={<PostList />} />
+                        <Route path="/blog/:postName" element={<PostPage theme={darkMode ? 'dark' : 'light'} />} />
                     </Routes>
                 </Body>
             </Router>
