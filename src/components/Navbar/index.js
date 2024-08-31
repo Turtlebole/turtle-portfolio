@@ -126,7 +126,7 @@ const Navbar = ({ toggleTheme }) => {
                   width: 'max-content' 
                 }}>
                 <LightBulbIcon style={{ width: '20px', height: '20px' }} />
-                <span style={{ marginLeft: '8px' }}>Toggle</span>
+                <span style={{ marginLeft: '8px' }}>Theme</span>
               </ThemeButton>
             </div>
           </MobileMenu>

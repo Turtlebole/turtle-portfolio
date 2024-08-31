@@ -105,6 +105,23 @@ const Loader = styled.div`
     margin-top: 20px;
 `;
 
+const CustomSyntaxHighlighter = styled(SyntaxHighlighter)`
+    /* Custom scrollbar for the syntax highlighter */
+    ::-webkit-scrollbar {
+        width: 6px; /* Make the scrollbar thinner */
+        height: 6px; /* Make the horizontal scrollbar thinner */
+    }
+
+    ::-webkit-scrollbar-thumb {
+        background-color: ${({ theme }) => theme.text_secondary}; /* Customize the scrollbar thumb */
+        border-radius: 3px; /* Round the scrollbar edges */
+    }
+
+    ::-webkit-scrollbar-track {
+        background-color: ${({ theme }) => theme.card}; /* Customize the scrollbar track */
+    }
+`;
+
 const PostPage = ({ theme }) => {
     const { postName } = useParams();
     const [content, setContent] = useState('');
@@ -156,14 +173,14 @@ const PostPage = ({ theme }) => {
                                     code: ({ node, inline, className, children, ...props }) => {
                                         const match = /language-(\w+)/.exec(className || '');
                                         return !inline && match ? (
-                                            <SyntaxHighlighter
+                                            <CustomSyntaxHighlighter
                                                 language={match[1]}
                                                 PreTag="div"
                                                 style={syntaxStyle}
                                                 {...props}
                                             >
                                                 {String(children).replace(/\n$/, '')}
-                                            </SyntaxHighlighter>
+                                            </CustomSyntaxHighlighter>
                                         ) : (
                                             <code className={className} {...props}>
                                                 {children}
