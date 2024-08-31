@@ -26,8 +26,12 @@ const ButtonContainer = styled.div`
     display: flex;
     justify-content: flex-end;
     width: 100%;
-    max-width: 600px;
+    max-width: 1200px;
     margin-bottom: 20px;
+
+    @media (max-width: 640px) {
+        display: none; /* Hide view buttons on mobile devices */
+    }
 `;
 
 const ViewButton = styled.div`
@@ -66,11 +70,13 @@ const GridContainer = styled.div`
     grid-gap: 20px;
     width: 100%;
     max-width: 1200px;
+
     @media (max-width: 960px) {
         grid-template-columns: repeat(2, 1fr);
     }
+
     @media (max-width: 640px) {
-        grid-template-columns: 1fr;
+        grid-template-columns: 1fr; /* Enforce list view on mobile devices */
     }
 `;
 
@@ -82,8 +88,8 @@ const ListItem = styled.div`
     margin: 10px 0;
     padding: 20px;
     display: flex;
-    flex-direction: ${({ viewType }) => (viewType === 'grid' ? 'column' : 'row')};
-    align-items: ${({ viewType }) => (viewType === 'grid' ? 'flex-start' : 'center')};
+    flex-direction: column;
+    align-items: flex-start;
     justify-content: space-between;
     transition: background-color 0.3s, transform 0.3s;
     text-align: left;
@@ -99,38 +105,36 @@ const ListItem = styled.div`
     }
 `;
 
-const PostDetails = styled.div`
-    flex: 1;
-    margin-right: ${({ viewType }) => (viewType === 'grid' ? '0' : '20px')};
-
-    @media (max-width: 640px) {
-        margin-right: 0;
-    }
+const PostHeader = styled.div`
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    align-items: center;
+    margin-bottom: 10px;
 `;
 
 const PostTitle = styled.h2`
     font-size: 1.5rem;
-    margin: 0 0 10px;
+    margin: 0;
     color: ${({ theme }) => theme.primary};
 `;
 
 const PostDate = styled.div`
     font-size: 0.875rem;
     color: ${({ theme }) => theme.text_secondary};
-    text-align: ${({ viewType }) => (viewType === 'grid' ? 'right' : 'left')};
 `;
 
 const PostDescription = styled.p`
     font-size: 1rem;
     color: ${({ theme }) => theme.text_secondary};
-    margin-bottom: 10px;
+    margin-bottom: 20px;
 `;
 
 const Tags = styled.div`
     display: flex;
     flex-wrap: wrap;
     gap: 8px;
-    margin-top: 10px;
+    margin-top: auto; /* Push tags to the bottom */
 `;
 
 const Tag = styled.span`
@@ -204,6 +208,19 @@ const PostList = () => {
         }
     }, [search, posts]);
 
+    useEffect(() => {
+        const handleResize = () => {
+            if (window.innerWidth <= 640) {
+                setViewType('list');
+            }
+        };
+
+        window.addEventListener('resize', handleResize);
+        handleResize();
+
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
+
     return (
         <Container>
             <Heading>Explore Our Posts</Heading>
@@ -237,16 +254,16 @@ const PostList = () => {
                         <GridContainer>
                             {filteredPosts.map((post, index) => (
                                 <ListItem key={index} viewType={viewType}>
-                                    <PostDetails viewType={viewType}>
+                                    <PostHeader>
                                         <PostTitle>{post.filename.replace('.md', '')}</PostTitle>
-                                        <PostDescription>{post.desc}</PostDescription>
-                                        <Tags>
-                                            {post.tags && post.tags.map((tag, index) => (
-                                                <Tag key={index}>{tag}</Tag>
-                                            ))}
-                                        </Tags>
-                                    </PostDetails>
-                                    <PostDate viewType={viewType}>{post.date}</PostDate>
+                                        <PostDate>{post.date}</PostDate>
+                                    </PostHeader>
+                                    <PostDescription>{post.desc}</PostDescription>
+                                    <Tags>
+                                        {post.tags && post.tags.map((tag, index) => (
+                                            <Tag key={index}>{tag}</Tag>
+                                        ))}
+                                    </Tags>
                                 </ListItem>
                             ))}
                         </GridContainer>
@@ -254,16 +271,16 @@ const PostList = () => {
                         <ListContainer>
                             {filteredPosts.map((post, index) => (
                                 <ListItem key={index} viewType={viewType}>
-                                    <PostDetails viewType={viewType}>
+                                    <PostHeader>
                                         <PostTitle>{post.filename.replace('.md', '')}</PostTitle>
-                                        <PostDescription>{post.desc}</PostDescription>
-                                        <Tags>
-                                            {post.tags && post.tags.map((tag, index) => (
-                                                <Tag key={index}>{tag}</Tag>
-                                            ))}
-                                        </Tags>
-                                    </PostDetails>
-                                    <PostDate viewType={viewType}>{post.date}</PostDate>
+                                        <PostDate>{post.date}</PostDate>
+                                    </PostHeader>
+                                    <PostDescription>{post.desc}</PostDescription>
+                                    <Tags>
+                                        {post.tags && post.tags.map((tag, index) => (
+                                            <Tag key={index}>{tag}</Tag>
+                                        ))}
+                                    </Tags>
                                 </ListItem>
                             ))}
                         </ListContainer>
