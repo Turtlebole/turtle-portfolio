@@ -3,7 +3,7 @@ import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import styled from 'styled-components';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
-import { materialDark, materialLight } from 'react-syntax-highlighter/src/styles/prism';
+import { oneDark, oneLight } from 'react-syntax-highlighter/src/styles/prism';
 import avatar from '../../images/avatar.jpg';
 import { useParams } from 'react-router-dom';
 
@@ -12,6 +12,7 @@ const Container = styled.div`
     flex-direction: column;
     align-items: center;
     padding: 20px;
+    margin-top: 10vh;
     min-height: 100vh;
     background-color: ${({ theme }) => theme.bg};
     color: ${({ theme }) => theme.text_primary};
@@ -129,7 +130,7 @@ const PostPage = ({ theme }) => {
         fetchMarkdownFile();
     }, [postName]);
 
-    const syntaxStyle = theme === 'light' ? materialLight : materialDark;
+    const syntaxStyle = theme === 'light' ? oneLight : oneDark;
 
     return (
         <Container>

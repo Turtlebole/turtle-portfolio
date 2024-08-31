@@ -80,6 +80,11 @@ const GridContainer = styled.div`
     }
 `;
 
+const StyledLink = styled(Link)`
+    text-decoration: none;
+    width: 100%;
+`;
+
 const ListItem = styled.div`
     background: ${({ theme }) => theme.card};
     border: 1px solid ${({ theme }) => theme.text_secondary};
@@ -93,6 +98,7 @@ const ListItem = styled.div`
     justify-content: space-between;
     transition: background-color 0.3s, transform 0.3s;
     text-align: left;
+    cursor: pointer;
 
     &:hover {
         background-color: ${({ theme }) => theme.card_light};
@@ -253,35 +259,39 @@ const PostList = () => {
                     viewType === 'grid' ? (
                         <GridContainer>
                             {filteredPosts.map((post, index) => (
-                                <ListItem key={index} viewType={viewType}>
-                                    <PostHeader>
-                                        <PostTitle>{post.filename.replace('.md', '')}</PostTitle>
-                                        <PostDate>{post.date}</PostDate>
-                                    </PostHeader>
-                                    <PostDescription>{post.desc}</PostDescription>
-                                    <Tags>
-                                        {post.tags && post.tags.map((tag, index) => (
-                                            <Tag key={index}>{tag}</Tag>
-                                        ))}
-                                    </Tags>
-                                </ListItem>
+                                <StyledLink key={index} to={`/blog/${post.filename}`}>
+                                    <ListItem viewType={viewType}>
+                                        <PostHeader>
+                                            <PostTitle>{post.filename.replace('.md', '')}</PostTitle>
+                                            <PostDate>{post.date}</PostDate>
+                                        </PostHeader>
+                                        <PostDescription>{post.desc}</PostDescription>
+                                        <Tags>
+                                            {post.tags && post.tags.map((tag, index) => (
+                                                <Tag key={index}>{tag}</Tag>
+                                            ))}
+                                        </Tags>
+                                    </ListItem>
+                                </StyledLink>
                             ))}
                         </GridContainer>
                     ) : (
                         <ListContainer>
                             {filteredPosts.map((post, index) => (
-                                <ListItem key={index} viewType={viewType}>
-                                    <PostHeader>
-                                        <PostTitle>{post.filename.replace('.md', '')}</PostTitle>
-                                        <PostDate>{post.date}</PostDate>
-                                    </PostHeader>
-                                    <PostDescription>{post.desc}</PostDescription>
-                                    <Tags>
-                                        {post.tags && post.tags.map((tag, index) => (
-                                            <Tag key={index}>{tag}</Tag>
-                                        ))}
-                                    </Tags>
-                                </ListItem>
+                                <StyledLink key={index} to={`/blog/${post.filename}`}>
+                                    <ListItem viewType={viewType}>
+                                        <PostHeader>
+                                            <PostTitle>{post.filename.replace('.md', '')}</PostTitle>
+                                            <PostDate>{post.date}</PostDate>
+                                        </PostHeader>
+                                        <PostDescription>{post.desc}</PostDescription>
+                                        <Tags>
+                                            {post.tags && post.tags.map((tag, index) => (
+                                                <Tag key={index}>{tag}</Tag>
+                                            ))}
+                                        </Tags>
+                                    </ListItem>
+                                </StyledLink>
                             ))}
                         </ListContainer>
                     )
