@@ -28,6 +28,10 @@ const Section = styled.div`
     opacity: 0;
     filter: blur(10px);
     transition: opacity 0.1s, filter 0.1s;
+    padding: 50px 0; 
+    &:first-of-type {
+        padding-top: 100px; 
+    }
 `;
 
 function Home({ darkMode, toggleTheme, sectionsRef }) {

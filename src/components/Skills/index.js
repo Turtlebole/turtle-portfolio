@@ -10,7 +10,7 @@ const Container = styled.div`
   align-items: center;
   position: relative;
   z-index: 1;
-  margin-top: 0; /* Ensure there's no extra margin causing space between Hero and Skills */
+  margin-top: 0;
 `;
 
 const Wrapper = styled.div`
@@ -27,12 +27,12 @@ export const Title = styled.div`
   font-size: 28px;
   text-align: center;
   font-weight: 600;
-  margin-top: 52px; /* Adjust this margin if necessary */
+  margin-top: 52px;
   color: ${({ theme }) => theme.primary};
-  position: relative; /* Ensure it’s positioned relative within the Container */
+  position: relative;
   @media (max-width: 768px) {
     margin-top: 12px;
-    font-size: 32px;
+    font-size: 24px; /* Reduced font size for smaller screens */
   }
 `;
 
@@ -43,7 +43,8 @@ export const Desc = styled.div`
   margin-top: 40px;
   color: ${({ theme }) => theme.colored_detail};
   @media (max-width: 768px) {
-    font-size: 16px;
+    font-size: 20px; /* Reduced font size for better readability */
+    margin-top: 24px; /* Reduced margin */
   }
 `;
 
@@ -52,6 +53,10 @@ const ButtonContainer = styled.div`
   justify-content: center;
   gap: 20px;
   margin-bottom: 20px;
+  @media (max-width: 768px) {
+    gap: 12px; /* Reduced gap between buttons on smaller screens */
+    margin-bottom: 16px; /* Reduced margin */
+  }
 `;
 
 const Button = styled.button`
@@ -66,10 +71,14 @@ const Button = styled.button`
   &:hover {
     background-color: ${({ theme }) => theme.primary_hover};
   }
+  @media (max-width: 768px) {
+    padding: 8px 16px; /* Reduced padding for smaller buttons */
+    font-size: 14px; /* Reduced font size */
+  }
 `;
 
 const SkillsContainer = styled.div`
-  display: ${({ showSkills }) => (showSkills ? 'flex' : 'none')};
+  display: flex;
   flex-wrap: wrap;
   justify-content: center;
   gap: 20px;
@@ -77,11 +86,11 @@ const SkillsContainer = styled.div`
   max-width: 1100px;
   margin-top: 30px;
   @media (max-width: 768px) {
-    justify-content: space-evenly;
-    gap: 15px;
+    justify-content: space-around; /* Adjusted alignment for better distribution */
+    gap: 12px; /* Reduced gap between skill items */
+    margin-top: 24px; /* Reduced margin */
   }
-`
-
+`;
 
 const Skill = styled.div`
   display: flex;
@@ -95,105 +104,104 @@ const Skill = styled.div`
   transition: all 0.3s ease;
   width: 150px;
   box-sizing: border-box;
+  opacity: 0;
+  transform: scale(0.9);
   &:hover {
     filter: brightness(1.2);
   }
+
   @media (max-width: 768px) {
-    width: 120px;
-    padding: 8px;
-    img {
-      margin: 0;
-    }
-    span {
-      display: none;
-    }
+    justify-content: center; /* Center icon on small screens */
+    width: 80px; /* Reduced width for smaller screens */
+    height: 80px; /* Set height for icon wrapper */
+    padding: 8px; /* Reduced padding */
+    flex-direction: column; /* Stack icon and text */
   }
-`
+
+  @media (max-width: 480px) {
+    width: 60px; /* Further reduced width for smaller phones */
+    height: 60px; /* Further reduced height for smaller phones */
+    padding: 6px; /* Further reduced padding */
+  }
+`;
 
 const SkillImage = styled.img`
   width: 30px;
   height: 30px;
   margin-right: 12px;
+
   @media (max-width: 768px) {
-    margin-right: 0;
-    width: 40px;
+    margin-right: 0; /* Remove margin on small screens */
+    width: 40px; /* Adjusted size for better fit */
     height: 40px;
   }
-`
+
+  @media (max-width: 480px) {
+    width: 30px; /* Further reduced size for smaller phones */
+    height: 30px;
+  }
+`;
 
 const SkillName = styled.span`
   font-size: 16px;
   font-weight: 400;
   color: ${({ theme }) => theme.colored_detail + 80};
+
   @media (max-width: 768px) {
-    display: none; /* Hide skill name on mobile */
+    display: none; /* Hide skill name on small screens */
   }
 `;
 
 const Skills = () => {
-  const [activeButton, setActiveButton] = useState('');
-  const [showSkills, setShowSkills] = useState(false);
-  const skillsRef = useRef(null);
+  const [activeButton, setActiveButton] = useState('frontend');
+  const skillsRef = useRef([]);
 
   const handleButtonClick = (buttonName) => {
     setActiveButton(buttonName);
-    setShowSkills(false);
   };
 
-  const filterSkills = () => {
-    if (!activeButton) {
-      return [];
-    }
-    return skills.filter(skill => skill.title.toLowerCase() === activeButton.toLowerCase());
-  };
+  const filteredSkills = skills.filter(skill => skill.title.toLowerCase() === activeButton.toLowerCase());
 
   useEffect(() => {
-    if (activeButton) {
-      setShowSkills(true);
+    if (skillsRef.current.length > 0) {
+      const tl = gsap.timeline({ defaults: { duration: 0.5, ease: 'power2.out' } });
+      tl.fromTo(skillsRef.current,
+        { opacity: 0, scale: 0.9 },
+        { opacity: 1, scale: 1, stagger: 0.1, duration: 0.3 }
+      );
     }
   }, [activeButton]);
 
-  useEffect(() => {
-    if (showSkills) {
-      gsap.fromTo(
-          skillsRef.current,
-          { opacity: 0, y: 20 },
-          { opacity: 1, y: 0, duration: 1, ease: 'power2.out' }
-      );
-    }
-  }, [showSkills]);
-
   return (
-      <Container id="skills">
-        <Wrapper>
-          <Desc>TECH STACK</Desc>
-          <ButtonContainer>
-            <Button active={activeButton === 'frontend'} onClick={() => handleButtonClick('frontend')}>
-              Frontend
-            </Button>
-            <Button active={activeButton === 'backend'} onClick={() => handleButtonClick('backend')}>
-              Backend
-            </Button>
-            <Button active={activeButton === 'database'} onClick={() => handleButtonClick('database')}>
-              Database
-            </Button>
-          </ButtonContainer>
-          <SkillsContainer
-              ref={skillsRef}
-              showSkills={showSkills}
-              key={activeButton}  // Added key to trigger re-render
-          >
-            {filterSkills().map((skill) => (
-                skill.skills.map((item) => (
-                    <Skill key={item.name}>
-                      <SkillImage src={item.image} />
-                      <SkillName>{item.name}</SkillName>
-                    </Skill>
-                ))
-            ))}
-          </SkillsContainer>
-        </Wrapper>
-      </Container>
+    <Container id="skills">
+      <Wrapper>
+        <Desc>TECH STACK</Desc>
+        <ButtonContainer>
+          <Button active={activeButton === 'frontend'} onClick={() => handleButtonClick('frontend')}>
+            Frontend
+          </Button>
+          <Button active={activeButton === 'backend'} onClick={() => handleButtonClick('backend')}>
+            Backend
+          </Button>
+          <Button active={activeButton === 'database'} onClick={() => handleButtonClick('database')}>
+            Database
+          </Button>
+        </ButtonContainer>
+        <SkillsContainer>
+          {filteredSkills.flatMap((skill, skillIndex) =>
+            skill.skills.map((item, index) => (
+              <Skill
+                key={item.name}
+                ref={el => (skillsRef.current[skillIndex * skill.skills.length + index] = el)}
+              >
+                <SkillImage src={item.image} />
+                <SkillName>{item.name}</SkillName>
+              </Skill>
+            ))
+          )}
+        </SkillsContainer>
+      </Wrapper>
+    </Container>
   );
 };
 
