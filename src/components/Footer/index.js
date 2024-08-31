@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Link as LinkR } from 'react-router-dom';
-import { FaGithub, FaTwitter, FaReddit, FaLinkedin, FaDiscord } from 'react-icons/fa';
+import { FaGithub, FaTwitch, FaLinkedin, FaDiscord } from 'react-icons/fa';
 import { ColoredSpan } from '../Navbar/NavbarStyledComponent';
 
 const FooterContainer = styled.footer`
@@ -52,11 +52,8 @@ const Footer = ({ toggleTheme }) => {
                 <SocialIcon href="https://github.com/Turtlebole" target="_blank" rel="noopener noreferrer">
                     <FaGithub />
                 </SocialIcon>
-                <SocialIcon href="#" target="_blank" rel="noopener noreferrer">
-                    <FaTwitter />
-                </SocialIcon>
-                <SocialIcon href="#" target="_blank" rel="noopener noreferrer">
-                    <FaReddit />
+                <SocialIcon href="https://www.twitch.tv/turtlebole" target="_blank" rel="noopener noreferrer">
+                    <FaTwitch />
                 </SocialIcon>
                 <SocialIcon href="https://discord.com/users/686681599894618144" target="_blank" rel="noopener noreferrer">
                     <FaDiscord />
