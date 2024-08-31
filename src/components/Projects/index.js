@@ -14,24 +14,19 @@ import { FaList, FaSlidersH } from 'react-icons/fa';
 const Projects = ({ setOpenModal }) => {
     const [startIndex, setStartIndex] = useState(0);
     const [isMobileView, setIsMobileView] = useState(false);
-    const [isTabletView, setIsTabletView] = useState(false);
     const [viewType, setViewType] = useState('grid'); 
     const navigate = useNavigate();
 
     const handleResize = () => {
         const width = window.innerWidth;
         const isMobile = width <= 768;
-        const isTablet = width > 768 && width <= 1024;
-        
+
         setIsMobileView(isMobile);
-        setIsTabletView(isTablet);
 
         if (isMobile) {
             setViewType('grid');
-        } else if (isTablet) {
-            setViewType('list'); 
         } else {
-            setViewType('grid'); 
+            setViewType('list'); 
         }
     };
 

@@ -125,17 +125,8 @@ const ContactButton = styled.button`
 const Contact = () => {
     const [open, setOpen] = useState(false);
     const form = useRef();
-
     const handleSubmit = (e) => {
         e.preventDefault();
-        const formData = new FormData(form.current);
-        const templateParams = {
-            email: formData.get('from_email'),
-            from_name: formData.get('from_name'),
-            subject: formData.get('subject'),
-            message_html: formData.get('message')
-        };
-
         emailjs.sendForm('service_ta9bofd', 'template_uynwfeq', form.current, '7ob0JqA_SdDIyYJOa')
             .then((result) => {
                 setOpen(true);

@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useRef, useEffect } from 'react';
 import styled from 'styled-components';
 import gsap from 'gsap';
 import ProjectCards from './ProjectCards';
@@ -12,8 +12,7 @@ const CarouselContainer = styled.div`
     padding: 20px;
 `;
 
-const ProjectCarousel = ({ numberOfProjects, projects, handleProjectClick }) => {
-    const [startIndex, setStartIndex] = useState(0);
+const ProjectCarousel = ({ projects, handleProjectClick }) => {
     const carouselRef = useRef(null);
 
     useEffect(() => {
@@ -26,19 +25,9 @@ const ProjectCarousel = ({ numberOfProjects, projects, handleProjectClick }) => 
         }
     }, [projects]);
 
-    const handleNext = () => {
-        if (numberOfProjects.length > startIndex + 3) {
-            setStartIndex(startIndex + 3);
-        }
-    };
-
-    const handlePrev = () => {
-        setStartIndex(Math.max(startIndex - 3, 0));
-    };
-
     return (
         <CarouselContainer ref={carouselRef}>
-            {projects.slice(startIndex, startIndex + 3).map((project, index) => (
+            {projects.slice(0, 3).map((project, index) => (
                 <ProjectCards
                     key={index}
                     project={project}
