@@ -127,6 +127,11 @@ export const CardContainer = styled.div`
     display: flex;
     flex-direction: column;
     gap: 16px;
+    padding: 0 20px; /* Add padding for tablets */
+
+    @media (min-width: 768px) and (max-width: 1024px) {
+        padding: 0 40px; /* Adjust padding for tablets */
+    }
 `;
 
 export const ListItem = styled.div`
@@ -144,15 +149,6 @@ export const ListItem = styled.div`
     position: relative;  /* Allow absolute positioning of date */
     padding-right: 100px;  /* Space for date positioning */
 
-    & > img {
-        width: 16.666%; /* 1/6 of the container */
-        height: auto;
-        border-radius: 6px;
-        margin-right: 16px;
-        object-fit: contain; /* Ensure image scales properly */
-        border: 2px solid ${({ theme }) => theme.text_secondary}; /* Add border */
-    }
-
     &:hover {
         background-color: ${({ theme }) => theme.card_light};
         transform: scale(0.99);
@@ -166,6 +162,15 @@ export const ListItem = styled.div`
             margin-right: 0;
             margin-bottom: 16px;
         }
+    }
+
+    & > img {
+        width: 16.666%; /* 1/6 of the container */
+        height: auto;
+        border-radius: 6px;
+        margin-right: 16px;
+        object-fit: contain; /* Ensure image scales properly */
+        border: 2px solid ${({ theme }) => theme.text_secondary}; /* Add border */
     }
 `;
 

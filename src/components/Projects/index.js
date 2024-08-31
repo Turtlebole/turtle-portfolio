@@ -2,9 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
     Container, Wrapper, Title, CarouselWrapper, ViewToggleButtonGroup, 
-    ToggleButtonGroup, ToggleButton, Divider, CardContainer, StyledLink, ListItem, 
-    PostHeader, PostTitle, PostDate, PostDescription, Tags, Tag, 
-    LeftArrowSVG, RightArrowSVG, LeftArrowPath, RightArrowPath
+    ToggleButtonGroup, ToggleButton, Divider, CardContainer, 
+    StyledLink, ListItem, PostHeader, PostTitle, PostDate, 
+    PostDescription, Tags, Tag, LeftArrowSVG, RightArrowSVG, 
+    LeftArrowPath, RightArrowPath
 } from './ProjectsStyle'; 
 import ProjectCarousel from '../Cards/ProjectCarousel';
 import { projects } from '../../data/constants';
@@ -98,23 +99,21 @@ const Projects = ({ setOpenModal }) => {
                 ) : (
                     <CardContainer>
                         {projects.map((project, index) => (
-                            <StyledLink key={index} to={`/project/${project.id}`}>
-                                <ListItem backgroundImage={project.image}>
-                                    <img src={project.image} alt={project.title} />
-                                    <div>
-                                        <PostHeader>
-                                            <PostTitle>{project.title}</PostTitle>
-                                            <PostDate>{project.date}</PostDate>
-                                        </PostHeader>
-                                        <PostDescription>{project.description}</PostDescription>
-                                        <Tags>
-                                            {project.tags?.map((tag, index) => (
-                                                <Tag key={index}>{tag}</Tag>
-                                            ))}
-                                        </Tags>
-                                    </div>
-                                </ListItem>
-                            </StyledLink>
+                            <ListItem key={index} onClick={() => handleProjectClick(project)}>
+                                <img src={project.image} alt={project.title} />
+                                <div>
+                                    <PostHeader>
+                                        <PostTitle>{project.title}</PostTitle>
+                                        <PostDate>{project.date}</PostDate>
+                                    </PostHeader>
+                                    <PostDescription>{project.description}</PostDescription>
+                                    <Tags>
+                                        {project.tags?.map((tag, index) => (
+                                            <Tag key={index}>{tag}</Tag>
+                                        ))}
+                                    </Tags>
+                                </div>
+                            </ListItem>
                         ))}
                     </CardContainer>
                 )}
