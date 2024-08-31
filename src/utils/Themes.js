@@ -29,5 +29,5 @@ export const lightTheme = {
     black: "#000000",
     colored_detail: "#4D4D4D",
     highlighted_svg: "#000000",
-    buttonGradient: "linear-gradient(180deg, #CCCCCC 0%, #FFFFFF 100%)"
+    buttonGradient: "linear-gradient(180deg, #CCCCCC 0%, #e9e9e9 100%)"
 };

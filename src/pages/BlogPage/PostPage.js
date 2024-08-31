@@ -135,7 +135,7 @@ const PostPage = ({ theme }) => {
     return (
         <Container>
             <Header>
-                <Title>Post Page</Title>
+                <Title>About this post</Title>
             </Header>
             <Wrapper>
                 <Meta>
