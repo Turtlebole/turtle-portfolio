@@ -9,7 +9,8 @@ export const Nav = styled.div`
     justify-content: center;
     user-select: none;
     font-size: 1rem;
-    position: sticky;
+    position: absolute;
+    width: 100%; /* Ensure it spans the full width */
     top: 0;
     z-index: 10;
     transition: 0.8s all ease;

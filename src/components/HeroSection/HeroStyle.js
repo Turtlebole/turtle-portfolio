@@ -87,11 +87,12 @@ export const HeroRightContainer = styled.div`
         order: 1;
         justify-content: center;
         align-items: center;
-        margin-bottom: 80px;
+        margin-top:5vh;
+        margin-bottom: 10vh;
     }
 
     @media (max-width: 640px) {
-        margin-bottom: 30px;
+        margin-top: 15vh;
     }
 `;
 
