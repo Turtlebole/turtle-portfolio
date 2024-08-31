@@ -87,6 +87,9 @@ const StyledLink = styled(Link)`
 
 const ListItem = styled.div`
     background: ${({ theme }) => theme.card};
+    background-image: url(${({ backgroundImage }) => backgroundImage});
+    background-size: cover;
+    background-position: center;
     border: 1px solid ${({ theme }) => theme.text_secondary};
     border-radius: 6px;
     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
@@ -260,7 +263,7 @@ const PostList = () => {
                         <GridContainer>
                             {filteredPosts.map((post, index) => (
                                 <StyledLink key={index} to={`/blog/${post.filename}`}>
-                                    <ListItem viewType={viewType}>
+                                    <ListItem viewType={viewType} backgroundImage={post.backgroundImage}>
                                         <PostHeader>
                                             <PostTitle>{post.filename.replace('.md', '')}</PostTitle>
                                             <PostDate>{post.date}</PostDate>
@@ -279,7 +282,7 @@ const PostList = () => {
                         <ListContainer>
                             {filteredPosts.map((post, index) => (
                                 <StyledLink key={index} to={`/blog/${post.filename}`}>
-                                    <ListItem viewType={viewType}>
+                                    <ListItem viewType={viewType} backgroundImage={post.backgroundImage}>
                                         <PostHeader>
                                             <PostTitle>{post.filename.replace('.md', '')}</PostTitle>
                                             <PostDate>{post.date}</PostDate>
