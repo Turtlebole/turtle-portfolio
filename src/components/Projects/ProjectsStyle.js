@@ -36,6 +36,46 @@ export const Title = styled.div`
     }
 `;
 
+export const ViewToggleButtonGroup = styled.div`
+    display: flex;
+    justify-content: center;
+    margin-top: 16px;
+    gap: 12px;
+`;
+
+export const ToggleButtonGroup = styled.div`
+    display: flex;
+    justify-content: space-between;
+    position: absolute;
+    top: 50%;
+    width: calc(100% - 40px);
+    max-width: 1350px;
+    transform: translateY(-50%);
+    pointer-events: none;
+    gap: 16px;
+
+    & > div:first-child {
+        margin-left: 20px;
+    }
+    & > div:last-child {
+        margin-right: -20px;
+    }
+
+    @media (max-width: 1200px) {
+        position: static;
+        top: auto;
+        transform: none;
+        margin-top: 20px;
+        width: 100%;
+        justify-content: center;
+        gap: 12px;
+    }
+
+    @media (max-width: 768px) {
+        display: none;
+    }
+`;
+
 export const CarouselWrapper = styled.div`
     position: relative;
     width: 100%;
@@ -46,16 +86,6 @@ export const CarouselWrapper = styled.div`
         overflow-x: auto;
         white-space: nowrap;
         padding: 0 20px;
-    }
-`;
-
-export const ToggleButtonGroup = styled.div`
-    display: flex;
-    justify-content: center;
-    margin-top: 20px;
-    gap: 12px;
-    @media (max-width: 768px) {
-        display: none; /* Hide view switcher on mobile */
     }
 `;
 
@@ -197,7 +227,6 @@ export const StyledLink = styled(Link)`
     text-decoration: none;
     width: 100%;
 `;
-
 
 export const LeftArrowSVG = styled.svg.attrs({
     width: '24',

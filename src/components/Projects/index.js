@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
-    Container, Wrapper, Title, CarouselWrapper, ToggleButtonGroup,
-    ToggleButton, Divider, CardContainer, StyledLink, ListItem, PostHeader,
-    PostTitle, PostDate, PostDescription, Tags, Tag, LeftArrowSVG, RightArrowSVG,
-    LeftArrowPath, RightArrowPath
+    Container, Wrapper, Title, CarouselWrapper, ViewToggleButtonGroup, 
+    ToggleButtonGroup, ToggleButton, Divider, CardContainer, StyledLink, ListItem, 
+    PostHeader, PostTitle, PostDate, PostDescription, Tags, Tag, 
+    LeftArrowSVG, RightArrowSVG, LeftArrowPath, RightArrowPath
 } from './ProjectsStyle'; 
 import ProjectCarousel from '../Cards/ProjectCarousel';
 import { projects } from '../../data/constants';
@@ -57,8 +57,9 @@ const Projects = ({ setOpenModal }) => {
             <Wrapper>
                 <Title>Projects</Title>
 
+                {/* View Toggle Button Group */}
                 {!isMobileView && (
-                    <ToggleButtonGroup>
+                    <ViewToggleButtonGroup>
                         <ToggleButton
                             onClick={() => handleViewTypeChange('list')}
                             isActive={viewType === 'list'}
@@ -71,7 +72,7 @@ const Projects = ({ setOpenModal }) => {
                         >
                             <FaTh />
                         </ToggleButton>
-                    </ToggleButtonGroup>
+                    </ViewToggleButtonGroup>
                 )}
 
                 {viewType === 'grid' ? (
