@@ -9,19 +9,19 @@ import {
 } from './ProjectsStyle'; 
 import ProjectCarousel from '../Cards/ProjectCarousel';
 import { projects } from '../../data/constants';
-import { FaList, FaTh } from 'react-icons/fa';
+import { FaList, FaSlidersH } from 'react-icons/fa'; 
 
 const Projects = ({ setOpenModal }) => {
     const [startIndex, setStartIndex] = useState(0);
     const [isMobileView, setIsMobileView] = useState(false);
-    const [viewType, setViewType] = useState('list');
+    const [viewType, setViewType] = useState('grid'); 
     const navigate = useNavigate();
 
     const handleResize = () => {
         const isMobile = window.innerWidth <= 768;
         setIsMobileView(isMobile);
         if (isMobile) {
-            setViewType('grid');  // Force grid view on mobile
+            setViewType('grid'); 
         }
     };
 
@@ -71,7 +71,7 @@ const Projects = ({ setOpenModal }) => {
                             onClick={() => handleViewTypeChange('grid')}
                             isActive={viewType === 'grid'}
                         >
-                            <FaTh />
+                            <FaSlidersH />
                         </ToggleButton>
                     </ViewToggleButtonGroup>
                 )}
