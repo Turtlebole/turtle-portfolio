@@ -41,6 +41,10 @@ export const ViewToggleButtonGroup = styled.div`
     justify-content: center;
     margin-top: 16px;
     gap: 12px;
+
+    @media (max-width: 1024px) and (min-width: 768px) {
+        display: none;
+    }
 `;
 
 export const ToggleButtonGroup = styled.div`
@@ -71,8 +75,27 @@ export const ToggleButtonGroup = styled.div`
         gap: 12px;
     }
 
+    @media (max-width: 1024px) and (min-width: 768px) {
+        display: none; 
+    }
+
     @media (max-width: 768px) {
-        display: none;
+        display: none; 
+    }
+`;
+
+
+export const ToggleButtonGroupMobile = styled.div`
+    display: none;
+
+    @media (max-width: 768px) {
+        display: flex;
+        justify-content: center;
+        width: 100%;
+        padding: 0 20px;
+        margin-top: 10px;
+        margin-bottom: 10px;
+        gap: 16px;
     }
 `;
 
@@ -127,10 +150,10 @@ export const CardContainer = styled.div`
     display: flex;
     flex-direction: column;
     gap: 16px;
-    padding: 0 20px; /* Add padding for tablets */
+    padding: 0 20px;
 
     @media (min-width: 768px) and (max-width: 1024px) {
-        padding: 0 40px; /* Adjust padding for tablets */
+        padding: 0 40px;
     }
 `;
 
@@ -145,9 +168,9 @@ export const ListItem = styled.div`
     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
     transition: background-color 0.3s, transform 0.3s;
     cursor: pointer;
-    max-width: 1100px; /* Adjusted to allow more space */
-    position: relative;  /* Allow absolute positioning of date */
-    padding-right: 100px;  /* Space for date positioning */
+    max-width: 1100px;
+    position: relative;
+    padding-right: 100px;
 
     &:hover {
         background-color: ${({ theme }) => theme.card_light};
@@ -165,12 +188,12 @@ export const ListItem = styled.div`
     }
 
     & > img {
-        width: 16.666%; /* 1/6 of the container */
+        width: 16.666%;
         height: auto;
         border-radius: 6px;
         margin-right: 16px;
-        object-fit: contain; /* Ensure image scales properly */
-        border: 2px solid ${({ theme }) => theme.text_secondary}; /* Add border */
+        object-fit: contain;
+        border: 2px solid ${({ theme }) => theme.text_secondary};
     }
 `;
 
@@ -178,7 +201,7 @@ export const PostHeader = styled.div`
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    width: calc(100% - 120px); /* Ensure consistent alignment for all content */
+    width: calc(100% - 120px);
     align-items: center;
     margin-bottom: 10px;
 `;
@@ -195,8 +218,8 @@ export const PostDate = styled.div`
     color: ${({ theme }) => theme.text_secondary};
     position: absolute;
     top: 12px;
-    right: 16px;  /* Fixed position for all dates */
-    width: 100px;  /* Fixed width to align dates */
+    right: 16px;
+    width: 100px;
     text-align: right;
 `;
 
@@ -210,7 +233,7 @@ export const PostDescription = styled.p`
     -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
     line-height: 1.5;
-    max-height: 4.5rem; /* Ensure the paragraph doesn’t exceed 3 lines */
+    max-height: 4.5rem;
 `;
 
 export const Tags = styled.div`

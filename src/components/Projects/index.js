@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
     Container, Wrapper, Title, CarouselWrapper, ViewToggleButtonGroup, 
-    ToggleButtonGroup, ToggleButton, Divider, CardContainer, 
-    StyledLink, ListItem, PostHeader, PostTitle, PostDate, 
+    ToggleButtonGroup, ToggleButtonGroupMobile, ToggleButton, Divider, CardContainer, 
+    ListItem, PostHeader, PostTitle, PostDate, 
     PostDescription, Tags, Tag, LeftArrowSVG, RightArrowSVG, 
     LeftArrowPath, RightArrowPath
 } from './ProjectsStyle'; 
@@ -14,13 +14,23 @@ import { FaList, FaSlidersH } from 'react-icons/fa';
 const Projects = ({ setOpenModal }) => {
     const [startIndex, setStartIndex] = useState(0);
     const [isMobileView, setIsMobileView] = useState(false);
+    const [isTabletView, setIsTabletView] = useState(false);
     const [viewType, setViewType] = useState('grid'); 
     const navigate = useNavigate();
 
     const handleResize = () => {
-        const isMobile = window.innerWidth <= 768;
+        const width = window.innerWidth;
+        const isMobile = width <= 768;
+        const isTablet = width > 768 && width <= 1024;
+        
         setIsMobileView(isMobile);
+        setIsTabletView(isTablet);
+
         if (isMobile) {
+            setViewType('grid');
+        } else if (isTablet) {
+            setViewType('list'); 
+        } else {
             setViewType('grid'); 
         }
     };
@@ -83,6 +93,7 @@ const Projects = ({ setOpenModal }) => {
                             projects={projects.slice(startIndex, startIndex + (isMobileView ? 1 : 3))}
                             handleProjectClick={handleProjectClick}
                         />
+                        {/* Desktop Button Group */}
                         <ToggleButtonGroup>
                             <ToggleButton onClick={handlePrev} disabled={startIndex === 0}>
                                 <LeftArrowSVG>
@@ -95,6 +106,19 @@ const Projects = ({ setOpenModal }) => {
                                 </RightArrowSVG>
                             </ToggleButton>
                         </ToggleButtonGroup>
+                        {/* Mobile Button Group */}
+                        <ToggleButtonGroupMobile>
+                            <ToggleButton onClick={handlePrev} disabled={startIndex === 0}>
+                                <LeftArrowSVG>
+                                    <LeftArrowPath />
+                                </LeftArrowSVG>
+                            </ToggleButton>
+                            <ToggleButton onClick={handleNext} disabled={startIndex + (isMobileView ? 1 : 3) >= projects.length}>
+                                <RightArrowSVG>
+                                    <RightArrowPath />
+                                </RightArrowSVG>
+                            </ToggleButton>
+                        </ToggleButtonGroupMobile>
                     </CarouselWrapper>
                 ) : (
                     <CardContainer>
