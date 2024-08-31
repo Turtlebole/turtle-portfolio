@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import { FaList, FaTh } from 'react-icons/fa';
 
 const Container = styled.div`
     padding: 20px;
+    margin-top: 10vh;
     min-height: 100vh;
     background-color: ${({ theme }) => theme.bg};
     color: ${({ theme }) => theme.text_primary};
@@ -13,11 +15,63 @@ const Container = styled.div`
 `;
 
 const Heading = styled.h1`
-    font-size: 1.5rem;
+    font-size: 2rem;
     font-weight: bold;
     color: ${({ theme }) => theme.primary};
-    margin-bottom: 15px;
+    margin-bottom: 20px;
     text-align: center;
+`;
+
+const ButtonContainer = styled.div`
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+    max-width: 600px;
+    margin-bottom: 20px;
+`;
+
+const ViewButton = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    border-radius: 50%;
+    cursor: pointer;
+    user-select: none;
+    background: ${({ isActive, theme }) => (isActive ? theme.primary + '60' : theme.primary + '20')};
+    color: ${({ theme }) => theme.darkMode ? '#FFFFFF' : '#000000'};
+    pointer-events: all;
+    transition: background 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+
+    &:hover {
+        background: ${({ theme }) => theme.primary + '60'};
+        transform: scale(1.1);
+    }
+
+    svg {
+        font-size: 1.2rem;
+    }
+
+    margin-left: 10px;
+`;
+
+const ListContainer = styled.div`
+    width: 100%;
+    max-width: 1200px;
+`;
+
+const GridContainer = styled.div`
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 20px;
+    width: 100%;
+    max-width: 1200px;
+    @media (max-width: 960px) {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    @media (max-width: 640px) {
+        grid-template-columns: 1fr;
+    }
 `;
 
 const ListItem = styled.div`
@@ -25,41 +79,66 @@ const ListItem = styled.div`
     border: 1px solid ${({ theme }) => theme.text_secondary};
     border-radius: 6px;
     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
-    margin: 8px 0;
-    padding: 15px;
-    width: 100%;
-    max-width: 600px;
+    margin: 10px 0;
+    padding: 20px;
+    display: flex;
+    flex-direction: ${({ viewType }) => (viewType === 'grid' ? 'column' : 'row')};
+    align-items: ${({ viewType }) => (viewType === 'grid' ? 'flex-start' : 'center')};
+    justify-content: space-between;
     transition: background-color 0.3s, transform 0.3s;
+    text-align: left;
 
     &:hover {
         background-color: ${({ theme }) => theme.card_light};
         transform: scale(0.99);
     }
-`;
 
-const PostTitle = styled.h2`
-    font-size: 1.25rem;
-    margin: 0;
-    color: ${({ theme }) => theme.primary};
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-`;
-
-const PostLink = styled(Link)`
-    text-decoration: none;
-    color: ${({ theme }) => theme.primary};
-    font-weight: bold;
-
-    &:hover {
-        color: ${({ theme }) => theme.colored_detail};
+    @media (max-width: 640px) {
+        flex-direction: column;
+        align-items: flex-start;
     }
 `;
 
-const PostDate = styled.span`
+const PostDetails = styled.div`
+    flex: 1;
+    margin-right: ${({ viewType }) => (viewType === 'grid' ? '0' : '20px')};
+
+    @media (max-width: 640px) {
+        margin-right: 0;
+    }
+`;
+
+const PostTitle = styled.h2`
+    font-size: 1.5rem;
+    margin: 0 0 10px;
+    color: ${({ theme }) => theme.primary};
+`;
+
+const PostDate = styled.div`
     font-size: 0.875rem;
     color: ${({ theme }) => theme.text_secondary};
-    margin-left: 10px;
+    text-align: ${({ viewType }) => (viewType === 'grid' ? 'right' : 'left')};
+`;
+
+const PostDescription = styled.p`
+    font-size: 1rem;
+    color: ${({ theme }) => theme.text_secondary};
+    margin-bottom: 10px;
+`;
+
+const Tags = styled.div`
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 10px;
+`;
+
+const Tag = styled.span`
+    font-size: 0.875rem;
+    color: ${({ theme }) => theme.text_secondary};
+    background-color: ${({ theme }) => theme.colored_detail + 20};
+    padding: 4px 8px;
+    border-radius: 5px;
 `;
 
 const SearchInput = styled.input`
@@ -85,12 +164,13 @@ const SearchInput = styled.input`
     }
 `;
 
-const PostList = ({ theme }) => {
+const PostList = () => {
     const [posts, setPosts] = useState([]);
     const [filteredPosts, setFilteredPosts] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [search, setSearch] = useState('');
+    const [viewType, setViewType] = useState('list');
 
     useEffect(() => {
         const fetchPostList = async () => {
@@ -116,7 +196,7 @@ const PostList = ({ theme }) => {
         if (search) {
             const regex = new RegExp(search, 'i');
             const filtered = posts.filter(post =>
-                regex.test(post.filename) || regex.test(post.date)
+                regex.test(post.filename) || regex.test(post.date) || regex.test(post.desc)
             );
             setFilteredPosts(filtered);
         } else {
@@ -126,29 +206,68 @@ const PostList = ({ theme }) => {
 
     return (
         <Container>
-            <Heading>Posts List</Heading>
+            <Heading>Explore Our Posts</Heading>
             <SearchInput
                 type="text"
                 placeholder="Search by name or date..."
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
             />
+            <ButtonContainer>
+                <ViewButton
+                    onClick={() => setViewType('list')}
+                    isActive={viewType === 'list'}
+                >
+                    <FaList />
+                </ViewButton>
+                <ViewButton
+                    onClick={() => setViewType('grid')}
+                    isActive={viewType === 'grid'}
+                >
+                    <FaTh />
+                </ViewButton>
+            </ButtonContainer>
             {loading ? (
                 <p>Loading...</p>
             ) : error ? (
                 <p>Error: {error}</p>
             ) : (
-                filteredPosts.length > 0 ? (
-                    filteredPosts.map((post, index) => (
-                        <ListItem key={index}>
-                            <PostTitle>
-                                <PostLink to={`/blog/${post.filename}`}>
-                                    {post.filename.replace('.md', '')}
-                                </PostLink>
-                                <PostDate>{post.date}</PostDate>
-                            </PostTitle>
-                        </ListItem>
-                    ))
+                filteredPosts && filteredPosts.length > 0 ? (
+                    viewType === 'grid' ? (
+                        <GridContainer>
+                            {filteredPosts.map((post, index) => (
+                                <ListItem key={index} viewType={viewType}>
+                                    <PostDetails viewType={viewType}>
+                                        <PostTitle>{post.filename.replace('.md', '')}</PostTitle>
+                                        <PostDescription>{post.desc}</PostDescription>
+                                        <Tags>
+                                            {post.tags && post.tags.map((tag, index) => (
+                                                <Tag key={index}>{tag}</Tag>
+                                            ))}
+                                        </Tags>
+                                    </PostDetails>
+                                    <PostDate viewType={viewType}>{post.date}</PostDate>
+                                </ListItem>
+                            ))}
+                        </GridContainer>
+                    ) : (
+                        <ListContainer>
+                            {filteredPosts.map((post, index) => (
+                                <ListItem key={index} viewType={viewType}>
+                                    <PostDetails viewType={viewType}>
+                                        <PostTitle>{post.filename.replace('.md', '')}</PostTitle>
+                                        <PostDescription>{post.desc}</PostDescription>
+                                        <Tags>
+                                            {post.tags && post.tags.map((tag, index) => (
+                                                <Tag key={index}>{tag}</Tag>
+                                            ))}
+                                        </Tags>
+                                    </PostDetails>
+                                    <PostDate viewType={viewType}>{post.date}</PostDate>
+                                </ListItem>
+                            ))}
+                        </ListContainer>
+                    )
                 ) : (
                     <p>No posts found</p>
                 )
