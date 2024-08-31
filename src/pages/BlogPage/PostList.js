@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { FaList, FaTh } from 'react-icons/fa';
+import throttle from 'lodash/throttle';
 
 const Container = styled.div`
     padding: 20px;
@@ -179,7 +180,6 @@ const SearchInput = styled.input`
 
 const PostList = () => {
     const [posts, setPosts] = useState([]);
-    const [filteredPosts, setFilteredPosts] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [search, setSearch] = useState('');
@@ -194,7 +194,6 @@ const PostList = () => {
                 }
                 const data = await response.json();
                 setPosts(data);
-                setFilteredPosts(data);
             } catch (error) {
                 setError(`Failed to fetch post list: ${error.message}`);
             } finally {
@@ -205,30 +204,72 @@ const PostList = () => {
         fetchPostList();
     }, []);
 
-    useEffect(() => {
+    const filteredPosts = useMemo(() => {
         if (search) {
             const regex = new RegExp(search, 'i');
-            const filtered = posts.filter(post =>
+            return posts.filter(post =>
                 regex.test(post.filename) || regex.test(post.date) || regex.test(post.desc)
             );
-            setFilteredPosts(filtered);
-        } else {
-            setFilteredPosts(posts);
         }
+        return posts;
     }, [search, posts]);
 
     useEffect(() => {
-        const handleResize = () => {
+        const handleResize = throttle(() => {
             if (window.innerWidth <= 640) {
                 setViewType('list');
             }
-        };
+        }, 200);
 
         window.addEventListener('resize', handleResize);
         handleResize();
 
         return () => window.removeEventListener('resize', handleResize);
     }, []);
+
+    const toggleViewType = useCallback((type) => setViewType(type), []);
+
+    const renderPosts = useCallback(() => {
+        return viewType === 'grid' ? (
+            <GridContainer>
+                {filteredPosts.map((post, index) => (
+                    <StyledLink key={index} to={`/blog/${post.filename}`}>
+                        <ListItem viewType={viewType} backgroundImage={post.backgroundImage}>
+                            <PostHeader>
+                                <PostTitle>{post.filename.replace('.md', '')}</PostTitle>
+                                <PostDate>{post.date}</PostDate>
+                            </PostHeader>
+                            <PostDescription>{post.desc}</PostDescription>
+                            <Tags>
+                                {post.tags && post.tags.map((tag, index) => (
+                                    <Tag key={index}>{tag}</Tag>
+                                ))}
+                            </Tags>
+                        </ListItem>
+                    </StyledLink>
+                ))}
+            </GridContainer>
+        ) : (
+            <ListContainer>
+                {filteredPosts.map((post, index) => (
+                    <StyledLink key={index} to={`/blog/${post.filename}`}>
+                        <ListItem viewType={viewType} backgroundImage={post.backgroundImage}>
+                            <PostHeader>
+                                <PostTitle>{post.filename.replace('.md', '')}</PostTitle>
+                                <PostDate>{post.date}</PostDate>
+                            </PostHeader>
+                            <PostDescription>{post.desc}</PostDescription>
+                            <Tags>
+                                {post.tags && post.tags.map((tag, index) => (
+                                    <Tag key={index}>{tag}</Tag>
+                                ))}
+                            </Tags>
+                        </ListItem>
+                    </StyledLink>
+                ))}
+            </ListContainer>
+        );
+    }, [viewType, filteredPosts]);
 
     return (
         <Container>
@@ -240,16 +281,10 @@ const PostList = () => {
                 onChange={(e) => setSearch(e.target.value)}
             />
             <ButtonContainer>
-                <ViewButton
-                    onClick={() => setViewType('list')}
-                    isActive={viewType === 'list'}
-                >
+                <ViewButton onClick={() => toggleViewType('list')} isActive={viewType === 'list'}>
                     <FaList />
                 </ViewButton>
-                <ViewButton
-                    onClick={() => setViewType('grid')}
-                    isActive={viewType === 'grid'}
-                >
+                <ViewButton onClick={() => toggleViewType('grid')} isActive={viewType === 'grid'}>
                     <FaTh />
                 </ViewButton>
             </ButtonContainer>
@@ -258,46 +293,8 @@ const PostList = () => {
             ) : error ? (
                 <p>Error: {error}</p>
             ) : (
-                filteredPosts && filteredPosts.length > 0 ? (
-                    viewType === 'grid' ? (
-                        <GridContainer>
-                            {filteredPosts.map((post, index) => (
-                                <StyledLink key={index} to={`/blog/${post.filename}`}>
-                                    <ListItem viewType={viewType} backgroundImage={post.backgroundImage}>
-                                        <PostHeader>
-                                            <PostTitle>{post.filename.replace('.md', '')}</PostTitle>
-                                            <PostDate>{post.date}</PostDate>
-                                        </PostHeader>
-                                        <PostDescription>{post.desc}</PostDescription>
-                                        <Tags>
-                                            {post.tags && post.tags.map((tag, index) => (
-                                                <Tag key={index}>{tag}</Tag>
-                                            ))}
-                                        </Tags>
-                                    </ListItem>
-                                </StyledLink>
-                            ))}
-                        </GridContainer>
-                    ) : (
-                        <ListContainer>
-                            {filteredPosts.map((post, index) => (
-                                <StyledLink key={index} to={`/blog/${post.filename}`}>
-                                    <ListItem viewType={viewType} backgroundImage={post.backgroundImage}>
-                                        <PostHeader>
-                                            <PostTitle>{post.filename.replace('.md', '')}</PostTitle>
-                                            <PostDate>{post.date}</PostDate>
-                                        </PostHeader>
-                                        <PostDescription>{post.desc}</PostDescription>
-                                        <Tags>
-                                            {post.tags && post.tags.map((tag, index) => (
-                                                <Tag key={index}>{tag}</Tag>
-                                            ))}
-                                        </Tags>
-                                    </ListItem>
-                                </StyledLink>
-                            ))}
-                        </ListContainer>
-                    )
+                filteredPosts.length > 0 ? (
+                    renderPosts()
                 ) : (
                     <p>No posts found</p>
                 )

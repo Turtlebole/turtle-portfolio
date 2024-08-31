@@ -1,6 +1,5 @@
 import React, { useRef, useEffect } from 'react';
 import styled from 'styled-components';
-import gsap from 'gsap';
 import ProjectCards from './ProjectCards';
 
 const CarouselContainer = styled.div`
@@ -10,6 +9,11 @@ const CarouselContainer = styled.div`
     overflow-x: auto;
     gap: 20px;
     padding: 20px;
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+    &.loaded {
+        opacity: 1;
+    }
 `;
 
 const ProjectCarousel = ({ projects, handleProjectClick }) => {
@@ -17,11 +21,7 @@ const ProjectCarousel = ({ projects, handleProjectClick }) => {
 
     useEffect(() => {
         if (carouselRef.current) {
-            gsap.fromTo(
-                carouselRef.current,
-                { opacity: 0 },
-                { opacity: 1, duration: 0.5, ease: 'power2.inOut' }
-            );
+            carouselRef.current.classList.add('loaded');
         }
     }, [projects]);
 

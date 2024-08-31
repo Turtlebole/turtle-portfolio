@@ -32,6 +32,7 @@ const Image = styled.img`
     user-select: none;
     -moz-user-select: -moz-none;
     -webkit-user-select: none;
+    loading: lazy;
 `;
 
 const Tags = styled.div`
@@ -60,18 +61,20 @@ const Details = styled.div`
     padding: 0px 2px;
 `;
 
-const Title = styled.div`
+const EllipsisText = styled.div`
+    overflow: hidden;
+    display: -webkit-box;
+    max-width: 100%;
+    -webkit-line-clamp: ${({ lines }) => lines || 1};
+    -webkit-box-orient: vertical;
+    text-overflow: ellipsis;
+`;
+
+const Title = styled(EllipsisText)`
     font-size: 20px;
     font-weight: 600;
     align-self: center;
     color: ${({ theme }) => theme.text_secondary};
-    overflow: hidden;
-    display: -webkit-box;
-    max-width: 100%;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    text-overflow: ellipsis;
 `;
 
 const Date = styled.div`
@@ -84,21 +87,18 @@ const Date = styled.div`
     }
 `;
 
-const Description = styled.div`
+const Description = styled(EllipsisText)`
     font-weight: 400;
     color: ${({ theme }) => theme.text_secondary + 99};
-    overflow: hidden;
     margin-top: 8px;
-    display: -webkit-box;
-    max-width: 100%;
     -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
-    text-overflow: ellipsis;
 `;
 
-const ProjectCards = ({ project, handleProjectClick }) => {
+const ProjectCards = React.memo(({ project, handleProjectClick }) => {
+    const handleClick = () => handleProjectClick(project);
+
     return (
-        <Card onClick={() => handleProjectClick(project)}>
+        <Card onClick={handleClick}>
             <Image src={project.image} />
             <Details>
                 <Title>{project.title}</Title>
@@ -112,6 +112,6 @@ const ProjectCards = ({ project, handleProjectClick }) => {
             </Tags>
         </Card>
     );
-};
+});
 
 export default ProjectCards;

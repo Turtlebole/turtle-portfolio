@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useCallback } from 'react';
 import styled from 'styled-components';
 import emailjs from '@emailjs/browser';
 import { Snackbar } from '@mui/material';
@@ -124,17 +124,23 @@ const ContactButton = styled.button`
 
 const Contact = () => {
     const [open, setOpen] = useState(false);
+    const [errorMessage, setErrorMessage] = useState('');
     const form = useRef();
-    const handleSubmit = (e) => {
+
+    const handleSubmit = useCallback((e) => {
         e.preventDefault();
         emailjs.sendForm('service_ta9bofd', 'template_uynwfeq', form.current, '7ob0JqA_SdDIyYJOa')
-            .then((result) => {
+            .then(() => {
                 setOpen(true);
+                setErrorMessage('');
                 form.current.reset();
-            }, (error) => {
-                console.log(error.text);
+            })
+            .catch((error) => {
+                console.error(error.text);
+                setErrorMessage('Failed to send the email. Please try again later.');
+                setOpen(true);
             });
-    };
+    }, []);
 
     return (
         <Container>
@@ -143,18 +149,18 @@ const Contact = () => {
                 <Desc>Reach out to me if you want to collaborate or book a project</Desc>
                 <ContactForm ref={form} onSubmit={handleSubmit}>
                     <ContactTitle>Message me</ContactTitle>
-                    <ContactInput placeholder="Your Email" name="from_email" required />
-                    <ContactInput placeholder="Your Name" name="from_name" required />
-                    <ContactInput placeholder="Subject" name="subject" required />
-                    <ContactInputMessage placeholder="Message" rows="4" name="message" required />
+                    <ContactInput placeholder="Your Email" name="from_email" type="email" required aria-label="Your Email" />
+                    <ContactInput placeholder="Your Name" name="from_name" required aria-label="Your Name" />
+                    <ContactInput placeholder="Subject" name="subject" required aria-label="Subject" />
+                    <ContactInputMessage placeholder="Message" rows="4" name="message" required aria-label="Message" />
                     <ContactButton type="submit">Send</ContactButton>
                 </ContactForm>
                 <Snackbar
                     open={open}
                     autoHideDuration={6000}
                     onClose={() => setOpen(false)}
-                    message="Email sent successfully!"
-                    severity="success"
+                    message={errorMessage || "Email sent successfully!"}
+                    severity={errorMessage ? "error" : "success"}
                 />
             </Wrapper>
         </Container>

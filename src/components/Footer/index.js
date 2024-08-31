@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import styled from 'styled-components';
 import { FaGithub, FaTwitch, FaLinkedin, FaDiscord, FaChevronUp } from 'react-icons/fa';
 import { ColoredSpan } from '../Navbar/NavbarStyledComponent';
@@ -73,46 +73,51 @@ const BackToTopButton = styled.button`
 
 const Footer = () => {
     const [isButtonVisible, setIsButtonVisible] = useState(false);
+    const footerRef = useRef(null);
     const navigate = useNavigate();
 
-    const handleScroll = (hash) => {
+    const handleScroll = useCallback((hash) => {
         const element = document.querySelector(hash);
         if (element) {
             element.scrollIntoView({ behavior: 'smooth' });
         }
-    };
+    }, []);
 
-    const handleNavigation = (path, hash) => {
-        navigate(path);
-        setTimeout(() => handleScroll(hash), 100);
-    };
+    const handleNavigation = useCallback(
+        (path, hash) => {
+            navigate(path);
+            setTimeout(() => handleScroll(hash), 100);
+        },
+        [navigate, handleScroll]
+    );
 
-    const handleScrollToTop = () => {
+    const handleScrollToTop = useCallback(() => {
         window.scrollTo({ top: 0, behavior: 'smooth' });
-    };
+    }, []);
 
-    const handleScrollVisibility = () => {
-        const footer = document.querySelector('footer');
-        if (footer) {
-            const footerRect = footer.getBoundingClientRect();
-            if (footerRect.top < window.innerHeight && footerRect.bottom >= 0) {
-                setIsButtonVisible(true);
-            } else {
-                setIsButtonVisible(false);
-            }
+    const handleScrollVisibility = useCallback(() => {
+        if (footerRef.current) {
+            const footerRect = footerRef.current.getBoundingClientRect();
+            setIsButtonVisible(footerRect.top < window.innerHeight && footerRect.bottom >= 0);
         }
-    };
+    }, []);
 
     useEffect(() => {
-        window.addEventListener('scroll', handleScrollVisibility);
-        return () => {
-            window.removeEventListener('scroll', handleScrollVisibility);
+        handleScrollVisibility();
+        const debouncedHandleScrollVisibility = () => {
+            clearTimeout(window.scrollTimeout);
+            window.scrollTimeout = setTimeout(handleScrollVisibility, 100);
         };
-    }, []);
+
+        window.addEventListener('scroll', debouncedHandleScrollVisibility);
+        return () => {
+            window.removeEventListener('scroll', debouncedHandleScrollVisibility);
+        };
+    }, [handleScrollVisibility]);
 
     return (
         <>
-            <FooterContainer>
+            <FooterContainer ref={footerRef}>
                 <FooterLinks>
                     <FooterLink onClick={() => handleNavigation('/', '#skills')}>
                         Skills

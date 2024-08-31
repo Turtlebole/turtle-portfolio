@@ -10,6 +10,7 @@ export const PageContainer = styled.div`
     align-items: center;
     padding: 20px;
     box-sizing: border-box;
+
     @media (min-width: 961px) {
         padding: 40px;
     }
@@ -22,10 +23,6 @@ export const InnerContainer = styled.div`
     max-width: 1200px;
     width: 100%;
     gap: 20px;
-
-    @media (min-width: 641px) and (max-width: 960px) {
-        flex-direction: column;
-    }
 
     @media (min-width: 961px) {
         flex-direction: row;
@@ -43,15 +40,8 @@ export const LeftContainer = styled.div`
     flex-direction: column;
     align-items: center;
 
-    @media (min-width: 641px) and (max-width: 960px) {
+    @media (max-width: 960px) {
         order: 2;
-        align-items: center;
-    }
-
-    @media (max-width: 640px) {
-        order: 2;
-        align-items: center;
-        margin-bottom: 20px;
     }
 `;
 
@@ -61,14 +51,8 @@ export const RightContainer = styled.div`
     justify-content: center;
     align-items: center;
 
-    @media (min-width: 641px) and (max-width: 960px) {
+    @media (max-width: 960px) {
         order: 1;
-        justify-content: center;
-    }
-
-    @media (max-width: 640px) {
-        order: 1;
-        justify-content: center;
     }
 `;
 
@@ -95,16 +79,6 @@ export const Img = styled.img`
     width: 100%;
     border: 2px solid ${({ theme }) => theme.primary};
     border-radius: 12px;
-
-    @media (max-width: 960px) {
-        max-width: 100%;
-        height: auto;
-    }
-
-    @media (max-width: 640px) {
-        max-width: 100%;
-        height: auto;
-    }
 `;
 
 export const ProjectTitle = styled.h2`
