@@ -14,10 +14,9 @@ const CarouselContainer = styled.div`
 
 const ProjectCarousel = ({ numberOfProjects, projects, handleProjectClick }) => {
     const [startIndex, setStartIndex] = useState(0);
-    const carouselRef = useRef(null); // Ref to target the carousel container
+    const carouselRef = useRef(null);
 
     useEffect(() => {
-        // Apply fade animation when projects change
         if (carouselRef.current) {
             gsap.fromTo(
                 carouselRef.current,
@@ -25,7 +24,7 @@ const ProjectCarousel = ({ numberOfProjects, projects, handleProjectClick }) => 
                 { opacity: 1, duration: 0.5, ease: 'power2.inOut' }
             );
         }
-    }, [projects]); // Trigger animation when projects update
+    }, [projects]);
 
     const handleNext = () => {
         if (numberOfProjects.length > startIndex + 3) {
@@ -43,7 +42,7 @@ const ProjectCarousel = ({ numberOfProjects, projects, handleProjectClick }) => 
                 <ProjectCards
                     key={index}
                     project={project}
-                    handleProjectClick={handleProjectClick} // Pass the handler here
+                    handleProjectClick={handleProjectClick}
                 />
             ))}
         </CarouselContainer>

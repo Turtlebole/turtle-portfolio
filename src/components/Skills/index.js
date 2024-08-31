@@ -32,7 +32,7 @@ export const Title = styled.div`
   position: relative;
   @media (max-width: 768px) {
     margin-top: 12px;
-    font-size: 24px; /* Reduced font size for smaller screens */
+    font-size: 24px;
   }
 `;
 
@@ -43,8 +43,8 @@ export const Desc = styled.div`
   margin-top: 40px;
   color: ${({ theme }) => theme.colored_detail};
   @media (max-width: 768px) {
-    font-size: 20px; /* Reduced font size for better readability */
-    margin-top: 24px; /* Reduced margin */
+    font-size: 20px;
+    margin-top: 24px;
   }
 `;
 
@@ -54,8 +54,8 @@ const ButtonContainer = styled.div`
   gap: 20px;
   margin-bottom: 20px;
   @media (max-width: 768px) {
-    gap: 12px; /* Reduced gap between buttons on smaller screens */
-    margin-bottom: 16px; /* Reduced margin */
+    gap: 12px;
+    margin-bottom: 16px;
   }
 `;
 
@@ -72,8 +72,8 @@ const Button = styled.button`
     background-color: ${({ theme }) => theme.primary_hover};
   }
   @media (max-width: 768px) {
-    padding: 8px 16px; /* Reduced padding for smaller buttons */
-    font-size: 14px; /* Reduced font size */
+    padding: 8px 16px;
+    font-size: 14px;
   }
 `;
 
@@ -86,9 +86,9 @@ const SkillsContainer = styled.div`
   max-width: 1100px;
   margin-top: 30px;
   @media (max-width: 768px) {
-    justify-content: space-around; /* Adjusted alignment for better distribution */
-    gap: 12px; /* Reduced gap between skill items */
-    margin-top: 24px; /* Reduced margin */
+    justify-content: space-around;
+    gap: 12px;
+    margin-top: 24px;
   }
 `;
 
@@ -111,17 +111,17 @@ const Skill = styled.div`
   }
 
   @media (max-width: 768px) {
-    justify-content: center; /* Center icon on small screens */
-    width: 80px; /* Reduced width for smaller screens */
-    height: 80px; /* Set height for icon wrapper */
-    padding: 8px; /* Reduced padding */
-    flex-direction: column; /* Stack icon and text */
+    justify-content: center;
+    width: 80px;
+    height: 80px;
+    padding: 8px;
+    flex-direction: column;
   }
 
   @media (max-width: 480px) {
-    width: 60px; /* Further reduced width for smaller phones */
-    height: 60px; /* Further reduced height for smaller phones */
-    padding: 6px; /* Further reduced padding */
+    width: 60px;
+    height: 60px;
+    padding: 6px;
   }
 `;
 
@@ -131,13 +131,13 @@ const SkillImage = styled.img`
   margin-right: 12px;
 
   @media (max-width: 768px) {
-    margin-right: 0; /* Remove margin on small screens */
-    width: 40px; /* Adjusted size for better fit */
+    margin-right: 0;
+    width: 40px;
     height: 40px;
   }
 
   @media (max-width: 480px) {
-    width: 30px; /* Further reduced size for smaller phones */
+    width: 30px;
     height: 30px;
   }
 `;
@@ -148,7 +148,7 @@ const SkillName = styled.span`
   color: ${({ theme }) => theme.colored_detail + 80};
 
   @media (max-width: 768px) {
-    display: none; /* Hide skill name on small screens */
+    display: none;
   }
 `;
 

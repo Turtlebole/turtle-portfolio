@@ -106,19 +106,18 @@ const Loader = styled.div`
 `;
 
 const CustomSyntaxHighlighter = styled(SyntaxHighlighter)`
-    /* Custom scrollbar for the syntax highlighter */
     ::-webkit-scrollbar {
-        width: 6px; /* Make the scrollbar thinner */
-        height: 6px; /* Make the horizontal scrollbar thinner */
+        width: 6px;
+        height: 6px;
     }
 
     ::-webkit-scrollbar-thumb {
-        background-color: ${({ theme }) => theme.text_secondary}; /* Customize the scrollbar thumb */
-        border-radius: 3px; /* Round the scrollbar edges */
+        background-color: ${({ theme }) => theme.text_secondary};
+        border-radius: 3px;
     }
 
     ::-webkit-scrollbar-track {
-        background-color: ${({ theme }) => theme.card}; /* Customize the scrollbar track */
+        background-color: ${({ theme }) => theme.card};
     }
 `;
 

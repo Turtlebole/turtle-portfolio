@@ -30,7 +30,7 @@ const ButtonContainer = styled.div`
     margin-bottom: 20px;
 
     @media (max-width: 640px) {
-        display: none; /* Hide view buttons on mobile devices */
+        display: none;
     }
 `;
 
@@ -76,7 +76,7 @@ const GridContainer = styled.div`
     }
 
     @media (max-width: 640px) {
-        grid-template-columns: 1fr; /* Enforce list view on mobile devices */
+        grid-template-columns: 1fr;
     }
 `;
 
@@ -143,7 +143,7 @@ const Tags = styled.div`
     display: flex;
     flex-wrap: wrap;
     gap: 8px;
-    margin-top: auto; /* Push tags to the bottom */
+    margin-top: auto;
 `;
 
 const Tag = styled.span`

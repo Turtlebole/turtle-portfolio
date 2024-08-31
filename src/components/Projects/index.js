@@ -67,8 +67,6 @@ const Projects = ({ setOpenModal }) => {
         <Container id="projects">
             <Wrapper>
                 <Title>Projects</Title>
-
-                {/* View Toggle Button Group */}
                 {!isMobileView && (
                     <ViewToggleButtonGroup>
                         <ToggleButton
@@ -93,7 +91,6 @@ const Projects = ({ setOpenModal }) => {
                             projects={projects.slice(startIndex, startIndex + (isMobileView ? 1 : 3))}
                             handleProjectClick={handleProjectClick}
                         />
-                        {/* Desktop Button Group */}
                         <ToggleButtonGroup>
                             <ToggleButton onClick={handlePrev} disabled={startIndex === 0}>
                                 <LeftArrowSVG>
@@ -106,7 +103,6 @@ const Projects = ({ setOpenModal }) => {
                                 </RightArrowSVG>
                             </ToggleButton>
                         </ToggleButtonGroup>
-                        {/* Mobile Button Group */}
                         <ToggleButtonGroupMobile>
                             <ToggleButton onClick={handlePrev} disabled={startIndex === 0}>
                                 <LeftArrowSVG>

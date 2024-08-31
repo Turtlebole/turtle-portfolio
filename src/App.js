@@ -58,7 +58,6 @@ function Home({ darkMode, toggleTheme, sectionsRef }) {
             });
         }
 
-        // Clean up ScrollTrigger on unmount
         return () => {
             ScrollTrigger.getAll().forEach(trigger => trigger.kill());
         };

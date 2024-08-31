@@ -42,11 +42,6 @@ const Navbar = ({ toggleTheme }) => {
         <ButtonContainer>
           <NavItems>
             <NavLink
-              onClick={() => handleNavigation('/', '#about')}
-            >
-              About
-            </NavLink>
-            <NavLink
               onClick={() => handleNavigation('/', '#skills')}
             >
               Skills
@@ -68,14 +63,6 @@ const Navbar = ({ toggleTheme }) => {
         {
           isOpen &&
           <MobileMenu isOpen={isOpen}>
-            <MobileLink
-              onClick={() => {
-                handleNavigation('/', '#about');
-                setIsOpen(!isOpen);
-              }}
-            >
-              About
-            </MobileLink>
             <MobileLink
               onClick={() => {
                 handleNavigation('/', '#skills');
@@ -107,7 +94,6 @@ const Navbar = ({ toggleTheme }) => {
                 Github
               </GitHubButton>
 
-              {/* Theme Toggle Button for Mobile */}
               <ThemeButton 
                 onClick={() => {
                   toggleTheme();
