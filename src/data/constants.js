@@ -134,8 +134,12 @@ export const projects = [
     id: 1,
     title: "Laplacia",
     date: "2023 - Present",
-    description: "Web application used to assist writers in visualizing and structuring their stories, its utilizing the .NET framework and Angular. The project is created using domain-driven design. Features include story mapping, character relationship visualization, and collaborative writing tools.",
-    image: "https://i.imgur.com/um67xkT.png",
+    description: "Web application used to assist writers...",
+    images: [
+      "https://i.imgur.com/um67xkT.png",
+      "https://i.imgur.com/example2.png",
+      "https://i.imgur.com/example3.png"
+    ],
     tags: [
       "C#",
       ".NET",
@@ -162,8 +166,12 @@ export const projects = [
     id: 2,
     title: "Airbnb Clone",
     date: "2023",
-    description: "A comprehensive fullstack clone of Airbnb built as a microservices architecture. Implements core features including property listing, booking management, user authentication, and review systems. Utilizes Go for backend services and Angular for the frontend interface.",
-    image: "https://i.imgur.com/um67xkT.png",
+    description: "A comprehensive fullstack clone of Airbnb...",
+    images: [
+      "https://i.imgur.com/um67xkT.png",
+      "https://i.imgur.com/example2.png",
+      "https://i.imgur.com/example3.png"
+    ],
     tags: [
       "Go",
       "Angular",
@@ -190,8 +198,12 @@ export const projects = [
     id: 3,
     title: "Fitness Manager",
     date: "2023",
-    description: "A comprehensive desktop application for fitness center management. Features include appointment scheduling, progress tracking, mentor reviews, and detailed reporting. The application provides an intuitive interface for both users and fitness center staff, with real-time updates and secure data management.",
-    image: "https://i.imgur.com/um67xkT.png",
+    description: "A comprehensive desktop application for fitness center management...",
+    images: [
+      "https://i.imgur.com/um67xkT.png",
+      "https://i.imgur.com/example2.png",
+      "https://i.imgur.com/example3.png"
+    ],
     tags: [
       "C#",
       ".NET",
@@ -218,7 +230,11 @@ export const projects = [
     title: "Project 4", // Update with actual project
     date: "2023",
     description: "Detailed description of the project goes here...",
-    image: "https://i.imgur.com/um67xkT.png",
+    images: [
+      "https://i.imgur.com/um67xkT.png",
+      "https://i.imgur.com/example2.png",
+      "https://i.imgur.com/example3.png"
+    ],
     tags: [
       "React",
       "Node.js",
@@ -242,7 +258,11 @@ export const projects = [
     title: "Project 5", // Update with actual project
     date: "2023",
     description: "Detailed description of the project goes here...",
-    image: "https://i.imgur.com/um67xkT.png",
+    images: [
+      "https://i.imgur.com/um67xkT.png",
+      "https://i.imgur.com/example2.png",
+      "https://i.imgur.com/example3.png"
+    ],
     tags: [
       "Vue.js",
       "Python",

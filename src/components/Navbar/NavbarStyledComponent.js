@@ -100,20 +100,39 @@ export const GitHubButton = styled.a`
 
 
 export const ThemeButton = styled.button`
-    padding: 5px 10px;
+    padding: 8px;
     background: none;
-    color: white;
     border: none;
     cursor: pointer;
     display: flex;
     align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+    position: relative;
+
+    &:hover {
+        background: ${({ theme }) => theme.primary + '20'};
+        transform: translateY(-2px);
+    }
+
     svg {
         width: 20px;
         height: 20px;
-        fill: ${({ theme }) => theme.colored_detail};
+        fill: ${({ theme }) => theme.text_primary};
+        transition: all 0.3s ease;
+        
+        path {
+            stroke: ${({ theme }) => theme.text_primary};
+            stroke-width: 1;
+        }
     }
+
     &:hover svg {
-        fill: ${({ theme }) => theme.bg};
+        fill: ${({ theme }) => theme.primary};
+        path {
+            stroke: ${({ theme }) => theme.primary};
+        }
     }
 `;
 

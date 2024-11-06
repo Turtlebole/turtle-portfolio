@@ -11,113 +11,207 @@ const Container = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 20px;
-    margin-top: 10vh;
+    padding: 40px 20px;
+    margin-top: 8vh;
     min-height: 100vh;
     background-color: ${({ theme }) => theme.bg};
     color: ${({ theme }) => theme.text_primary};
 `;
 
 const Wrapper = styled.div`
-    max-width: 800px;
+    max-width: 900px;
     width: 100%;
     background-color: ${({ theme }) => theme.card};
-    border-radius: 10px;
-    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 8px;
+    border-radius: 20px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
     color: ${({ theme }) => theme.text_primary};
-    margin-bottom: 20px;
-    padding: 20px;
+    margin-bottom: 40px;
+    padding: 40px;
+    transition: all 0.3s ease;
+
+    @media (max-width: 768px) {
+        padding: 20px;
+    }
 `;
 
 const Header = styled.header`
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-bottom: 20px;
+    margin-bottom: 40px;
+    position: relative;
 `;
 
 const Title = styled.h1`
-    font-size: 2.5rem;
-    color: ${({ theme }) => theme.primary};
-    margin-bottom: 10px;
+    font-size: 3rem;
+    font-weight: 700;
+    color: ${({ theme }) => theme.text_primary};
+    margin-bottom: 20px;
     text-align: center;
+    line-height: 1.3;
+
+    @media (max-width: 768px) {
+        font-size: 2rem;
+    }
 `;
 
 const Meta = styled.div`
     display: flex;
     align-items: center;
-    font-size: 0.9rem;
+    gap: 12px;
+    font-size: 1rem;
     color: ${({ theme }) => theme.text_secondary};
-    margin-bottom: 20px;
+    margin-bottom: 30px;
+    padding: 12px 24px;
+    background: ${({ theme }) => theme.card_light};
+    border-radius: 50px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
 `;
 
 const Avatar = styled.img`
-    width: 40px;
-    height: 40px;
+    width: 36px;
+    height: 36px;
     border-radius: 50%;
-    margin-right: 10px;
     object-fit: cover;
+    border: 2px solid ${({ theme }) => theme.primary};
+`;
+
+const AuthorName = styled.span`
+    font-weight: 500;
+    color: ${({ theme }) => theme.text_primary};
 `;
 
 const Divider = styled.hr`
     width: 100%;
     border: none;
-    border-top: 1px solid ${({ theme }) => theme.text_secondary};
-    margin: 20px 0;
+    border-top: 1px solid ${({ theme }) => theme.card_light};
+    margin: 32px 0;
 `;
 
 const Content = styled.div`
     width: 100%;
+    font-size: 1.1rem;
+    line-height: 1.8;
+
+    h1, h2, h3, h4, h5, h6 {
+        color: ${({ theme }) => theme.text_primary};
+        margin: 2.5rem 0 1.5rem 0;
+        line-height: 1.4;
+        font-weight: 600;
+    }
+
+    h1 { font-size: 2.4rem; }
+    h2 { font-size: 2rem; }
+    h3 { font-size: 1.8rem; }
+    h4 { font-size: 1.6rem; }
+    h5 { font-size: 1.4rem; }
+    h6 { font-size: 1.2rem; }
+
+    p {
+        margin: 1.5rem 0;
+        color: ${({ theme }) => theme.text_secondary};
+    }
+
+    a {
+        color: ${({ theme }) => theme.primary};
+        text-decoration: none;
+        border-bottom: 2px solid transparent;
+        transition: border-color 0.3s ease;
+
+        &:hover {
+            border-color: ${({ theme }) => theme.primary};
+        }
+    }
 
     img {
         max-width: 100%;
         height: auto;
+        border-radius: 12px;
+        margin: 2rem auto;
         display: block;
-        margin: 20px auto;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
     }
 
-    @media (min-width: 768px) {
-        img {
-            max-width: 40%;
-            margin: 20px 20px 20px 0;
-            display: inline-block;
-            float: left;
-        }
+    blockquote {
+        margin: 2rem 0;
+        padding: 1rem 2rem;
+        border-left: 4px solid ${({ theme }) => theme.primary};
+        background: ${({ theme }) => theme.card_light};
+        border-radius: 0 12px 12px 0;
+        font-style: italic;
+        color: ${({ theme }) => theme.text_secondary};
     }
 
-    h1, h2, h3, h4, h5, h6 {
-        margin-top: 2rem;
+    ul, ol {
+        margin: 1.5rem 0;
+        padding-left: 2rem;
+        color: ${({ theme }) => theme.text_secondary};
+    }
+
+    li {
+        margin: 0.5rem 0;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 2rem 0;
+        background: ${({ theme }) => theme.card_light};
+        border-radius: 12px;
+        overflow: hidden;
+    }
+
+    th, td {
+        padding: 1rem;
+        text-align: left;
+        border-bottom: 1px solid ${({ theme }) => theme.card};
+    }
+
+    th {
+        background: ${({ theme }) => theme.card_light};
         font-weight: 600;
+        color: ${({ theme }) => theme.text_primary};
+    }
+`;
+
+const CustomSyntaxHighlighter = styled(SyntaxHighlighter)`
+    margin: 2rem 0 !important;
+    border-radius: 12px !important;
+    padding: 20px !important;
+    font-size: 0.9rem !important;
+    
+    ::-webkit-scrollbar {
+        width: 8px;
+        height: 8px;
     }
 
-    p + h1, p + h2, p + h3, p + h4, p + h5, p + h6,
-    ul + h1, ul + h2, ul + h3, ul + h4, ul + h5, ul + h6,
-    ol + h1, ol + h2, ol + h3, ol + h4, ol + h5, ol + h6,
-    blockquote + h1, blockquote + h2, blockquote + h3, blockquote + h4, blockquote + h5, blockquote + h6 {
-        margin-top: 2rem;
+    ::-webkit-scrollbar-thumb {
+        background-color: ${({ theme }) => theme.primary}80;
+        border-radius: 4px;
+    }
+
+    ::-webkit-scrollbar-track {
+        background-color: ${({ theme }) => theme.card_light};
+        border-radius: 4px;
     }
 `;
 
 const Loader = styled.div`
-    text-align: center;
-    font-size: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 200px;
+    font-size: 1.2rem;
     color: ${({ theme }) => theme.text_secondary};
-    margin-top: 20px;
-`;
+    gap: 12px;
 
-const CustomSyntaxHighlighter = styled(SyntaxHighlighter)`
-    ::-webkit-scrollbar {
-        width: 6px;
-        height: 6px;
+    svg {
+        animation: spin 1s linear infinite;
     }
 
-    ::-webkit-scrollbar-thumb {
-        background-color: ${({ theme }) => theme.text_secondary};
-        border-radius: 3px;
-    }
-
-    ::-webkit-scrollbar-track {
-        background-color: ${({ theme }) => theme.card};
+    @keyframes spin {
+        from { transform: rotate(0deg); }
+        to { transform: rotate(360deg); }
     }
 `;
 
@@ -150,48 +244,47 @@ const PostPage = ({ theme }) => {
 
     return (
         <Container>
-            <Header>
-                <Title>About this post</Title>
-            </Header>
             <Wrapper>
-                <Meta>
-                    <Avatar src={avatar} alt="Avatar" />
-                    <span>Turtle</span>
-                </Meta>
+                <Header>
+                    <Title>{postName.replace('.md', '').replace(/-/g, ' ')}</Title>
+                    <Meta>
+                        <Avatar src={avatar} alt="Avatar" />
+                        <AuthorName>Turtle</AuthorName>
+                    </Meta>
+                </Header>
                 {loading ? (
-                    <Loader>Loading...</Loader>
+                    <Loader>
+                        <span>Loading content...</span>
+                    </Loader>
                 ) : error ? (
-                    <Loader>Error loading content: {error}</Loader>
+                    <Loader>Error: {error}</Loader>
                 ) : (
-                    <>
-                        <Divider />
-                        <Content>
-                            <ReactMarkdown
-                                remarkPlugins={[remarkGfm]}
-                                components={{
-                                    code: ({ node, inline, className, children, ...props }) => {
-                                        const match = /language-(\w+)/.exec(className || '');
-                                        return !inline && match ? (
-                                            <CustomSyntaxHighlighter
-                                                language={match[1]}
-                                                PreTag="div"
-                                                style={syntaxStyle}
-                                                {...props}
-                                            >
-                                                {String(children).replace(/\n$/, '')}
-                                            </CustomSyntaxHighlighter>
-                                        ) : (
-                                            <code className={className} {...props}>
-                                                {children}
-                                            </code>
-                                        );
-                                    }
-                                }}
-                            >
-                                {content}
-                            </ReactMarkdown>
-                        </Content>
-                    </>
+                    <Content>
+                        <ReactMarkdown
+                            remarkPlugins={[remarkGfm]}
+                            components={{
+                                code: ({ node, inline, className, children, ...props }) => {
+                                    const match = /language-(\w+)/.exec(className || '');
+                                    return !inline && match ? (
+                                        <CustomSyntaxHighlighter
+                                            language={match[1]}
+                                            PreTag="div"
+                                            style={syntaxStyle}
+                                            {...props}
+                                        >
+                                            {String(children).replace(/\n$/, '')}
+                                        </CustomSyntaxHighlighter>
+                                    ) : (
+                                        <code className={className} {...props}>
+                                            {children}
+                                        </code>
+                                    );
+                                }
+                            }}
+                        >
+                            {content}
+                        </ReactMarkdown>
+                    </Content>
                 )}
             </Wrapper>
         </Container>

@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { Swiper } from 'swiper/react';
 
 export const PageContainer = styled.div`
     display: flex;
@@ -9,10 +10,13 @@ export const PageContainer = styled.div`
     justify-content: center;
     align-items: center;
     padding: 20px;
+    padding-top: 100px;
     box-sizing: border-box;
+    overflow-x: hidden;
 
     @media (min-width: 961px) {
         padding: 40px;
+        padding-top: 120px;
     }
 `;
 
@@ -20,67 +24,116 @@ export const InnerContainer = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-    max-width: 1200px;
+    max-width: 1600px;
     width: 100%;
+    height: 80vh;
     gap: 20px;
 
     @media (min-width: 961px) {
         flex-direction: row;
-        gap: 40px;
+        gap: 0;
+        justify-content: center;
     }
 `;
 
 export const LeftContainer = styled.div`
-    flex: 1;
     background-color: ${({ theme }) => theme.card};
-    border-radius: 16px;
     padding: 32px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
     display: flex;
     flex-direction: column;
     gap: 24px;
-    max-width: 600px;
+    height: 100%;
+    overflow-y: auto;
+    min-width: 300px;
+    max-width: 400px;
+
+    @media (min-width: 961px) {
+        flex: 0.3;
+        order: 1;
+        border-radius: 16px 0 0 16px;
+    }
 
     @media (max-width: 960px) {
         order: 2;
         padding: 24px;
+        border-radius: 16px;
+        width: 100%;
+        max-width: none;
     }
 `;
 
 export const RightContainer = styled.div`
-    flex: 1;
+    width: 100%;
+    height: 100%;
     display: flex;
-    justify-content: center;
-    align-items: center;
+    justify-content: flex-start;
+    
+    @media (min-width: 961px) {
+        flex: 0.7;
+        order: 2;
+        max-width: 1000px;
+    }
 
     @media (max-width: 960px) {
         order: 1;
+        height: auto;
     }
 `;
 
 export const ImageContainer = styled.div`
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
     width: 100%;
-    max-width: 500px;
-
-    @media (max-width: 960px) {
-        padding: 10px;
-        max-width: 400px;
+    height: 100%;
+    overflow: hidden;
+    background: ${({ theme }) => theme.card};
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+    
+    @media (min-width: 961px) {
+        border-radius: 0 16px 16px 0;
     }
 
-    @media (max-width: 640px) {
-        padding: 5px;
-        max-width: 280px;
+    @media (max-width: 960px) {
+        border-radius: 16px;
+        height: auto;
     }
 `;
 
-export const Img = styled.img`
+export const StyledSwiper = styled(Swiper)`
+    height: 100%;
+
+    .swiper-slide {
+        height: 100%;
+    }
+
+    .swiper-button-next,
+    .swiper-button-prev {
+        color: ${({ theme }) => theme.primary};
+        background: ${({ theme }) => theme.card + 'CC'};
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        &:after {
+            font-size: 20px;
+        }
+        &:hover {
+            background: ${({ theme }) => theme.primary};
+            color: white;
+        }
+    }
+
+    .swiper-pagination-bullet {
+        background: ${({ theme }) => theme.primary};
+    }
+
+    .swiper-pagination-bullet-active {
+        background: ${({ theme }) => theme.primary};
+    }
+`;
+
+export const ProjectImage = styled.img`
     width: 100%;
-    border: 2px solid ${({ theme }) => theme.primary};
-    border-radius: 12px;
+    height: 100%;
+    object-fit: cover;
 `;
 
 export const ProjectHeader = styled.div`
@@ -92,12 +145,14 @@ export const ProjectTitle = styled.h1`
     font-weight: 700;
     color: ${({ theme }) => theme.text_primary};
     margin-bottom: 8px;
+    line-height: 1.2;
 `;
 
 export const ProjectSubtitle = styled.p`
     color: ${({ theme }) => theme.text_secondary};
     font-size: 16px;
     font-weight: 500;
+    opacity: 0.8;
 `;
 
 export const Divider = styled.div`
@@ -122,12 +177,16 @@ export const InfoItem = styled.div`
 export const InfoLabel = styled.span`
     color: ${({ theme }) => theme.text_secondary};
     font-size: 14px;
+    display: flex;
+    align-items: center;
+    opacity: 0.8;
 `;
 
 export const InfoValue = styled.span`
     color: ${({ theme }) => theme.text_primary};
     font-size: 16px;
     font-weight: 500;
+    opacity: 0.9;
 `;
 
 export const Description = styled.div`
@@ -135,6 +194,7 @@ export const Description = styled.div`
     font-size: 16px;
     line-height: 1.7;
     margin-bottom: 24px;
+    opacity: 0.9;
 `;
 
 export const Tags = styled.div`

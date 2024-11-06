@@ -1,13 +1,19 @@
 import React from 'react';
 import { useLocation } from 'react-router-dom';
 import { FaGithub, FaCalendar, FaCode, FaTools } from 'react-icons/fa';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Navigation, Pagination, Autoplay } from 'swiper/modules';
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
 import {
     PageContainer,
     InnerContainer,
     LeftContainer,
     RightContainer,
     ImageContainer,
-    Img,
+    StyledSwiper,
+    ProjectImage,
     ProjectHeader,
     ProjectTitle,
     ProjectSubtitle,
@@ -93,7 +99,22 @@ const ProjectPage = () => {
 
                 <RightContainer>
                     <ImageContainer>
-                        <Img src={project.image} alt={project.title} />
+                        <StyledSwiper
+                            modules={[Navigation, Pagination, Autoplay]}
+                            navigation
+                            pagination={{ clickable: true }}
+                            autoplay={{
+                                delay: 3500,
+                                disableOnInteraction: false,
+                            }}
+                            loop={true}
+                        >
+                            {project.images.map((image, index) => (
+                                <SwiperSlide key={index}>
+                                    <ProjectImage src={image} alt={`${project.title} ${index + 1}`} />
+                                </SwiperSlide>
+                            ))}
+                        </StyledSwiper>
                     </ImageContainer>
                 </RightContainer>
             </InnerContainer>

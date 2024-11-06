@@ -3,7 +3,7 @@ import { Nav, NavLink, NavbarContainer, Span, ColoredSpan, NavLogo, NavItems, Gi
 import { FaBars } from 'react-icons/fa';
 import { Bio } from '../../data/constants';
 import { useTheme } from 'styled-components';
-import { ReactComponent as LightBulbIcon } from '../../images/light-bulb-svgrepo-com.svg';
+import ThemeToggleIcon from '../Icons/ThemeToggleIcon';
 import { useNavigate } from 'react-router-dom';
 
 const Navbar = ({ toggleTheme }) => {
@@ -41,7 +41,9 @@ const Navbar = ({ toggleTheme }) => {
             <NavLink onClick={() => handleNavigation('/', '#projects')}>Projects</NavLink>
             <NavLink href='/blog'>Blog</NavLink>
             <GitHubButton href={Bio.github} target="_blank">Github</GitHubButton>
-            <ThemeButton onClick={toggleTheme}><LightBulbIcon /></ThemeButton>
+            <ThemeButton onClick={toggleTheme}>
+              <ThemeToggleIcon />
+            </ThemeButton>
           </NavItems>
         </ButtonContainer>
 
@@ -52,10 +54,24 @@ const Navbar = ({ toggleTheme }) => {
             <MobileLink href='/blog' onClick={() => setIsOpen(!isOpen)}>Blog</MobileLink>
 
             <div style={{ display: 'flex', gap: '12px', marginTop: '16px', alignItems: 'center' }}>
-              <GitHubButton style={{ background: theme.bgLight, color: theme.text_primary, border: `1.8px solid ${theme.primary}` }} href={Bio.github} target="_blank">Github</GitHubButton>
-              <ThemeButton onClick={() => { toggleTheme(); setIsOpen(!isOpen); }} style={{ background: theme.bgLight, color: theme.text_primary, border: `1.8px solid ${theme.primary}`, borderRadius: '20px'}}>
-                <LightBulbIcon style={{ width: '20px', height: '20px' }} />
-                <span style={{ marginLeft: '8px' }}>Theme</span>
+              <GitHubButton 
+                style={{ 
+                  background: theme.bgLight, 
+                  color: theme.text_primary, 
+                  border: `1.8px solid ${theme.primary}` 
+                }} 
+                href={Bio.github} 
+                target="_blank"
+              >
+                Github
+              </GitHubButton>
+              <ThemeButton 
+                onClick={() => { 
+                  toggleTheme(); 
+                  setIsOpen(!isOpen); 
+                }}
+              >
+                <ThemeToggleIcon />
               </ThemeButton>
             </div>
           </MobileMenu>
