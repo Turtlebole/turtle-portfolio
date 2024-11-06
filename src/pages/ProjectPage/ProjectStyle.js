@@ -33,15 +33,17 @@ export const InnerContainer = styled.div`
 export const LeftContainer = styled.div`
     flex: 1;
     background-color: ${({ theme }) => theme.card};
-    border-radius: 12px;
-    padding: 20px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 16px;
+    padding: 32px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
     display: flex;
     flex-direction: column;
-    align-items: center;
+    gap: 24px;
+    max-width: 600px;
 
     @media (max-width: 960px) {
         order: 2;
+        padding: 24px;
     }
 `;
 
@@ -81,87 +83,111 @@ export const Img = styled.img`
     border-radius: 12px;
 `;
 
-export const ProjectTitle = styled.h2`
-    margin-bottom: 20px;
-    text-align: center;
-    font-weight: 600;
-    color: ${({ theme }) => theme.text_primary};
-    font-size: 24px;
-
-    @media (max-width: 960px) {
-        font-size: 20px;
-        margin-bottom: 10px;
-    }
-
-    @media (max-width: 640px) {
-        font-size: 18px;
-        margin-bottom: 5px;
-    }
+export const ProjectHeader = styled.div`
+    margin-bottom: 8px;
 `;
 
-export const SubTitle = styled.p`
-    font-size: 18px;
-    line-height: 1.5;
-    margin-bottom: 30px;
-    text-align: center;
+export const ProjectTitle = styled.h1`
+    font-size: 32px;
+    font-weight: 700;
     color: ${({ theme }) => theme.text_primary};
-    padding: 0 20px;
-
-    @media (max-width: 960px) {
-        font-size: 16px;
-    }
-
-    @media (max-width: 640px) {
-        font-size: 14px;
-        margin-bottom: 20px;
-    }
+    margin-bottom: 8px;
 `;
 
-export const Highlight = styled.span`
-    color: ${({ theme }) => theme.colored_detail};
+export const ProjectSubtitle = styled.p`
+    color: ${({ theme }) => theme.text_secondary};
+    font-size: 16px;
+    font-weight: 500;
+`;
+
+export const Divider = styled.div`
+    height: 1px;
+    background: ${({ theme }) => theme.text_secondary + '20'};
+    margin: 16px 0;
+`;
+
+export const InfoSection = styled.div`
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+    margin-bottom: 24px;
+`;
+
+export const InfoItem = styled.div`
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+`;
+
+export const InfoLabel = styled.span`
+    color: ${({ theme }) => theme.text_secondary};
+    font-size: 14px;
+`;
+
+export const InfoValue = styled.span`
+    color: ${({ theme }) => theme.text_primary};
+    font-size: 16px;
+    font-weight: 500;
+`;
+
+export const Description = styled.div`
+    color: ${({ theme }) => theme.text_primary};
+    font-size: 16px;
+    line-height: 1.7;
+    margin-bottom: 24px;
 `;
 
 export const Tags = styled.div`
-    width: 100%;
     display: flex;
-    align-items: center;
     flex-wrap: wrap;
-    gap: 8px;
-    margin-top: 4px;
-    padding: 20px;
-    justify-content: center;
+    gap: 12px;
+    margin-bottom: 24px;
 `;
 
 export const Tag = styled.span`
-    font-size: 18px;
-    font-weight: 400;
-    color: ${({ theme }) => theme.text_secondary};
-    background-color: ${({ theme }) => theme.colored_detail + 20};
-    padding: 2px 8px;
-    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 500;
+    color: ${({ theme }) => theme.primary};
+    background-color: ${({ theme }) => theme.primary + '15'};
+    padding: 6px 16px;
+    border-radius: 100px;
+    transition: all 0.3s ease;
+
+    &:hover {
+        background-color: ${({ theme }) => theme.primary + '30'};
+    }
+`;
+
+export const Links = styled.div`
+    display: flex;
+    gap: 16px;
+    margin-top: auto;
 `;
 
 export const GitHubLink = styled.a`
     display: flex;
     align-items: center;
-    margin-top: 10px;
-`;
+    gap: 8px;
+    text-decoration: none;
+    color: ${({ theme }) => theme.text_primary};
+    background: ${({ theme }) => theme.card_light};
+    padding: 12px 20px;
+    border-radius: 100px;
+    font-weight: 500;
+    font-size: 16px;
+    transition: all 0.3s ease;
 
-export const GitHubIcon = styled.button`
-    padding: 5px;
-    background: none;
-    border: none;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-
-    svg {
-        width: 32px;
-        height: 32px;
-        fill: ${({ theme }) => theme.colored_detail};
+    &:hover {
+        background: ${({ theme }) => theme.text_primary + '10'};
+        color: ${({ theme }) => theme.primary};
+        transform: translateY(-2px);
+        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
     }
 
-    &:hover svg {
-        fill: ${({ theme }) => theme.primary};
+    svg {
+        width: 20px;
+        height: 20px;
+        fill: currentColor;
+        transition: all 0.3s ease;
     }
 `;
