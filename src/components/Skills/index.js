@@ -10,7 +10,8 @@ const Container = styled.div`
   align-items: center;
   position: relative;
   z-index: 1;
-  margin-top: 0;
+  padding: 80px 0;
+  background: ${({ theme }) => theme.card_light + '20'};
 `;
 
 const Wrapper = styled.div`
@@ -19,58 +20,67 @@ const Wrapper = styled.div`
   flex-direction: column;
   align-items: center;
   width: 100%;
-  max-width: 1100px;
-  padding: 0 20px;
+  max-width: 1200px;
+  padding: 0 40px;
+  gap: 12px;
 `;
 
-export const Title = styled.div`
-  font-size: 28px;
+const Title = styled.div`
+  font-size: 42px;
   text-align: center;
   font-weight: 600;
-  margin-top: 52px;
-  color: ${({ theme }) => theme.primary};
-  position: relative;
+  margin-top: 20px;
+  color: ${({ theme }) => theme.text_primary};
+  
   @media (max-width: 768px) {
+    font-size: 32px;
     margin-top: 12px;
-    font-size: 24px;
   }
 `;
 
-export const Desc = styled.div`
-  font-size: 48px;
+const Desc = styled.div`
+  font-size: 18px;
   text-align: center;
   max-width: 600px;
-  margin-top: 40px;
-  color: ${({ theme }) => theme.colored_detail};
+  color: ${({ theme }) => theme.text_secondary};
+  margin-bottom: 40px;
+
   @media (max-width: 768px) {
-    font-size: 20px;
-    margin-top: 24px;
+    font-size: 16px;
+    margin-bottom: 30px;
   }
 `;
 
 const ButtonContainer = styled.div`
   display: flex;
   justify-content: center;
-  gap: 20px;
-  margin-bottom: 20px;
+  gap: 12px;
+  margin-bottom: 40px;
+  flex-wrap: wrap;
+
   @media (max-width: 768px) {
-    gap: 12px;
-    margin-bottom: 16px;
+    gap: 8px;
+    margin-bottom: 30px;
   }
 `;
 
 const Button = styled.button`
   font-size: 16px;
-  padding: 10px 20px;
-  background: transparent;
-  color: ${({ active, theme }) => (active ? theme.primary : theme.text_primary)};
-  border: 1px solid ${({ theme }) => theme.text_primary + 80};
-  border-radius: 8px;
+  padding: 12px 24px;
+  background: ${({ active, theme }) => active ? theme.primary + '20' : 'transparent'};
+  color: ${({ active, theme }) => active ? theme.primary : theme.text_primary};
+  border: 1.8px solid ${({ active, theme }) => active ? theme.primary : theme.text_primary + '50'};
+  border-radius: 12px;
   cursor: pointer;
   transition: all 0.3s ease;
+  font-weight: 500;
+
   &:hover {
-    background-color: ${({ theme }) => theme.primary_hover};
+    background: ${({ theme }) => theme.primary + '10'};
+    border: 1.8px solid ${({ theme }) => theme.primary};
+    color: ${({ theme }) => theme.primary};
   }
+
   @media (max-width: 768px) {
     padding: 8px 16px;
     font-size: 14px;
@@ -78,77 +88,66 @@ const Button = styled.button`
 `;
 
 const SkillsContainer = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 20px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 24px;
   width: 100%;
-  max-width: 1100px;
-  margin-top: 30px;
+  padding: 20px 0;
+
   @media (max-width: 768px) {
-    justify-content: space-around;
-    gap: 12px;
-    margin-top: 24px;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 16px;
+    padding: 10px 0;
   }
 `;
 
 const Skill = styled.div`
   display: flex;
   align-items: center;
+  gap: 12px;
+  padding: 16px;
   background: ${({ theme }) => theme.card};
-  border: 0.1px solid ${({ theme }) => theme.colored_detail};
-  box-shadow: rgba(76, 81, 109, 0.15) 0px 4px 18px;
+  border: 1px solid ${({ theme }) => theme.text_primary + '15'};
   border-radius: 16px;
-  padding: 12px;
-  position: relative;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
   transition: all 0.3s ease;
-  width: 150px;
-  box-sizing: border-box;
   opacity: 0;
-  transform: scale(0.9);
+  transform: translateY(20px);
+
   &:hover {
-    filter: brightness(1.2);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.15);
+    transform: translateY(-5px);
+    border: 1px solid ${({ theme }) => theme.primary + '50'};
   }
 
   @media (max-width: 768px) {
-    justify-content: center;
-    width: 80px;
-    height: 80px;
-    padding: 8px;
-    flex-direction: column;
-  }
-
-  @media (max-width: 480px) {
-    width: 60px;
-    height: 60px;
-    padding: 6px;
+    padding: 12px;
+    gap: 8px;
   }
 `;
 
 const SkillImage = styled.img`
-  width: 30px;
-  height: 30px;
-  margin-right: 12px;
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  background: ${({ theme }) => theme.card_light};
+  padding: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 
   @media (max-width: 768px) {
-    margin-right: 0;
-    width: 40px;
-    height: 40px;
-  }
-
-  @media (max-width: 480px) {
-    width: 30px;
-    height: 30px;
+    width: 32px;
+    height: 32px;
+    padding: 6px;
   }
 `;
 
 const SkillName = styled.span`
   font-size: 16px;
-  font-weight: 400;
-  color: ${({ theme }) => theme.colored_detail + 80};
-
+  font-weight: 500;
+  color: ${({ theme }) => theme.text_primary};
+  
   @media (max-width: 768px) {
-    display: none;
+    font-size: 14px;
   }
 `;
 
@@ -160,32 +159,39 @@ const Skills = () => {
     setActiveButton(buttonName);
   };
 
-  const filteredSkills = skills.filter(skill => skill.title.toLowerCase() === activeButton.toLowerCase());
+  const filteredSkills = skills.filter(skill => 
+    skill.title.toLowerCase() === activeButton.toLowerCase()
+  );
 
   useEffect(() => {
     if (skillsRef.current.length > 0) {
-      const tl = gsap.timeline({ defaults: { duration: 0.5, ease: 'power2.out' } });
-      tl.fromTo(skillsRef.current,
-        { opacity: 0, scale: 0.9 },
-        { opacity: 1, scale: 1, stagger: 0.1, duration: 0.3 }
-      );
+      gsap.to(skillsRef.current, {
+        opacity: 1,
+        y: 0,
+        duration: 0.5,
+        stagger: 0.1,
+        ease: "power3.out"
+      });
     }
   }, [activeButton]);
 
   return (
     <Container id="skills">
       <Wrapper>
-        <Desc>TECH STACK</Desc>
+        <Title>Technical Proficiency</Title>
+        <Desc>
+          Showcasing my expertise across various technologies and tools
+        </Desc>
         <ButtonContainer>
-          <Button active={activeButton === 'frontend'} onClick={() => handleButtonClick('frontend')}>
-            Frontend
-          </Button>
-          <Button active={activeButton === 'backend'} onClick={() => handleButtonClick('backend')}>
-            Backend
-          </Button>
-          <Button active={activeButton === 'database'} onClick={() => handleButtonClick('database')}>
-            Database
-          </Button>
+          {['Frontend', 'Backend', 'Database'].map((btn) => (
+            <Button
+              key={btn}
+              active={activeButton === btn.toLowerCase()}
+              onClick={() => handleButtonClick(btn.toLowerCase())}
+            >
+              {btn}
+            </Button>
+          ))}
         </ButtonContainer>
         <SkillsContainer>
           {filteredSkills.flatMap((skill, skillIndex) =>
@@ -194,7 +200,7 @@ const Skills = () => {
                 key={item.name}
                 ref={el => (skillsRef.current[skillIndex * skill.skills.length + index] = el)}
               >
-                <SkillImage src={item.image} />
+                <SkillImage src={item.image} alt={item.name} />
                 <SkillName>{item.name}</SkillName>
               </Skill>
             ))

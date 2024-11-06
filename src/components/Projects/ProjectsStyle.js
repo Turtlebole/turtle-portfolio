@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
 
 export const Container = styled.div`
     display: flex;
@@ -18,10 +17,7 @@ export const Wrapper = styled.div`
     width: 100%;
     max-width: 1350px;
     padding: 10px 0px 100px 0;
-    gap: 12px;
-    @media (max-width: 960px) {
-        flex-direction: column;
-    }
+    gap: 40px;
 `;
 
 export const Title = styled.div`
@@ -31,259 +27,168 @@ export const Title = styled.div`
     margin-top: 20px;
     color: ${({ theme }) => theme.colored_detail};
     @media (max-width: 768px) {
-        margin-top: 12px;
         font-size: 32px;
     }
 `;
 
-export const ViewToggleButtonGroup = styled.div`
-    display: flex;
-    justify-content: center;
-    margin-top: 16px;
-    gap: 12px;
-
-    @media (max-width: 1024px) and (min-width: 768px) {
-        display: none;
-    }
-`;
-
-export const ToggleButtonGroup = styled.div`
-    display: flex;
-    justify-content: space-between;
-    position: absolute;
-    top: 50%;
-    width: calc(100% - 40px);
-    max-width: 1350px;
-    transform: translateY(-50%);
-    pointer-events: none;
-    gap: 16px;
-
-    & > div:first-child {
-        margin-left: 20px;
-    }
-    & > div:last-child {
-        margin-right: -20px;
-    }
-
-    @media (max-width: 1200px) {
-        position: static;
-        top: auto;
-        transform: none;
-        margin-top: 20px;
-        width: 100%;
-        justify-content: center;
-        gap: 12px;
-    }
-
-    @media (max-width: 1024px) and (min-width: 768px) {
-        display: none; 
-    }
-
-    @media (max-width: 768px) {
-        display: none; 
-    }
-`;
-
-
-export const ToggleButtonGroupMobile = styled.div`
-    display: none;
-
-    @media (max-width: 768px) {
-        display: flex;
-        justify-content: center;
-        width: 100%;
-        padding: 0 20px;
-        margin-top: 10px;
-        margin-bottom: 10px;
-        gap: 16px;
-    }
-`;
-
-export const CarouselWrapper = styled.div`
+export const TimelineContainer = styled.div`
     position: relative;
     width: 100%;
-    max-width: 1350px;
     overflow: hidden;
-
-    @media (max-width: 768px) {
-        overflow-x: auto;
-        white-space: nowrap;
-        padding: 0 20px;
-    }
+    padding: 75px 0 40px;
+    height: 700px;
 `;
 
-export const ToggleButton = styled.div`
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 10px;
-    border-radius: 50%;
-    cursor: pointer;
-    user-select: none;
-    background: ${({ theme }) => theme.primary + '20'};
-    color: ${({ theme }) => theme.darkMode ? '#FFFFFF' : '#000000'};
-    pointer-events: all;
-    transition: background 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
-
-    &:hover {
-        background: ${({ theme }) => theme.primary + '60'};
-        transform: scale(1.1);
-    }
-
-    @media (max-width: 1200px) {
-        font-size: 20px;
-        padding: 12px;
-    }
-
-    @media (max-width: 768px) {
-        padding: 14px;
-        font-size: 24px;
-    }
+export const TimelineLine = styled.div`
+    position: absolute;
+    top: 155px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: ${({ theme }) => theme.primary}15;
+    z-index: 1;
 `;
 
-export const Divider = styled.div`
-    width: 1.5px;
-    background: ${({ theme }) => theme.primary};
-`;
-
-export const CardContainer = styled.div`
+export const SlideContent = styled.div`
+    position: relative;
     display: flex;
     flex-direction: column;
-    gap: 16px;
-    padding: 0 20px;
+    align-items: center;
+    padding: 0 10px;
+    margin-top: 25px;
+`;
 
-    @media (min-width: 768px) and (max-width: 1024px) {
-        padding: 0 40px;
+export const Pin = styled.div`
+    position: relative;
+    width: 20px;
+    height: 20px;
+    background-color: ${({ theme }) => theme.bg};
+    border: 2px solid ${({ theme }) => theme.primary};
+    border-radius: 50%;
+    z-index: 2;
+    margin: 0;
+    transform: translateY(-50%);
+
+    &::before {
+        content: '';
+        position: absolute;
+        top: 100%;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 2px;
+        height: 20px;
+        background-color: ${({ theme }) => theme.primary};
+    }
+
+    &::after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 8px;
+        height: 8px;
+        background-color: ${({ theme }) => theme.primary};
+        border-radius: 50%;
     }
 `;
 
-export const ListItem = styled.div`
+export const PinDate = styled.div`
+    padding: 8px 15px;
+    background: ${({ theme }) => theme.primary}15;
+    color: ${({ theme }) => theme.primary};
+    border: 1.8px solid ${({ theme }) => theme.primary};
+    border-radius: 12px;
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 15px;
+    z-index: 2;
+`;
+
+export const CardWrapper = styled.div`
+    margin-top: 2px;
     display: flex;
-    flex-direction: row;
-    align-items: flex-start;
-    padding: 12px;
-    background: ${({ theme }) => theme.card};
-    border: 1px solid ${({ theme }) => theme.text_secondary};
-    border-radius: 6px;
-    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
-    transition: background-color 0.3s, transform 0.3s;
+    justify-content: center;
+`;
+
+export const ProjectCard = styled.div`
+    width: 330px;
+    height: 490px;
+    background: linear-gradient(343.07deg, hsla(231, 17%, 36%, 0.06) 5.71%, hsla(231, 17%, 36%, 0) 64.83%);
     cursor: pointer;
-    max-width: 1100px;
-    position: relative;
-    padding-right: 100px;
+    border: 1px solid ${({ theme }) => theme.text_primary + 80};
+    border-radius: 12px;
+    box-shadow: 0 0 12px 4px rgba(0,0,0,0.4);
+    overflow: hidden;
+    padding: 26px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    transition: all 0.5s ease-in-out;
 
     &:hover {
-        background-color: ${({ theme }) => theme.card_light};
-        transform: scale(0.99);
+        transform: translateY(-10px);
+        filter: brightness(1.2);
     }
 
-    @media (max-width: 640px) {
-        flex-direction: column;
-        align-items: flex-start;
-
-        & > img {
-            margin-right: 0;
-            margin-bottom: 16px;
-        }
-    }
-
-    & > img {
-        width: 16.666%;
-        height: auto;
-        border-radius: 6px;
-        margin-right: 16px;
-        object-fit: contain;
-        border: 2px solid ${({ theme }) => theme.text_secondary};
+    & img {
+        width: 75%;
+        height: 50%;
+        align-self: center;
+        border: 1px solid ${({ theme }) => theme.primary + 80};
+        border-radius: 10px;
+        box-shadow: 0 0 16px 2px rgba(0,0,0,0.3);
+        user-select: none;
     }
 `;
 
-export const PostHeader = styled.div`
+export const ProjectContent = styled.div`
+    width: 100%;
     display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    width: calc(100% - 120px);
-    align-items: center;
-    margin-bottom: 10px;
+    flex-direction: column;
+    gap: 0px;
+    padding: 0px 2px;
 `;
 
-export const PostTitle = styled.h2`
-    font-size: 1.5rem;
-    margin: 0;
-    color: ${({ theme }) => theme.primary};
-    flex-grow: 1;
-`;
-
-export const PostDate = styled.div`
-    font-size: 0.875rem;
+export const ProjectTitle = styled.h2`
+    font-size: 20px;
+    font-weight: 600;
     color: ${({ theme }) => theme.text_secondary};
-    position: absolute;
-    top: 12px;
-    right: 16px;
-    width: 100px;
-    text-align: right;
-`;
-
-export const PostDescription = styled.p`
-    font-size: 1rem;
-    color: ${({ theme }) => theme.text_secondary};
-    margin-bottom: 16px;
+    align-self: center;
     overflow: hidden;
-    text-overflow: ellipsis;
     display: -webkit-box;
+    max-width: 100%;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    text-overflow: ellipsis;
+`;
+
+export const ProjectDescription = styled.p`
+    font-weight: 400;
+    color: ${({ theme }) => theme.text_secondary + 99};
+    margin-top: 8px;
+    overflow: hidden;
+    display: -webkit-box;
+    max-width: 100%;
     -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
-    line-height: 1.5;
-    max-height: 4.5rem;
+    text-overflow: ellipsis;
 `;
 
 export const Tags = styled.div`
+    width: 100%;
     display: flex;
+    align-items: center;
     flex-wrap: wrap;
     gap: 8px;
-    margin-top: auto;
+    margin-top: 4px;
 `;
 
 export const Tag = styled.span`
-    font-size: 0.875rem;
+    font-size: 12px;
+    font-weight: 400;
     color: ${({ theme }) => theme.text_secondary};
-    background-color: ${({ theme }) => theme.colored_detail + '20'};
-    padding: 4px 8px;
-    border-radius: 5px;
+    background-color: ${({ theme }) => theme.primary + 15};
+    padding: 2px 8px;
+    border-radius: 10px;
 `;
-
-export const StyledLink = styled(Link)`
-    text-decoration: none;
-    width: 100%;
-`;
-
-export const LeftArrowSVG = styled.svg.attrs({
-    width: '24',
-    height: '24',
-    viewBox: '0 0 24 24',
-    fill: 'none',
-    xmlns: 'http://www.w3.org/2000/svg',
-})`
-    path {
-        stroke: ${({ theme }) => theme.highlighted_svg};
-    }
-`;
-
-export const RightArrowSVG = styled.svg.attrs({
-    width: '24',
-    height: '24',
-    viewBox: '0 0 24 24',
-    fill: 'none',
-    xmlns: 'http://www.w3.org/2000/svg',
-})`
-    path {
-        stroke: ${({ theme }) => theme.highlighted_svg};
-    }
-`;
-
-export const LeftArrowPath = () => (
-    <path d="M15 18l-6-6 6-6" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-);
-
-export const RightArrowPath = () => (
-    <path d="M9 18l6-6-6-6" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-);
