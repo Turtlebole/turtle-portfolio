@@ -1,124 +1,197 @@
 import React, { useRef, useState, useCallback } from 'react';
 import styled from 'styled-components';
 import emailjs from '@emailjs/browser';
-import { Snackbar } from '@mui/material';
+import { Snackbar, Alert } from '@mui/material';
 
 const Container = styled.div`
     display: flex;
-    flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding: 20px;
-    position: relative;
-    z-index: 1;
-    background: transparent;
+    padding: 80px 0;
+    background: ${({ theme }) => theme.bg};
+    
     @media (max-width: 960px) {
-        padding: 20px 10px;
+        padding: 60px 20px;
     }
 `;
 
 const Wrapper = styled.div`
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    max-width: 1100px;
     width: 100%;
-    max-width: 800px;
-    padding: 40px 20px;
-    background-color: transparent;
-    border-radius: 12px;
-    gap: 20px;
-    @media (max-width: 768px) {
-        padding: 20px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+
+    @media (max-width: 960px) {
+        grid-template-columns: 1fr;
+        gap: 30px;
     }
 `;
 
-const Title = styled.h1`
-    font-size: 32px;
-    text-align: center;
-    font-weight: 600;
-    color: ${({ theme }) => theme.primary};
+const LeftSection = styled.div`
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    padding-right: 20px;
+
+    @media (max-width: 960px) {
+        padding-right: 0;
+        text-align: center;
+        align-items: center;
+    }
+`;
+
+const Title = styled.h2`
+    font-size: 42px;
+    font-weight: 700;
+    color: ${({ theme }) => theme.text_primary};
+    line-height: 1.2;
+
     @media (max-width: 768px) {
-        font-size: 24px;
+        font-size: 32px;
     }
 `;
 
 const Desc = styled.p`
     font-size: 18px;
-    text-align: center;
-    max-width: 400px;
+    line-height: 1.6;
     color: ${({ theme }) => theme.text_secondary};
+    margin-bottom: 20px;
+
     @media (max-width: 768px) {
         font-size: 16px;
     }
 `;
 
-const ContactForm = styled.form`
-    width: 100%;
-    max-width: 600px;
+const ContactInfo = styled.div`
     display: flex;
     flex-direction: column;
-    background-color: ${({ theme }) => theme.card};
-    padding: 24px;
-    border-radius: 10px;
-    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 8px;
+    gap: 16px;
+
+    @media (max-width: 960px) {
+        align-items: center;
+    }
+`;
+
+const InfoItem = styled.div`
+    display: flex;
+    align-items: center;
     gap: 12px;
+    color: ${({ theme }) => theme.text_secondary};
+    font-size: 16px;
+
     @media (max-width: 768px) {
-        padding: 16px;
+        font-size: 14px;
     }
 `;
 
-const ContactTitle = styled.h2`
-    font-size: 20px;
-    margin-bottom: 10px;
-    font-weight: 600;
-    color: ${({ theme }) => theme.text_primary};
+const ContactForm = styled.form`
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    background: ${({ theme }) => theme.card};
+    padding: 32px;
+    border-radius: 20px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+    border: 1px solid ${({ theme }) => theme.card_border};
+
+    @media (max-width: 768px) {
+        padding: 20px;
+    }
 `;
 
-const ContactInput = styled.input`
+const InputGroup = styled.div`
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+`;
+
+const Label = styled.label`
+    font-size: 14px;
+    font-weight: 500;
+    color: ${({ theme }) => theme.text_secondary};
+`;
+
+const Input = styled.input`
     width: 100%;
-    background-color: transparent;
-    border: 2px solid ${({ theme }) => theme.primary};
-    outline: none;
-    font-size: 16px;
+    padding: 12px 16px;
+    background: ${({ theme }) => theme.bg};
+    border: 1px solid ${({ theme }) => theme.card_border};
+    border-radius: 12px;
     color: ${({ theme }) => theme.text_primary};
-    padding: 10px;
-    border-radius: 6px;
-    transition: border-color 0.3s ease-in-out;
+    font-size: 16px;
+    outline: none;
+    transition: all 0.3s ease;
+
     &:focus {
         border-color: ${({ theme }) => theme.primary};
+        box-shadow: 0 0 0 2px ${({ theme }) => theme.primary}20;
+    }
+
+    @media (max-width: 768px) {
+        font-size: 14px;
+        padding: 10px 14px;
     }
 `;
 
-const ContactInputMessage = styled.textarea`
+const TextArea = styled.textarea`
     width: 100%;
-    background-color: transparent;
-    border: 2px solid ${({ theme }) => theme.primary};
-    outline: none;
-    font-size: 16px;
+    padding: 12px 16px;
+    background: ${({ theme }) => theme.bg};
+    border: 1px solid ${({ theme }) => theme.card_border};
+    border-radius: 12px;
     color: ${({ theme }) => theme.text_primary};
-    padding: 10px;
-    border-radius: 6px;
+    font-size: 16px;
+    outline: none;
     resize: vertical;
-    transition: border-color 0.3s ease-in-out;
+    min-height: 120px;
+    transition: all 0.3s ease;
+
     &:focus {
         border-color: ${({ theme }) => theme.primary};
+        box-shadow: 0 0 0 2px ${({ theme }) => theme.primary}20;
+    }
+
+    @media (max-width: 768px) {
+        font-size: 14px;
+        padding: 10px 14px;
+        min-height: 100px;
     }
 `;
 
-const ContactButton = styled.button`
+const SubmitButton = styled.button`
     width: 100%;
-    background: ${({ theme }) => theme.buttonGradient};
-    padding: 12px;
-    border-radius: 8px;
-    border: none;
-    color: ${({ theme }) => theme.text_primary};
-    font-size: 16px;
+    padding: 16px 32px;
+    background: ${({ theme }) => theme.primary}15;
+    color: ${({ theme }) => theme.primary};
+    border: 1.8px solid ${({ theme }) => theme.primary};
+    border-radius: 12px;
+    font-size: 18px;
     font-weight: 600;
     cursor: pointer;
-    transition: all 0.3s ease-in-out;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: all 0.2s ease;
+
+    svg {
+        font-size: 20px;
+    }
+
     &:hover {
-        filter: brightness(1.15);
-        box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 8px;
+        background: ${({ theme }) => theme.primary}30;
+        color: ${({ theme }) => theme.primary};
+        box-shadow: 0 5px 10px ${({ theme }) => theme.primary}15;
+    }
+
+    @media screen and (max-width: 768px) {
+        padding: 12px 24px;
+        font-size: 16px;
+        
+        svg {
+            font-size: 18px;
+        }
     }
 `;
 
@@ -145,24 +218,73 @@ const Contact = () => {
     return (
         <Container>
             <Wrapper>
-                <Title>Contact</Title>
-                <Desc>Reach out to me if you want to collaborate or book a project</Desc>
+                <LeftSection>
+                    <Title>Contact me</Title>
+                    <Desc>
+                        Feel free to reach out if you're looking for a frontend developer, 
+                        have a question, or just want to connect.
+                    </Desc>
+                    <ContactInfo>
+                        <InfoItem>
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                                <polyline points="22,6 12,13 2,6"/>
+                            </svg>
+                            turtlebole@gmail.com
+                        </InfoItem>
+                    </ContactInfo>
+                </LeftSection>
+
                 <ContactForm ref={form} onSubmit={handleSubmit}>
-                    <ContactTitle>Message me</ContactTitle>
-                    <ContactInput placeholder="Your Email" name="from_email" type="email" required aria-label="Your Email" />
-                    <ContactInput placeholder="Your Name" name="from_name" required aria-label="Your Name" />
-                    <ContactInput placeholder="Subject" name="subject" required aria-label="Subject" />
-                    <ContactInputMessage placeholder="Message" rows="4" name="message" required aria-label="Message" />
-                    <ContactButton type="submit">Send</ContactButton>
+                    <InputGroup>
+                        <Label>Name</Label>
+                        <Input name="from_name" required placeholder="Your name" />
+                    </InputGroup>
+                    <InputGroup>
+                        <Label>Email</Label>
+                        <Input type="email" name="from_email" required placeholder="Your email" />
+                    </InputGroup>
+                    <InputGroup>
+                        <Label>Subject</Label>
+                        <Input name="subject" required placeholder="About your subject" />
+                    </InputGroup>
+                    <InputGroup>
+                        <Label>Message</Label>
+                        <TextArea name="message" required placeholder="Your message" />
+                    </InputGroup>
+                    <SubmitButton type="submit">
+                        <svg 
+                            width="20" 
+                            height="20" 
+                            viewBox="0 0 24 24" 
+                            fill="none" 
+                            stroke="currentColor" 
+                            strokeWidth="2" 
+                            strokeLinecap="round" 
+                            strokeLinejoin="round"
+                        >
+                            <path d="M22 2L11 13"/>
+                            <path d="M22 2L15 22L11 13L2 9L22 2z"/>
+                        </svg>
+                        Send Message
+                    </SubmitButton>
                 </ContactForm>
-                <Snackbar
-                    open={open}
-                    autoHideDuration={6000}
-                    onClose={() => setOpen(false)}
-                    message={errorMessage || "Email sent successfully!"}
-                    severity={errorMessage ? "error" : "success"}
-                />
             </Wrapper>
+
+            <Snackbar 
+                open={open} 
+                autoHideDuration={6000} 
+                onClose={() => setOpen(false)}
+                anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+            >
+                <Alert 
+                    onClose={() => setOpen(false)} 
+                    severity={errorMessage ? "error" : "success"} 
+                    sx={{ width: '100%' }}
+                >
+                    {errorMessage || "Message sent successfully!"}
+                </Alert>
+            </Snackbar>
         </Container>
     );
 };

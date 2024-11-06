@@ -1,208 +1,186 @@
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 
-export const HeroContainer = styled.div`
-    display: flex;
-    justify-content: center;
-    position: relative;
-    padding: 80px 30px;
-    height: 100vh; 
-    @media (max-width: 960px) {
-        padding: 66px 16px;
-    }
-    @media (max-width: 640px) {
-        padding: 32px 16px;
-    }
-    z-index: 1;
+const fadeIn = keyframes`
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
 `;
 
-export const HeroBg = styled.div`
-    position: absolute;
+export const HeroContainer = styled.div`
+    position: relative;
     display: flex;
-    justify-content: end;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    max-width: 1360px;
-    overflow: hidden;
-    padding: 0 30px;
-    top: 50%;
-    left: 50%;
-    transform: translateX(-50%) translateY(-50%);
-    z-index: -1; /* Ensures it's behind other content */
-    canvas {
-        width: 100%;
-        height: 100%;
-        position: absolute;
-        top: 0;
-        left: 0;
-    }
-    @media (max-width: 960px) {
-        justify-content: center;
-        padding: 0;
+    justify-content: center;
+    align-items: center;
+    background: ${({ theme }) => theme.bg};
+    padding: 0 40px;
+    height: calc(100vh - 80px); // Adjust based on your navbar height
+
+    @media screen and (max-width: 960px) {
+        padding: 0 20px;
+        height: auto;
+        min-height: 100vh;
     }
 `;
 
 export const HeroInnerContainer = styled.div`
     position: relative;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr;
+    max-width: 1400px;
     width: 100%;
-    max-width: 1100px;
+    padding: 40px 0;
+    gap: 60px;
+    align-items: center;
+    animation: ${fadeIn} 1s ease;
 
-    @media (max-width: 960px) {
-        flex-direction: column;
+    @media screen and (max-width: 960px) {
+        grid-template-columns: 1fr;
+        padding: 80px 0;
+        gap: 30px;
     }
 `;
-export const HeroLeftContainer = styled.div`
-    width: 100%;
-    order: 1;
-    @media (max-width: 960px) {
-        order: 2;
-        margin-bottom: 30px;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-    }
 
-    @media (max-width: 640px) {
+export const HeroLeftContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    order: 1;
+
+    @media screen and (max-width: 960px) {
         order: 2;
-        margin-bottom: 30px;
-        display: flex;
-        flex-direction: column;
         align-items: center;
+        text-align: center;
     }
 `;
 
 export const HeroRightContainer = styled.div`
-    width: 100%;
     display: flex;
+    justify-content: center;
+    align-items: center;
     order: 2;
-    justify-content: end;
-    gap: 12px;
-    @media (max-width: 960px) {
-        order: 1;
-        justify-content: center;
-        align-items: center;
-        margin-top:5vh;
-        margin-bottom: 10vh;
+    position: relative;
+
+    &::before {
+        content: '';
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background: radial-gradient(circle at center, ${({ theme }) => theme.primary}20 0%, transparent 70%);
+        border-radius: 50%;
+        z-index: 0;
     }
 
-    @media (max-width: 640px) {
-        margin-top: 15vh;
+    @media screen and (max-width: 960px) {
+        order: 1;
     }
 `;
 
 export const Img = styled.img`
     position: relative;
-    width: 100%;
-    height: 100%;
-    max-width: 450px;
-    max-height: 450px;
+    width: 400px;
+    height: 400px;
     border-radius: 50%;
-    border: 2px solid ${({ theme }) => theme.colored_detail};
-    animation: glow 1.5s infinite alternate;
+    border: 4px solid ${({ theme }) => theme.primary};
     object-fit: cover;
-    user-select: none;
-    -moz-user-select: -moz-none;
-    -webkit-user-select: none;
-    @media (max-width: 768px) {
-        max-width: 400px;
-        max-height: 400px;
-    }
+    object-position: center;
+    z-index: 1;
+    filter: contrast(1.1) brightness(1.1);
+    box-shadow: 0 8px 30px rgba(0,0,0,0.12);
 
-    @media (max-width: 640px) {
-        max-width: 280px;
-        max-height: 280px;
-    }
-
-    @keyframes glow {
-        0% {
-            box-shadow: 0 0 15px 0 ${({ theme }) => theme.colored_detail};
-        }
-        100% {
-            box-shadow: 0 0 20px 10px ${({ theme }) => theme.colored_detail};
-        }
+    @media screen and (max-width: 768px) {
+        width: 280px;
+        height: 280px;
     }
 `;
 
-export const Title = styled.div`
-    font-weight: 700;
-    font-size: 50px;
+export const Title = styled.h1`
+    font-size: 60px;
+    font-weight: 800;
     color: ${({ theme }) => theme.text_primary};
-    line-height: 68px;
-    @media (max-width: 960px) {
-        text-align: center;
-    }
+    line-height: 1.1;
+    margin: 0;
+    background: linear-gradient(
+        to right,
+        ${({ theme }) => theme.text_primary} 0%,
+        ${({ theme }) => theme.primary} 100%
+    );
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 
-    @media (max-width: 640px) {
+    @media screen and (max-width: 768px) {
         font-size: 40px;
-        line-height: 48px;
-        margin-bottom: 8px;
     }
 `;
 
 export const TextLoop = styled.div`
-    font-weight: 600;
-    font-size: 32px;
     display: flex;
     gap: 12px;
+    font-size: 32px;
+    font-weight: 600;
     color: ${({ theme }) => theme.text_primary};
-    line-height: 68px;
-    @media (max-width: 960px) {
-        text-align: center;
-    }
-    @media (max-width: 640px) {
-        font-size: 22px;
-        line-height: 48px;
-        margin-bottom: 16px;
+    line-height: 1.2;
+
+    @media screen and (max-width: 768px) {
+        font-size: 24px;
+        align-items: center;
+        justify-content: center;
     }
 `;
 
 export const Span = styled.span`
     color: ${({ theme }) => theme.primary};
-    cursor: pointer;
+    cursor: default;
 `;
 
-export const SubTitle = styled.div`
+export const SubTitle = styled.p`
     font-size: 20px;
-    line-height: 32px;
-    margin-bottom: 42px;
-    color: ${({ theme }) => theme.text_primary + 95};
+    line-height: 1.6;
+    color: ${({ theme }) => theme.text_secondary};
+    margin: 0;
+    max-width: 600px;
 
-    @media (max-width: 960px) {
-        text-align: center;
-    }
-
-    @media (max-width: 640px) {
+    @media screen and (max-width: 768px) {
         font-size: 16px;
-        line-height: 32px;
     }
 `;
 
 export const ResumeButton = styled.a`
-    width: 100%;
-    text-decoration: none;
-    text-align: center;
-    background: ${({ theme }) => theme.buttonGradient};
-    padding: 13px 16px;
-    margin-top: 2px;
+    width: fit-content;
+    padding: 16px 32px;
+    background: ${({ theme }) => theme.primary}15;
+    color: ${({ theme }) => theme.primary};
+    border: 1.8px solid ${({ theme }) => theme.primary};
     border-radius: 12px;
-    border: none;
-    color: ${({ theme }) => theme.text_primary};
     font-size: 18px;
     font-weight: 600;
-    transition: all 0.5s ease-in-out;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+
+    svg {
+        font-size: 20px;
+    }
+
     &:hover {
-        transform: scale(1.2);
-        filter: brightness(1.2);
+        background: ${({ theme }) => theme.primary}30;
+        color: ${({ theme }) => theme.primary};
+        box-shadow: 0 5px 10px ${({ theme }) => theme.primary}15;
+    }
+
+    @media screen and (max-width: 768px) {
+        padding: 12px 24px;
+        font-size: 16px;
+        
+        svg {
+            font-size: 18px;
+        }
     }
 `;
 
-export const ResumeButtonComponent = () => {
+export const ResumeButtonComponent = ({ children }) => {
     const handleDownload = (event) => {
         event.preventDefault();
         const fileUrl = '/CV/CV.pdf';
@@ -218,7 +196,21 @@ export const ResumeButtonComponent = () => {
 
     return (
         <ResumeButton href="#" onClick={handleDownload}>
-            Download CV
+            <svg 
+                width="20" 
+                height="20" 
+                viewBox="0 0 24 24" 
+                fill="none" 
+                stroke="currentColor" 
+                strokeWidth="2" 
+                strokeLinecap="round" 
+                strokeLinejoin="round"
+            >
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                <polyline points="7 10 12 15 17 10"/>
+                <line x1="12" y1="15" x2="12" y2="3"/>
+            </svg>
+            {children}
         </ResumeButton>
     );
 };
