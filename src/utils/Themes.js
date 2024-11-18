@@ -1,34 +1,34 @@
 export const darkTheme = {
-    bg: "#0F1219",
-    bgLight: "#171B24",
-    primary: "#5B6EE1",
+    bg: "#0A0A0A",
+    bgLight: "#1A1A1A",
+    primary: "#595959",
     text_primary: "#FFFFFF",
-    text_secondary: "#B4BDDB",
-    text_skills: "#9BA5CC",
-    card: "#1A1F2B",
-    card_light: "#202634",
-    button: "#5B6EE1",
+    text_secondary: "#E0E0E0",
+    text_skills: "#F0F0F0",
+    card: "#171717",
+    card_light: "#2B2B2B",
+    button: "#757575",
     white: "#FFFFFF",
     black: "#000000",
-    colored_detail: "#FFFFFF",
-    highlighted_svg: "#5B6EE1",
-    buttonGradient: "linear-gradient(180deg, #5B6EE1 0%, #4557C0 100%)"
+    colored_detail: "#BDBDBD",
+    highlighted_svg: "#9E9E9E",
+    buttonGradient: "linear-gradient(180deg, #757575 0%, #595959 100%)"
 };
 
 export const lightTheme = {
-    bg: "#F8F9FC",
-    bgLight: "#FFFFFF",
-    primary: "#5B6EE1",
-    text_primary: "#1A1F2B",
-    text_secondary: "#4A5571",
-    text_skills: "#566388",
+    bg: "#FFFFFF",
+    bgLight: "#FAFAFA",
+    primary: "#424242",
+    text_primary: "#121212",
+    text_secondary: "#2C2C2C",
+    text_skills: "#1F1F1F",
     card: "#FFFFFF",
-    card_light: "#F0F2F8",
-    button: "#5B6EE1",
+    card_light: "#F5F5F5",
+    button: "#616161",
     white: "#FFFFFF",
     black: "#000000",
-    colored_detail: "#000000",
-    highlighted_svg: "#5B6EE1",
-    buttonGradient: "linear-gradient(180deg, #6576E4 0%, #5B6EE1 100%)"
+    colored_detail: "#757575",
+    highlighted_svg: "#616161",
+    buttonGradient: "linear-gradient(180deg, #616161 0%, #424242 100%)"
 };
 
