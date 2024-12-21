@@ -1,216 +1,141 @@
 import styled, { keyframes } from "styled-components";
+import avatarImage from '../../images/avatar.jpg';
+
+const spin = keyframes`
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+`;
 
 const fadeIn = keyframes`
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+`;
+
+const pulse = keyframes`
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
 `;
 
 export const HeroContainer = styled.div`
     position: relative;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    min-height: 100vh;
     background: ${({ theme }) => theme.bg};
-    padding: 0 40px;
-    height: calc(100vh - 80px); // Adjust based on your navbar height
-
-    @media screen and (max-width: 960px) {
-        padding: 0 20px;
-        height: auto;
-        min-height: 100vh;
-    }
-`;
-
-export const HeroInnerContainer = styled.div`
-    position: relative;
-    display: grid;
-    grid-template-columns: 1.2fr 0.8fr;
-    max-width: 1400px;
-    width: 100%;
-    padding: 40px 0;
-    gap: 60px;
+    overflow: hidden;
+    display: flex;
     align-items: center;
-    animation: ${fadeIn} 1s ease;
-
-    @media screen and (max-width: 960px) {
-        grid-template-columns: 1fr;
-        padding: 80px 0;
-        gap: 30px;
-    }
-`;
-
-export const HeroLeftContainer = styled.div`
-    display: flex;
-    flex-direction: column;
-    gap: 32px;
-    order: 1;
-
-    @media screen and (max-width: 960px) {
-        order: 2;
-        align-items: center;
-        text-align: center;
-    }
-`;
-
-export const HeroRightContainer = styled.div`
-    display: flex;
     justify-content: center;
-    align-items: center;
-    order: 2;
-    position: relative;
-
+    
     &::before {
         content: '';
         position: absolute;
-        width: 100%;
-        height: 100%;
-        background: radial-gradient(circle at center, ${({ theme }) => theme.primary}20 0%, transparent 70%);
-        border-radius: 50%;
-        z-index: 0;
-    }
-
-    @media screen and (max-width: 960px) {
-        order: 1;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: radial-gradient(circle at center, 
+            ${({ theme }) => `${theme.primary}15`} 0%,
+            transparent 70%);
     }
 `;
 
-export const Img = styled.img`
-    position: relative;
-    width: 400px;
-    height: 400px;
-    border-radius: 50%;
-    border: 4px solid ${({ theme }) => theme.primary};
-    object-fit: cover;
-    object-position: center;
-    z-index: 1;
-    filter: contrast(1.1) brightness(1.1);
-    box-shadow: 0 8px 30px rgba(0,0,0,0.12);
-
-    @media screen and (max-width: 768px) {
-        width: 280px;
-        height: 280px;
-    }
-`;
-
-export const Title = styled.h1`
-    font-size: 60px;
-    font-weight: 800;
-    color: ${({ theme }) => theme.text_primary};
-    line-height: 1.1;
-    margin: 0;
+export const BlackParade = styled.div`
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 100%;
     background: linear-gradient(
-        to right,
-        ${({ theme }) => theme.text_primary} 0%,
-        ${({ theme }) => theme.primary} 100%
+        0deg,
+        transparent 0%,
+        ${({ theme }) => `${theme.primary}10`} 50%,
+        transparent 100%
     );
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-
-    @media screen and (max-width: 768px) {
-        font-size: 40px;
-    }
+    pointer-events: none;
 `;
 
-export const TextLoop = styled.div`
+export const HeroContent = styled.div`
+    position: relative;
     display: flex;
-    gap: 12px;
-    font-size: 32px;
-    font-weight: 600;
-    color: ${({ theme }) => theme.text_primary};
-    line-height: 1.2;
-
-    @media screen and (max-width: 768px) {
-        font-size: 24px;
-        align-items: center;
-        justify-content: center;
-    }
-`;
-
-export const Span = styled.span`
-    color: ${({ theme }) => theme.primary};
-    cursor: default;
-`;
-
-export const SubTitle = styled.p`
-    font-size: 20px;
-    line-height: 1.6;
-    color: ${({ theme }) => theme.text_secondary};
-    margin: 0;
-    max-width: 600px;
-
-    @media screen and (max-width: 768px) {
-        font-size: 16px;
-    }
-`;
-
-export const ResumeButton = styled.a`
-    width: fit-content;
-    padding: 16px 32px;
-    background: ${({ theme }) => theme.primary}15;
-    color: ${({ theme }) => theme.primary};
-    border: 1.8px solid ${({ theme }) => theme.primary};
-    border-radius: 12px;
-    font-size: 18px;
-    font-weight: 600;
-    text-decoration: none;
-    transition: all 0.2s ease;
-    cursor: pointer;
-    display: inline-flex;
+    flex-direction: column;
     align-items: center;
-    justify-content: center;
-    gap: 8px;
+    gap: 2rem;
+    padding: 2rem;
+    z-index: 2;
+    animation: ${fadeIn} 1s ease;
+`;
 
-    svg {
-        font-size: 20px;
+export const VinylRecord = styled.div`
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+    background: ${({ theme }) => theme.bg};
+    position: relative;
+    animation: ${spin} 20s linear infinite;
+    box-shadow: 0 0 30px ${({ theme }) => `${theme.primary}30`};
+    
+    &::before {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 120px;
+        height: 120px;
+        background: url(${avatarImage}) center center/cover;
+        border-radius: 50%;
+        transform: translate(-50%, -50%);
+        border: 4px solid ${({ theme }) => theme.primary};
     }
 
-    &:hover {
-        background: ${({ theme }) => theme.primary}30;
-        color: ${({ theme }) => theme.primary};
-        box-shadow: 0 5px 10px ${({ theme }) => theme.primary}15;
+    &::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        border-radius: 50%;
+        background: repeating-radial-gradient(
+            circle at center,
+            ${({ theme }) => `${theme.text_primary}10`} 0%,
+            ${({ theme }) => `${theme.text_primary}10`} 2px,
+            transparent 2px,
+            transparent 7px
+        );
+        border: 1px solid ${({ theme }) => `${theme.text_primary}30`};
     }
 
-    @media screen and (max-width: 768px) {
-        padding: 12px 24px;
-        font-size: 16px;
-        
-        svg {
-            font-size: 18px;
+    @media (max-width: 768px) {
+        width: 200px;
+        height: 200px;
+
+        &::before {
+            width: 60px;
+            height: 60px;
         }
     }
 `;
 
-export const ResumeButtonComponent = ({ children }) => {
-    const handleDownload = (event) => {
-        event.preventDefault();
-        const fileUrl = '/CV/CV.pdf';
-        const fileName = 'CV.pdf';
+export const MainTitle = styled.h1`
+    font-size: 3.5rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    text-align: center;
+    color: ${({ theme }) => theme.text_primary};
+    text-shadow: 0 0 10px ${({ theme }) => theme.primary};
+    letter-spacing: 4px;
+    animation: ${pulse} 2s infinite;
 
-        const link = document.createElement('a');
-        link.href = fileUrl;
-        link.download = fileName;
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-    };
+    @media (max-width: 768px) {
+        font-size: 2rem;
+    }
+`;
 
-    return (
-        <ResumeButton href="#" onClick={handleDownload}>
-            <svg 
-                width="20" 
-                height="20" 
-                viewBox="0 0 24 24" 
-                fill="none" 
-                stroke="currentColor" 
-                strokeWidth="2" 
-                strokeLinecap="round" 
-                strokeLinejoin="round"
-            >
-                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-                <polyline points="7 10 12 15 17 10"/>
-                <line x1="12" y1="15" x2="12" y2="3"/>
-            </svg>
-            {children}
-        </ResumeButton>
-    );
-};
+export const SubTitle = styled.p`
+    font-size: 1.2rem;
+    color: ${({ theme }) => theme.text_secondary};
+    text-align: center;
+    max-width: 600px;
+    margin: 0 auto;
+    font-style: italic;
+`;

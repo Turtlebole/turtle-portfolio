@@ -1,284 +1,122 @@
 export const Bio = {
-  title: "Greetings, I am Bojan",
-  roles: [
-    "Web Development",
-    "Learning about Tech",
-    "Gaming"
-  ],
-  description:
-    "Passionate software and web developer from Serbia\nInterested in Frontend development, embedded and AI",
-  github: "https://github.com/Turtlebole",
-  resume:
-    "",
-  linkedin: "https://www.linkedin.com/in/babicbojan/",
+  typewriter: {
+    strings: [
+      'When I was a young boy...',
+      'The Black Parade Lives',
+      'Welcome to the Dark Side'
+    ],
+    autoStart: true,
+    loop: true,
+    delay: 80,
+    deleteSpeed: 50,
+  },
+  subtitle: "Jedina prava When We Were Young žurka u Novom Sadu"
 };
 
-export const skills = [
-  {
-    title: "Frontend",
-    skills: [
-      {
-        name: "Angular",
-        image:
-          "https://raw.githubusercontent.com/tandpfun/skill-icons/65dea6c4eaca7da319e552c09f4cf5a9a8dab2c8/icons/Angular-Dark.svg",
-      },
-      {
-        name: "React Js",
-        image:
-          "https://raw.githubusercontent.com/tandpfun/skill-icons/65dea6c4eaca7da319e552c09f4cf5a9a8dab2c8/icons/React-Dark.svg",
-      },
-      {
-        name: "Vue Js",
-        image:
-            "https://raw.githubusercontent.com/tandpfun/skill-icons/65dea6c4eaca7da319e552c09f4cf5a9a8dab2c8/icons/VueJS-Dark.svg",
-      },
-      {
-        name: "Nuxt Js",
-        image:
-            "https://raw.githubusercontent.com/tandpfun/skill-icons/65dea6c4eaca7da319e552c09f4cf5a9a8dab2c8/icons/NuxtJS-Dark.svg",
-      },
-      {
-        name: "Next Js",
-        image:
-          "https://raw.githubusercontent.com/tandpfun/skill-icons/65dea6c4eaca7da319e552c09f4cf5a9a8dab2c8/icons/NextJS-Dark.svg",
-      },
-      {
-        name: "JavaScript",
-        image:
-          "https://raw.githubusercontent.com/tandpfun/skill-icons/65dea6c4eaca7da319e552c09f4cf5a9a8dab2c8/icons/JavaScript.svg",
-      },
-      {
-        name: "TypeScript",
-        image:
-          "https://raw.githubusercontent.com/tandpfun/skill-icons/65dea6c4eaca7da319e552c09f4cf5a9a8dab2c8/icons/TypeScript.svg",
-      },
-      {
-        name: "HTML",
-        image: "https://raw.githubusercontent.com/tandpfun/skill-icons/65dea6c4eaca7da319e552c09f4cf5a9a8dab2c8/icons/HTML.svg",
-      },
-      {
-        name: "CSS",
-        image:
-          "https://raw.githubusercontent.com/tandpfun/skill-icons/65dea6c4eaca7da319e552c09f4cf5a9a8dab2c8/icons/CSS.svg",
-      },
-      {
-        name: "Bootstrap",
-        image:
-          "https://raw.githubusercontent.com/tandpfun/skill-icons/65dea6c4eaca7da319e552c09f4cf5a9a8dab2c8/icons/Bootstrap.svg",
-      },
-      {
-        name: "Tailwind",
-        image:
-          "https://raw.githubusercontent.com/tandpfun/skill-icons/65dea6c4eaca7da319e552c09f4cf5a9a8dab2c8/icons/TailwindCSS-Dark.svg",
-      },
-     
-    ],
-  },
-  {
-    title: "Backend",
-    skills: [
-      {
-        name: "C#",
-        image:
-          "https://raw.githubusercontent.com/tandpfun/skill-icons/65dea6c4eaca7da319e552c09f4cf5a9a8dab2c8/icons/CS.svg",
-      },
-      {
-        name: "Java",
-        image:
-          "https://raw.githubusercontent.com/tandpfun/skill-icons/65dea6c4eaca7da319e552c09f4cf5a9a8dab2c8/icons/Java-Dark.svg",
-      },
-      {
-        name: "Python",
-        image:
-          "https://raw.githubusercontent.com/tandpfun/skill-icons/65dea6c4eaca7da319e552c09f4cf5a9a8dab2c8/icons/Python-Dark.svg",
-      },
-      {
-        name: "Go",
-        image:
-          "https://raw.githubusercontent.com/tandpfun/skill-icons/65dea6c4eaca7da319e552c09f4cf5a9a8dab2c8/icons/GoLang.svg",
-      },
-    ],
-  },
-  {
-    title: "Database",
-    skills: [
-      {
-        name: "MsSQL",
-        image:
-          "http://upload.wikimedia.org/wikipedia/de/8/8c/Microsoft_SQL_Server_Logo.svg",
-      },
-      {
-        name: "MySQL",
-        image:
-          "https://raw.githubusercontent.com/tandpfun/skill-icons/65dea6c4eaca7da319e552c09f4cf5a9a8dab2c8/icons/MySQL-Dark.svg",
-      },
-      {
-        name: "Postgresql",
-        image: "https://raw.githubusercontent.com/tandpfun/skill-icons/65dea6c4eaca7da319e552c09f4cf5a9a8dab2c8/icons/PostgreSQL-Dark.svg",
-      },
-      {
-        name: "MongoDB",
-        image:
-          "https://raw.githubusercontent.com/tandpfun/skill-icons/65dea6c4eaca7da319e552c09f4cf5a9a8dab2c8/icons/MongoDB.svg",
-      },
-      {
-        name: "Firebase",
-        image: "https://raw.githubusercontent.com/tandpfun/skill-icons/65dea6c4eaca7da319e552c09f4cf5a9a8dab2c8/icons/Firebase-Dark.svg",
-      },
-    ]
-  },
-];
-
-export const projects = [
+export const galleryImages = [
   {
     id: 1,
-    title: "Laplacia",
-    date: "2023 - Present",
-    description: "Web application used to assist writers...",
-    images: [
-      "https://i.imgur.com/um67xkT.png",
-      "https://i.imgur.com/example2.png",
-      "https://i.imgur.com/example3.png"
-    ],
-    tags: [
-      "C#",
-      ".NET",
-      "PostgreSQL",
-      "Angular",
-      "Docker",
-      "DDD",
-      "REST API",
-      "Entity Framework"
-    ],
-    category: "web",
-    github: "https://github.com/ProjectLaplacia",
-    webapp: "#",
-    type: "Full Stack Application",
-    role: "Lead Developer",
-    status: "In Development",
-    duration: "6+ months",
-    additionalImages: [
-      "https://i.imgur.com/um67xkT.png",
-      // Add more image URLs when available
-    ]
+    url: "https://media.pitchfork.com/photos/64dfb1f211b236152dd5555c/master/pass/My-Chemical-Romance.jpg",
+    title: "DJ Nightmare Spins",
   },
   {
     id: 2,
-    title: "Airbnb Clone",
-    date: "2023",
-    description: "A comprehensive fullstack clone of Airbnb...",
-    images: [
-      "https://i.imgur.com/um67xkT.png",
-      "https://i.imgur.com/example2.png",
-      "https://i.imgur.com/example3.png"
-    ],
-    tags: [
-      "Go",
-      "Angular",
-      "MongoDB",
-      "CassandraDB",
-      "Docker",
-      "Microservices",
-      "REST API",
-      "JWT Auth"
-    ],
-    category: "web",
-    github: "https://github.com/Turtlebole/airbnb-msa-mockup",
-    webapp: "#",
-    type: "Microservices Application",
-    role: "Full Stack Developer",
-    status: "Completed",
-    duration: "3 months",
-    additionalImages: [
-      "https://i.imgur.com/um67xkT.png",
-      // Add more image URLs when available
-    ]
+    url: "https://i.scdn.co/image/ab67616d0000b27317f77fab7e8f18d5f9fee4a1",
+    title: "DJ Nightmare Spins",
   },
   {
     id: 3,
-    title: "Fitness Manager",
-    date: "2023",
-    description: "A comprehensive desktop application for fitness center management...",
-    images: [
-      "https://i.imgur.com/um67xkT.png",
-      "https://i.imgur.com/example2.png",
-      "https://i.imgur.com/example3.png"
-    ],
-    tags: [
-      "C#",
-      ".NET",
-      "MicrosoftSQL",
-      "Windows Forms",
-      "Entity Framework",
-      "LINQ",
-      "Repository Pattern"
-    ],
-    category: "desktop",
-    github: "https://github.com/Turtlebole/fitness-center-manager",
-    webapp: "#",
-    type: "Desktop Application",
-    role: "Backend Developer",
-    status: "Completed",
-    duration: "2 months",
-    additionalImages: [
-      "https://i.imgur.com/um67xkT.png",
-      // Add more image URLs when available
-    ]
+    url: "https://64.media.tumblr.com/e2e1c14e43d67b3c7b4f9e8e2bdaee29/d8b9af7a89963edc-32/s500x750/51e268fe899e697d866df55017fe32aa64e05a45.jpg",
+    title: "DJ Nightmare Spins",
   },
   {
     id: 4,
-    title: "Project 4", // Update with actual project
-    date: "2023",
-    description: "Detailed description of the project goes here...",
-    images: [
-      "https://i.imgur.com/um67xkT.png",
-      "https://i.imgur.com/example2.png",
-      "https://i.imgur.com/example3.png"
-    ],
-    tags: [
-      "React",
-      "Node.js",
-      "MongoDB",
-      "Express"
-    ],
-    category: "web",
-    github: "https://github.com/yourusername/project4",
-    webapp: "#",
-    type: "Full Stack Application",
-    role: "Frontend Developer",
-    status: "Completed",
-    duration: "3 months",
-    additionalImages: [
-      "https://i.imgur.com/um67xkT.png",
-      // Add more image URLs when available
-    ]
+    url: "https://upload.wikimedia.org/wikipedia/en/9/95/Skilletawake2009albumart.jpg",
+    title: "DJ Nightmare Spins",
   },
   {
     id: 5,
-    title: "Project 5", // Update with actual project
-    date: "2023",
-    description: "Detailed description of the project goes here...",
-    images: [
-      "https://i.imgur.com/um67xkT.png",
-      "https://i.imgur.com/example2.png",
-      "https://i.imgur.com/example3.png"
-    ],
-    tags: [
-      "Vue.js",
-      "Python",
-      "Django",
-      "PostgreSQL"
-    ],
-    category: "web",
-    github: "https://github.com/yourusername/project5",
-    webapp: "#",
-    type: "Web Application",
-    role: "Full Stack Developer",
-    status: "Completed",
-    duration: "4 months",
-    additionalImages: [
-      "https://i.imgur.com/um67xkT.png",
-      // Add more image URLs when available
-    ]
+    url: "https://cdn-images.dzcdn.net/images/cover/1e55355d3418513d0577950b484af017/0x1900-000000-80-0-0.jpg",
+    title: "DJ Nightmare Spins",
+  },
+  {
+    id: 6,
+    url: "https://cdn-images.dzcdn.net/images/cover/40ee194a256aad119746d7718b66977b/0x1900-000000-80-0-0.jpg",
+    title: "DJ Nightmare Spins",
+  }
+];
+
+export const PartyDetails = {
+  title: "Sledeća žurka",
+  details: [
+    {
+      icon: "faCalendarAlt",
+      title: "Datum",
+      text: "Subota, 18.1.2025 u 20:00"
+    },
+    {
+      icon: "faMapMarkerAlt",
+      title: "Lokacija",
+      text: "KC Lab, Dr. Hempta 2"
+    },
+    {
+      icon: "faUsers",
+      title: "Broj mesta",
+      text: "Predviđeno 300 ljudi"
+    },
+    {
+      icon: "faTicketAlt",
+      title: "Cena ulaza",
+      text: "300 RSD"
+    }
+  ]
+};
+
+export const extendedGalleryImages = [
+  {
+    id: 1,
+    url: "https://www.instagram.com/p/DCSLpPrIeCH/?img_index=1",
+    title: "DJ Nightmare Spins",
+  },
+  {
+    id: 2,
+    url: "https://raw.githubusercontent.com/Turtlebole/portfolio-images/main/gallery/event2.jpg",
+    title: "DJ Nightmare Spins",
+  },
+  {
+    id: 3,
+    url: "https://raw.githubusercontent.com/Turtlebole/portfolio-images/main/gallery/event3.jpg",
+    title: "DJ Nightmare Spins",
+  },
+  {
+    id: 4,
+    url: "https://raw.githubusercontent.com/Turtlebole/portfolio-images/main/gallery/event4.jpg",
+    title: "DJ Nightmare Spins",
+    description: "Spooky season party"
+  },
+  {
+    id: 5,
+    url: "https://raw.githubusercontent.com/Turtlebole/portfolio-images/main/gallery/event5.jpg",
+    title: "DJ Nightmare Spins",
+  },
+  {
+    id: 6,
+    url: "https://raw.githubusercontent.com/Turtlebole/portfolio-images/main/gallery/event6.jpg",
+    title: "Valentine's Day",
+  },
+  {
+    id: 7,
+    url: "https://raw.githubusercontent.com/Turtlebole/portfolio-images/main/gallery/event7.jpg",
+    title: "DJ Nightmare Spins",
+  },
+  {
+    id: 8,
+    url: "https://raw.githubusercontent.com/Turtlebole/portfolio-images/main/gallery/event8.jpg",
+    title: "DJ Nightmare Spins",
+  },
+  {
+    id: 9,
+    url: "https://raw.githubusercontent.com/Turtlebole/portfolio-images/main/gallery/event9.jpg",
+    title: "DJ Nightmare Spins",
   }
 ];

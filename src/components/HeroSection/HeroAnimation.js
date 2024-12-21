@@ -1,30 +1,28 @@
 import React, { useRef, useEffect } from 'react';
 
-const LightweightParticles = ({ theme }) => {
+const HeroAnimation = ({ theme }) => {
     const canvasRef = useRef(null);
+    const particles = useRef(null);
 
     useEffect(() => {
         const canvas = canvasRef.current;
         const ctx = canvas.getContext('2d');
         let animationFrameId;
-        let particles = [];
         
-        // Configuration
         const config = {
-            particleCount: 80,
-            particleColor: theme === 'light' ? '0, 0, 0' : '255, 255, 255',
-            lineColor: theme === 'light' ? '0, 0, 0' : '255, 255, 255',
-            particleRadius: 1.5,
-            lineWidth: 0.8,
-            lineDistance: 200,
-            mouseDistance: 150,
-            particleSpeed: 0.5,
-            mouseRadius: 120,
-            maxConnections: 5,
-            baseOpacity: 0.5
+            particleCount: 100,
+            particleColor: theme === 'light' ? '255, 0, 0' : '255, 0, 0', 
+            lineColor: theme === 'light' ? '255, 0, 0' : '255, 0, 0',
+            particleRadius: 2,
+            lineWidth: 1,
+            lineDistance: 150,
+            mouseDistance: 200,
+            particleSpeed: 1.5, 
+            mouseRadius: 150,
+            maxConnections: 3,
+            baseOpacity: 0.6
         };
 
-        // Handle window resize
         const resize = () => {
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
@@ -38,12 +36,17 @@ const LightweightParticles = ({ theme }) => {
                 this.vy = Math.random() * config.particleSpeed - config.particleSpeed/2;
                 this.radius = config.particleRadius;
                 this.connections = 0;
+                this.pulse = 0;
+                this.pulseSpeed = 0.05;
             }
 
             draw() {
+                this.pulse += this.pulseSpeed;
+                const pulseFactor = Math.sin(this.pulse) * 0.5 + 1;
+                
                 ctx.beginPath();
-                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-                ctx.fillStyle = `rgba(${config.particleColor}, ${config.baseOpacity})`;
+                ctx.arc(this.x, this.y, this.radius * pulseFactor, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(${config.particleColor}, ${config.baseOpacity * pulseFactor})`;
                 ctx.fill();
             }
 
@@ -60,22 +63,22 @@ const LightweightParticles = ({ theme }) => {
         }
 
         const init = () => {
-            particles = [];
+            particles.current = [];
             for (let i = 0; i < config.particleCount; i++) {
-                particles.push(new Particle());
+                particles.current.push(new Particle());
             }
         };
 
         const connectParticles = () => {
-            particles.forEach(particle => particle.connections = 0);
+            particles.current.forEach(particle => particle.connections = 0);
 
-            for (let i = 0; i < particles.length; i++) {
+            for (let i = 0; i < particles.current.length; i++) {
                 const distances = [];
                 
-                for (let j = 0; j < particles.length; j++) {
+                for (let j = 0; j < particles.current.length; j++) {
                     if (i !== j) {
-                        const dx = particles[i].x - particles[j].x;
-                        const dy = particles[i].y - particles[j].y;
+                        const dx = particles.current[i].x - particles.current[j].x;
+                        const dy = particles.current[i].y - particles.current[j].y;
                         const distance = Math.sqrt(dx * dx + dy * dy);
 
                         if (distance < config.lineDistance) {
@@ -90,20 +93,20 @@ const LightweightParticles = ({ theme }) => {
                 distances.sort((a, b) => a.distance - b.distance);
                 
                 distances.slice(0, config.maxConnections).forEach(({ particleIndex, distance }) => {
-                    const particle2 = particles[particleIndex];
+                    const particle2 = particles.current[particleIndex];
                     
-                    if (particles[i].connections < config.maxConnections && 
+                    if (particles.current[i].connections < config.maxConnections && 
                         particle2.connections < config.maxConnections) {
                         
                         const opacity = (1 - (distance / config.lineDistance)) * config.baseOpacity;
                         ctx.beginPath();
                         ctx.strokeStyle = `rgba(${config.lineColor}, ${opacity})`;
                         ctx.lineWidth = config.lineWidth;
-                        ctx.moveTo(particles[i].x, particles[i].y);
+                        ctx.moveTo(particles.current[i].x, particles.current[i].y);
                         ctx.lineTo(particle2.x, particle2.y);
                         ctx.stroke();
 
-                        particles[i].connections++;
+                        particles.current[i].connections++;
                         particle2.connections++;
                     }
                 });
@@ -117,7 +120,7 @@ const LightweightParticles = ({ theme }) => {
                 y: e.clientY - rect.top
             };
 
-            particles.forEach(particle => {
+            particles.current.forEach(particle => {
                 const dx = mouse.x - particle.x;
                 const dy = mouse.y - particle.y;
                 const distance = Math.sqrt(dx * dx + dy * dy);
@@ -134,7 +137,7 @@ const LightweightParticles = ({ theme }) => {
         const animate = () => {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             
-            particles.forEach(particle => {
+            particles.current.forEach(particle => {
                 particle.update();
                 particle.draw();
             });
@@ -169,11 +172,12 @@ const LightweightParticles = ({ theme }) => {
                 left: 0,
                 width: '100%',
                 height: '100%',
-                opacity: 0.7,
-                pointerEvents: 'none'
+                opacity: 0.8,
+                pointerEvents: 'none',
+                background: 'radial-gradient(circle at center, rgba(255,0,0,0.1) 0%, rgba(0,0,0,0) 70%)'
             }}
         />
     );
 };
 
-export default LightweightParticles;
+export default HeroAnimation;

@@ -1,17 +1,61 @@
 import React from 'react';
+import { useTheme } from 'styled-components';
 
-const ThemeToggleIcon = () => (
-    <svg
-        viewBox="0 0 24 24"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
+const ThemeToggleIcon = () => {
+  const theme = useTheme();
+  
+  return (
+    <svg 
+      width="24" 
+      height="24" 
+      viewBox="0 0 24 24" 
+      fill="none" 
+      xmlns="http://www.w3.org/2000/svg"
+      style={{ transition: 'all 0.3s ease' }}
     >
+      {theme.name === 'dark' ? (
+        // Sun icon with rays for light mode
+        <>
+          <circle 
+            cx="12" 
+            cy="12" 
+            r="5" 
+            stroke={theme.primary} 
+            strokeWidth="2"
+            fill="none"
+          />
+          {/* Rays */}
+          {[0, 45, 90, 135, 180, 225, 270, 315].map((angle) => (
+            <line
+              key={angle}
+              x1="12"
+              y1="12"
+              x2={12 + Math.cos(angle * Math.PI / 180) * 8}
+              y2={12 + Math.sin(angle * Math.PI / 180) * 8}
+              stroke={theme.primary}
+              strokeWidth="2"
+              strokeLinecap="round"
+              transform={`rotate(${angle} 12 12)`}
+              style={{
+                transformOrigin: 'center',
+                opacity: 0.7
+              }}
+            />
+          ))}
+        </>
+      ) : (
+        // Crescent moon for dark mode
         <path
-            d="M12 4V2M12 22v-2M6.34 6.34L4.93 4.93M19.07 19.07l-1.41-1.41M4 12H2M22 12h-2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41M17 12a5 5 0 11-10 0 5 5 0 0110 0z"
-            strokeLinecap="round"
-            strokeLinejoin="round"
+          d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"
+          stroke={theme.primary}
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          fill="none"
         />
+      )}
     </svg>
-);
+  );
+};
 
 export default ThemeToggleIcon; 

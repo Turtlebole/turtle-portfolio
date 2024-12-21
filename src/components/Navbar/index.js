@@ -1,5 +1,16 @@
 import React, { useState, useCallback } from 'react';
-import { Nav, NavLink, NavbarContainer, Span, ColoredSpan, NavLogo, NavItems, GitHubButton, ButtonContainer, MobileIcon, MobileMenu, MobileLink, ThemeButton } from './NavbarStyledComponent';
+import { 
+    Nav, 
+    NavLink, 
+    NavbarContainer, 
+    NavLogo, 
+    NavItems, 
+    ButtonContainer, 
+    MobileIcon, 
+    MobileMenu, 
+    MobileLink, 
+    ThemeButton
+} from './NavbarStyledComponent';
 import { FaBars } from 'react-icons/fa';
 import { Bio } from '../../data/constants';
 import { useTheme } from 'styled-components';
@@ -27,9 +38,7 @@ const Navbar = ({ toggleTheme }) => {
     <Nav>
       <NavbarContainer>
         <NavLogo to='/'>
-          <Span>
-            Turtle<ColoredSpan>Bole</ColoredSpan>
-          </Span>
+          <span>DJ Nightmare Spins</span>
         </NavLogo>
         <MobileIcon onClick={() => setIsOpen(!isOpen)}>
           <FaBars />
@@ -37,10 +46,10 @@ const Navbar = ({ toggleTheme }) => {
 
         <ButtonContainer>
           <NavItems>
-            <NavLink onClick={() => handleNavigation('/', '#skills')}>Skills</NavLink>
-            <NavLink onClick={() => handleNavigation('/', '#projects')}>Projects</NavLink>
-            <NavLink href='/blog'>Blog</NavLink>
-            <GitHubButton href={Bio.github} target="_blank">Github</GitHubButton>
+            <NavLink onClick={() => handleNavigation('/', '#events')}>Događaji</NavLink>
+            <NavLink onClick={() => handleNavigation('/', '#music')}>Radio</NavLink>
+            <NavLink onClick={() => handleNavigation('/', '#gallery')}>Highlight</NavLink>
+            <NavLink onClick={() => handleNavigation('/gallery', '#')}>Galerija</NavLink>
             <ThemeButton onClick={toggleTheme}>
               <ThemeToggleIcon />
             </ThemeButton>
@@ -49,22 +58,12 @@ const Navbar = ({ toggleTheme }) => {
 
         {isOpen && (
           <MobileMenu isOpen={isOpen}>
-            <MobileLink onClick={() => { handleNavigation('/', '#skills'); setIsOpen(!isOpen); }}>Skills</MobileLink>
-            <MobileLink onClick={() => { handleNavigation('/', '#projects'); setIsOpen(!isOpen); }}>Projects</MobileLink>
-            <MobileLink href='/blog' onClick={() => setIsOpen(!isOpen)}>Blog</MobileLink>
+            <MobileLink onClick={() => { handleNavigation('/', '#events'); setIsOpen(!isOpen); }}>Događaji</MobileLink>
+            <MobileLink onClick={() => { handleNavigation('/', '#music'); setIsOpen(!isOpen); }}>Radio</MobileLink>
+            <MobileLink onClick={() => { handleNavigation('/', '#gallery'); setIsOpen(!isOpen); }}>Highlight</MobileLink>
+            <MobileLink onClick={() => { handleNavigation('/gallery', '#'); setIsOpen(!isOpen); }}>Galerija</MobileLink>
 
             <div style={{ display: 'flex', gap: '12px', marginTop: '16px', alignItems: 'center' }}>
-              <GitHubButton 
-                style={{ 
-                  background: theme.bgLight, 
-                  color: theme.text_primary, 
-                  border: `1.8px solid ${theme.primary}` 
-                }} 
-                href={Bio.github} 
-                target="_blank"
-              >
-                Github
-              </GitHubButton>
               <ThemeButton 
                 onClick={() => { 
                   toggleTheme(); 

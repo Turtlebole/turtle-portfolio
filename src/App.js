@@ -6,13 +6,11 @@ import Footer from "./components/Footer";
 import './App.css';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import HeroSection from "./components/HeroSection";
-import Skills from "./components/Skills";
-import Contact from "./components/Contact";
+import PartyInfo from "./components/PartyInfo";
+import Playlists from "./components/Playlists/index.js";
 import styled from "styled-components";
-import Projects from "./components/Projects";
-import ProjectPage from "./pages/ProjectPage/ProjectPage.js";
-import PostList from "./pages/BlogPage/PostList";
-import PostPage from "./pages/BlogPage/PostPage";
+import GalleryPage from "./pages/GalleryPage";
+import Gallery from "./components/Gallery";
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
@@ -67,13 +65,13 @@ function Home({ darkMode, toggleTheme, sectionsRef }) {
         <>
             <HeroSection theme={darkMode ? 'dark' : 'light'} />
             <Section ref={el => sectionsRef.current[0] = el}>
-                <Skills />
+                <PartyInfo />
             </Section>
             <Section ref={el => sectionsRef.current[1] = el}>
-                <Projects />
+                <Gallery />
             </Section>
             <Section ref={el => sectionsRef.current[2] = el}>
-                <Contact />
+                <Playlists />
             </Section>
             <Footer toggleTheme={toggleTheme} />
         </>
@@ -105,9 +103,9 @@ function App() {
                         <Route path="/" element={
                             <Home darkMode={darkMode} toggleTheme={toggleTheme} sectionsRef={sectionsRef} />
                         } />
-                        <Route path="/project/:id" element={<ProjectPage theme={darkMode ? 'dark' : 'light'} />} />
-                        <Route path="/blog" element={<PostList />} />
-                        <Route path="/blog/:postName" element={<PostPage theme={darkMode ? 'dark' : 'light'} />} />
+                          <Route path="/gallery" element={
+                            <GalleryPage darkMode={darkMode} toggleTheme={toggleTheme} sectionsRef={sectionsRef} />
+                        } />
                     </Routes>
                 </Body>
             </Router>
