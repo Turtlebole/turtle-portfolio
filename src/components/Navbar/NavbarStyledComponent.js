@@ -69,10 +69,10 @@ export const NavLink = styled.a`
     transition: all 0.2s ease-in-out;
     text-decoration: none;
     :hover {
-        color: ${({ theme }) => theme.primary};
+        color: ${({ theme }) => theme.colored_detail};
     }
     &.active {
-        border-bottom: 2px solid ${({ theme }) => theme.primary};
+        border-bottom: 2px solid ${({ theme }) => theme.colored_detail};
     }
 `;
 
@@ -112,7 +112,7 @@ export const ThemeButton = styled.button`
     position: relative;
 
     &:hover {
-        background: ${({ theme }) => theme.primary + '20'};
+        background: ${({ theme }) => theme.colored_detail + '20'};
         transform: translateY(-2px);
     }
 
@@ -129,9 +129,9 @@ export const ThemeButton = styled.button`
     }
 
     &:hover svg {
-        fill: ${({ theme }) => theme.primary};
+        fill: ${({ theme }) => theme.colored_detail};
         path {
-            stroke: ${({ theme }) => theme.primary};
+            stroke: ${({ theme }) => theme.colored_detail};
         }
     }
 `;
@@ -235,10 +235,10 @@ export const MobileLink = styled.a`
     transition: all 0.2s ease-in-out;
     text-decoration: none;
     :hover {
-        color: ${({ theme }) => theme.primary};
+        color: ${({ theme }) => theme.colored_detail};
     }
     &.active {
-        border-bottom: 2px solid ${({ theme }) => theme.primary};
+        border-bottom: 2px solid ${({ theme }) => theme.colored_detail};
     }
 `;
 

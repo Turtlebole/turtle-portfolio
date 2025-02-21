@@ -127,6 +127,7 @@ const PostCard = styled.div`
     display: flex;
     flex-direction: column;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    border: 1px solid ${({ theme }) => theme.card_border};
 
     &:hover {
         transform: translateY(-5px);
@@ -220,6 +221,7 @@ const ListPostCard = styled.div`
     gap: 20px;
     transition: all 0.3s ease;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    border: 1px solid ${({ theme }) => theme.card_border};
 
     &:hover {
         transform: translateY(-5px);

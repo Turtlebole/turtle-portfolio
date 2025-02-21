@@ -28,6 +28,7 @@ const Wrapper = styled.div`
     margin-bottom: 40px;
     padding: 40px;
     transition: all 0.3s ease;
+    border: 1px solid ${({ theme }) => theme.card_border};
 
     @media (max-width: 768px) {
         padding: 20px;

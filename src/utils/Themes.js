@@ -1,34 +1,38 @@
 export const darkTheme = {
-    bg: "#151515",
-    bgLight: "#1F1F1F",
-    primary: "#B31B25",
-    text_primary: "#F8F8F8",
-    text_secondary: "#DBDBDB",
-    text_skills: "#B8B8B8",
-    card: "#1A1A1A",
-    card_light: "#252525",
-    button: "#A61922",
+    bg: "#1A0F2E",            // Deep purple background
+    bgLight: "#2D1B4A",       // Medium purple
+    primary: "#5C3884",       // Bright purple
+    text_primary: "#F8F8F8",  // Almost white
+    text_secondary: "#E6D5FF", // Light purple text
+    text_skills: "#D4B675",    // Golden brown (scarf color)
+    card: "#1A0F2E",          // Deep purple
+    card_light: "#1A0F2E",    // Deep purple for navbar and top button
+    card_border: "#2D1B4A",   // Border color for cards and posts
+    button: "#5C3884",        // Bright purple
     white: "#FFFFFF",
     black: "#000000",
-    colored_detail: "#943338",
-    highlighted_svg: "#8B2F33",
-    buttonGradient: "linear-gradient(180deg, #B31B25 0%, #8B2F33 100%)"
+    colored_detail: "#D4B675", // Golden brown (scarf color)
+    highlighted_svg: "#D4B675", // Golden brown (scarf color)
+    buttonGradient: "linear-gradient(180deg, #2D1B4A 0%, #1A0F2E 100%)",
+    top_button_bg: "#1A0F2E"  // Added for top button background
 };
 
 export const lightTheme = {
-    bg: "#F8F8F8",
+    bg: "#F4EEFF",            // Very light purple
     bgLight: "#FFFFFF",
-    primary: "#B31B25",
-    text_primary: "#1A1A1A",
-    text_secondary: "#404040",
-    text_skills: "#8B2F33",
+    primary: "#5C3884",       // Bright purple
+    text_primary: "#1A0F2E",  // Deep purple for text
+    text_secondary: "#2D1B4A", // Medium purple for secondary text
+    text_skills: "#5C3884",    // Bright purple
     card: "#FFFFFF",
-    card_light: "#F5F5F5",
-    button: "#A61922",
+    card_light: "#1A0F2E",    // Deep purple for navbar and top button
+    card_border: "#E6D5FF",   // Border color for cards and posts
+    button: "#5C3884",        // Bright purple
     white: "#FFFFFF",
     black: "#000000",
-    colored_detail: "#943338",
-    highlighted_svg: "#8B2F33",
-    buttonGradient: "linear-gradient(180deg, #B31B25 0%, #8B2F33 100%)"
+    colored_detail: "#D4B675", // Golden brown (scarf color)
+    highlighted_svg: "#D4B675", // Golden brown (scarf color)
+    buttonGradient: "linear-gradient(180deg, #2D1B4A 0%, #1A0F2E 100%)",
+    top_button_bg: "#1A0F2E"  // Added for top button background
 };
 
