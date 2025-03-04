@@ -1,4 +1,5 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useRef, useEffect } from 'react';
+import HeroAnimation from './HeroAnimation';
 import {
     HeroContainer,
     HeroContent,
@@ -27,6 +28,7 @@ import { HiDownload, HiArrowDown } from 'react-icons/hi';
 import Typewriter from 'typewriter-effect';
 import { Bio } from '../../data/constants';
 import HeroImg from '../../images/avatar.jpg';
+import LightweightParticles from './HeroAnimation';
 
 const HeroSection = ({ theme }) => {
     const heroRef = useRef(null);
@@ -74,14 +76,15 @@ const HeroSection = ({ theme }) => {
     return (
         <HeroContainer id="about" ref={heroRef}>
             <BackgroundDecoration />
+            <LightweightParticles theme={theme} />
             
             <HeroContent>
                 <LeftColumn>
-                    <Greeting>Hello, I'm</Greeting>
-                    <Name>{Bio.name}</Name>
+                    <Greeting>Hello, I'm {Bio.name}</Greeting>
                     
                     <RoleWrapper>
                         <Role>
+                            Interested in{" "}
                             <Typewriter
                                 options={{
                                     strings: Bio.roles,

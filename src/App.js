@@ -75,7 +75,6 @@ function Home({ darkMode, toggleTheme, sectionsRef }) {
             <Section ref={el => sectionsRef.current[2] = el}>
                 <Contact />
             </Section>
-            <Footer toggleTheme={toggleTheme} />
         </>
     );
 }
@@ -110,6 +109,7 @@ function App() {
                         <Route path="/blog/:postName" element={<PostPage theme={darkMode ? 'dark' : 'light'} />} />
                     </Routes>
                 </Body>
+                <Footer toggleTheme={toggleTheme} />
             </Router>
         </ThemeProvider>
     );

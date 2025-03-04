@@ -80,7 +80,7 @@ const SearchContainer = styled.div`
 const SearchInput = styled.input`
     width: 100%;
     padding: 12px 20px 12px 48px;
-    border: 2px solid ${({ theme }) => theme.card_light};
+    border: 2px solid ${({ theme }) => theme.bgLight || theme.card_light || 'rgba(255, 255, 255, 0.1)'};
     border-radius: 12px;
     font-size: 1rem;
     background-color: ${({ theme }) => theme.card};
@@ -213,17 +213,6 @@ const PostTitle = styled.h2`
     color: ${({ theme }) => theme.text_primary};
     margin-bottom: 8px;
     line-height: 1.4;
-    transition: color 0.3s ease;
-    
-    ${PostCard}:hover & {
-        background: linear-gradient(
-            90deg,
-            ${({ theme }) => theme.text_primary},
-            ${({ theme }) => theme.primary}
-        );
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-    }
 `;
 
 const PostMeta = styled.div`

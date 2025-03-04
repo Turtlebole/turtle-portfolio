@@ -63,12 +63,12 @@ export const InnerContainer = styled.div`
     width: 100%;
     gap: 30px;
     margin-top: 40px;
+    height: calc(100vh - 200px);
 
     @media (min-width: 961px) {
         flex-direction: row;
         gap: 40px;
         justify-content: center;
-        height: auto;
     }
 `;
 
@@ -84,6 +84,26 @@ export const LeftContainer = styled.div`
     border-radius: 20px;
     border: 1px solid ${({ theme }) => theme.primary}30;
     transition: all 0.3s ease;
+    overflow-y: auto;
+    
+    &::-webkit-scrollbar {
+        width: 8px;
+    }
+    
+    &::-webkit-scrollbar-track {
+        background: transparent;
+        margin: 10px 0;
+    }
+    
+    &::-webkit-scrollbar-thumb {
+        background: ${({ theme }) => theme.primary}40;
+        border-radius: 20px;
+        border: 2px solid ${({ theme }) => theme.card};
+    }
+    
+    &::-webkit-scrollbar-thumb:hover {
+        background: ${({ theme }) => theme.primary}80;
+    }
 
     &:hover {
         box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
@@ -93,6 +113,7 @@ export const LeftContainer = styled.div`
     @media (min-width: 961px) {
         flex: 0.4;
         order: 1;
+        max-height: 100%;
     }
 
     @media (max-width: 960px) {
@@ -111,6 +132,7 @@ export const RightContainer = styled.div`
         flex: 0.6;
         order: 2;
         max-width: 800px;
+        max-height: 100%;
     }
 
     @media (max-width: 960px) {
@@ -129,6 +151,7 @@ export const ImageContainer = styled.div`
     border: 1px solid ${({ theme }) => theme.primary}30;
     transition: all 0.3s ease;
     display: flex;
+    position: relative;
     
     &:hover {
         box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
@@ -142,9 +165,14 @@ export const ImageContainer = styled.div`
 
 export const StyledSwiper = styled(Swiper)`
     height: 100%;
+    width: 100%;
 
     .swiper-slide {
         height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
     }
 
     .swiper-button-next,
@@ -177,7 +205,12 @@ export const StyledSwiper = styled(Swiper)`
 export const ProjectImage = styled.img`
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: contain;
+    transition: transform 0.3s ease;
+    
+    &:hover {
+        transform: scale(1.02);
+    }
 `;
 
 export const ProjectHeader = styled.div`
@@ -253,14 +286,8 @@ export const Description = styled.div`
     font-size: 16px;
     line-height: 1.7;
     margin-bottom: 16px;
-    
-    /* Limit to 5 rows with ellipsis */
-    display: -webkit-box;
-    -webkit-line-clamp: 5;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    max-height: calc(1.7em * 5); /* line-height * number of lines */
+    max-height: none;
+    overflow: visible;
 `;
 
 export const Tags = styled.div`

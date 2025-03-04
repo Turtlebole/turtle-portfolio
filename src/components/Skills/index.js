@@ -192,18 +192,12 @@ const SkillLevel = styled.div`
     width: ${({ level, animated }) => animated ? `${level}%` : '0'};
     background: ${({ theme }) => theme.primary};
     border-radius: 8px;
-    transition: width 1s ease, background-color 0.3s ease;
+    transition: width 1s ease;
   }
   
   @media (max-width: 600px) {
     height: 4px;
     margin-top: 8px;
-  }
-  
-  @keyframes pulse {
-    0% { opacity: 1; }
-    50% { opacity: 0.7; }
-    100% { opacity: 1; }
   }
 `;
 
@@ -263,7 +257,7 @@ const SkillCard = styled.div`
         ${({ theme }) => theme.primary},
         ${({ theme }) => theme.primary}CC
       );
-      animation: pulse 1.5s infinite;
+      animation: none;
     }
   }
   
@@ -291,7 +285,7 @@ const Skills = () => {
           ...prev,
           [tab]: true
         }));
-      }, 500);
+      }, 100);
     }
   };
 

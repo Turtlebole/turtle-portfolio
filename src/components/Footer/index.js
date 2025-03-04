@@ -4,46 +4,82 @@ import { FaGithub, FaTwitch, FaLinkedin, FaDiscord, FaChevronUp } from 'react-ic
 import { ColoredSpan } from '../Navbar/NavbarStyledComponent';
 import { useNavigate } from 'react-router-dom';
 
-const FooterContainer = styled.footer`
-    background-color: ${({ theme }) => theme.card_light};
-    padding: 20px;
-    text-align: center;
-    position: relative;
-`;
-
-const FooterLinks = styled.div`
+const FooterContainer = styled.div`
+    width: 100%;
+    padding: 2rem 0;
     display: flex;
     justify-content: center;
-    gap: 20px;
-    margin-bottom: 20px;
+    background: ${({ theme }) => theme.card};
 `;
 
-const FooterLink = styled.span`
+const FooterWrapper = styled.div`
+    width: 100%;
+    max-width: 1200px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    align-items: center;
+    padding: 1rem;
+    color: ${({ theme }) => theme.text_primary};
+`;
+
+const Logo = styled.div`
+    font-weight: 600;
+    font-size: 20px;
+    color: ${({ theme }) => theme.primary};
+`;
+
+const Nav = styled.nav`
+    width: 100%;
+    max-width: 800px;
+    margin-top: 0.5rem;
+    display: flex;
+    flex-direction: row;
+    gap: 2rem;
+    justify-content: center;
+    @media (max-width: 768px) {
+        flex-wrap: wrap;
+        gap: 1rem;
+        justify-content: center;
+        text-align: center;
+        font-size: 12px;
+    }
+`;
+
+const NavLink = styled.a`
     color: ${({ theme }) => theme.text_primary};
     text-decoration: none;
-    font-weight: 500;
-    cursor: pointer;
-    transition: color 0.3s ease;
-
+    font-size: 1rem;
+    transition: color 0.2s ease-in-out;
     &:hover {
         color: ${({ theme }) => theme.primary};
     }
+    @media (max-width: 768px) {
+        font-size: 0.8rem;
+    }
 `;
 
-const SocialIcons = styled.div`
+const SocialMediaIcons = styled.div`
     display: flex;
-    justify-content: center;
-    gap: 15px;
+    margin-top: 1rem;
 `;
 
-const SocialIcon = styled.a`
+const SocialMediaIcon = styled.a`
+    display: inline-block;
+    margin: 0 1rem;
+    font-size: 1.5rem;
     color: ${({ theme }) => theme.text_primary};
-    font-size: 24px;
-    transition: color 0.3s ease;
-
+    transition: color 0.2s ease-in-out;
     &:hover {
         color: ${({ theme }) => theme.primary};
     }
+`;
+
+const Copyright = styled.p`
+    margin-top: 1.5rem;
+    font-size: 0.9rem;
+    color: ${({ theme }) => theme.text_secondary};
+    text-align: center;
 `;
 
 const BackToTopButton = styled.button`
@@ -71,10 +107,19 @@ const BackToTopButton = styled.button`
     }
 `;
 
-const Footer = () => {
+const Footer = ({ toggleTheme }) => {
     const [isButtonVisible, setIsButtonVisible] = useState(false);
     const footerRef = useRef(null);
     const navigate = useNavigate();
+    
+    // Force re-render on theme change
+    const [, forceUpdate] = useState();
+    
+    useEffect(() => {
+        // This will force a re-render when the component mounts
+        // and should pick up any theme changes
+        forceUpdate({});
+    }, []);
 
     const handleScroll = useCallback((hash) => {
         const element = document.querySelector(hash);
@@ -118,31 +163,25 @@ const Footer = () => {
     return (
         <>
             <FooterContainer ref={footerRef}>
-                <FooterLinks>
-                    <FooterLink onClick={() => handleNavigation('/', '#skills')}>
-                        Skills
-                    </FooterLink>
-                    <FooterLink onClick={() => handleNavigation('/', '#projects')}>
-                        Projects
-                    </FooterLink>
-                </FooterLinks>
-                <SocialIcons>
-                    <SocialIcon href="https://github.com/Turtlebole" target="_blank" rel="noopener noreferrer">
-                        <FaGithub />
-                    </SocialIcon>
-                    <SocialIcon href="https://www.twitch.tv/turtlebole" target="_blank" rel="noopener noreferrer">
-                        <FaTwitch />
-                    </SocialIcon>
-                    <SocialIcon href="https://discord.com/users/686681599894618144" target="_blank" rel="noopener noreferrer">
-                        <FaDiscord />
-                    </SocialIcon>
-                    <SocialIcon href="https://www.linkedin.com/in/babicbojan/" target="_blank" rel="noopener noreferrer">
-                        <FaLinkedin />
-                    </SocialIcon>
-                </SocialIcons>
-                <div>
-                    <ColoredSpan>© 2024</ColoredSpan>
-                </div>
+                <FooterWrapper>
+                    <SocialMediaIcons>
+                        <SocialMediaIcon href="https://github.com/Turtlebole" target="_blank" rel="noopener noreferrer">
+                            <FaGithub />
+                        </SocialMediaIcon>
+                        <SocialMediaIcon href="https://www.twitch.tv/turtlebole" target="_blank" rel="noopener noreferrer">
+                            <FaTwitch />
+                        </SocialMediaIcon>
+                        <SocialMediaIcon href="https://discord.com/users/686681599894618144" target="_blank" rel="noopener noreferrer">
+                            <FaDiscord />
+                        </SocialMediaIcon>
+                        <SocialMediaIcon href="https://www.linkedin.com/in/babicbojan/" target="_blank" rel="noopener noreferrer">
+                            <FaLinkedin />
+                        </SocialMediaIcon>
+                    </SocialMediaIcons>
+                    <Copyright>
+                        <ColoredSpan>© 2024</ColoredSpan> Bojan Babić
+                    </Copyright>
+                </FooterWrapper>
             </FooterContainer>
             <BackToTopButton onClick={handleScrollToTop} isVisible={isButtonVisible}>
                 <FaChevronUp />
