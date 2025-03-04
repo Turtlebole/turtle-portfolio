@@ -2,6 +2,7 @@ import React, { useRef, useState, useCallback } from 'react';
 import styled from 'styled-components';
 import emailjs from '@emailjs/browser';
 import { Snackbar, Alert } from '@mui/material';
+import ParallaxLineArt from '../ParallaxLineArt';
 
 const Container = styled.div`
     display: flex;
@@ -9,6 +10,7 @@ const Container = styled.div`
     align-items: center;
     padding: 80px 0;
     background: ${({ theme }) => theme.bg};
+    position: relative;
     
     @media (max-width: 960px) {
         padding: 60px 20px;
@@ -199,6 +201,11 @@ const Contact = () => {
     const [open, setOpen] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
     const form = useRef();
+    const [theme] = useState(() => {
+        // Get theme from localStorage or default to 'dark'
+        const savedTheme = localStorage.getItem('darkMode');
+        return savedTheme ? (JSON.parse(savedTheme) ? 'dark' : 'light') : 'dark';
+    });
 
     const handleSubmit = useCallback((e) => {
         e.preventDefault();
@@ -216,7 +223,8 @@ const Contact = () => {
     }, []);
 
     return (
-        <Container>
+        <Container id="contact">
+            <ParallaxLineArt theme={theme} />
             <Wrapper>
                 <LeftSection>
                     <Title>Contact me</Title>

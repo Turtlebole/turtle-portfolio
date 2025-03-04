@@ -1,7 +1,7 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import styled from 'styled-components';
 import { skills } from '../../data/constants';
-import { gsap } from 'gsap';
+import ParallaxLineArt from '../ParallaxLineArt';
 
 const Container = styled.div`
   display: flex;
@@ -111,77 +111,73 @@ const SkillsGridContainer = styled.div`
 
 const SkillsGrid = styled.div`
   display: grid;
-  grid-template-columns: repeat(8, 120px);
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
   gap: 20px;
   justify-content: center;
-  
-  @media (max-width: 1200px) {
-    grid-template-columns: repeat(6, 120px);
-  }
-  
-  @media (max-width: 900px) {
-    grid-template-columns: repeat(4, 120px);
-  }
+  width: 100%;
   
   @media (max-width: 600px) {
-    grid-template-columns: repeat(3, 100px);
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
     gap: 16px;
   }
+`;
+
+const SkillCard = styled.div`
+  background: ${({ theme }) => theme.card};
+  border-radius: 12px;
+  padding: 20px 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   
-  @media (max-width: 400px) {
-    grid-template-columns: repeat(2, 100px);
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
   }
 `;
 
 const SkillIcon = styled.div`
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
+  width: 60px;
+  height: 60px;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 14px;
-  position: relative;
-  z-index: 1;
-  transition: all 0.4s ease;
+  margin-bottom: 12px;
   
   img {
     width: 100%;
     height: 100%;
     object-fit: contain;
-    transition: all 0.3s ease;
   }
   
   @media (max-width: 600px) {
-    width: 40px;
-    height: 40px;
-    margin-bottom: 10px;
+    width: 50px;
+    height: 50px;
   }
 `;
 
 const SkillName = styled.h3`
-  font-size: 14px;
-  font-weight: 500;
-  color: ${({ theme }) => theme.text_primary};
+  font-size: 16px;
+  font-weight: 600;
   text-align: center;
-  position: relative;
-  z-index: 1;
-  transition: all 0.3s ease;
+  color: ${({ theme }) => theme.text_primary};
+  margin-bottom: 8px;
   
   @media (max-width: 600px) {
-    font-size: 12px;
+    font-size: 14px;
   }
 `;
 
 const SkillLevel = styled.div`
   width: 100%;
-  height: 5px;
-  background: ${({ theme }) => theme.text_primary + '20'};
+  height: 6px;
+  background: ${({ theme }) => theme.bg};
   border-radius: 8px;
-  margin-top: 10px;
-  position: relative;
   overflow: hidden;
-  z-index: 1;
+  position: relative;
   
   &::after {
     content: '';
@@ -189,142 +185,37 @@ const SkillLevel = styled.div`
     top: 0;
     left: 0;
     height: 100%;
-    width: ${({ level, animated }) => animated ? `${level}%` : '0'};
-    background: ${({ theme }) => theme.primary};
+    width: ${({ level }) => `${level}%`};
+    background: linear-gradient(
+      90deg,
+      ${({ theme }) => theme.primary},
+      ${({ theme }) => theme.primary}CC
+    );
     border-radius: 8px;
     transition: width 1s ease;
-  }
-  
-  @media (max-width: 600px) {
-    height: 4px;
-    margin-top: 8px;
-  }
-`;
-
-const SkillCard = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 120px;
-  padding: 20px 12px;
-  background: ${({ theme }) => theme.card};
-  border-radius: 16px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  border: 1px solid ${({ theme }) => theme.text_primary + '10'};
-  opacity: 0;
-  transform: translateY(20px);
-  position: relative;
-  overflow: hidden;
-  
-  &::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(
-      135deg,
-      ${({ theme }) => theme.primary}10,
-      transparent 80%
-    );
-    opacity: 0;
-    transition: opacity 0.4s ease;
-    z-index: 0;
-  }
-  
-  &:hover {
-    transform: translateY(-12px) scale(1.05);
-    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
-    border-color: ${({ theme }) => theme.primary + '60'};
-    
-    &::before {
-      opacity: 1;
-    }
-    
-    ${SkillIcon} {
-      transform: scale(1.15);
-      filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.2));
-    }
-    
-    ${SkillName} {
-      color: ${({ theme }) => theme.primary};
-      transform: translateY(-2px);
-    }
-    
-    ${SkillLevel}::after {
-      background: linear-gradient(
-        90deg,
-        ${({ theme }) => theme.primary},
-        ${({ theme }) => theme.primary}CC
-      );
-      animation: none;
-    }
-  }
-  
-  @media (max-width: 600px) {
-    width: 100px;
-    padding: 16px 10px;
   }
 `;
 
 const Skills = () => {
   const [activeTab, setActiveTab] = useState('frontend');
-  const [animatedSkills, setAnimatedSkills] = useState({});
   const skillsRef = useRef(null);
-  const cardsRef = useRef([]);
+  const [theme] = useState(() => {
+    // Get theme from localStorage or default to 'dark'
+    const savedTheme = localStorage.getItem('darkMode');
+    return savedTheme ? (JSON.parse(savedTheme) ? 'dark' : 'light') : 'dark';
+  });
 
   const handleTabChange = (tab) => {
     setActiveTab(tab);
-    // Reset refs for new tab
-    cardsRef.current = [];
-    
-    // If this tab hasn't been animated yet, animate it
-    if (!animatedSkills[tab]) {
-      setTimeout(() => {
-        setAnimatedSkills(prev => ({
-          ...prev,
-          [tab]: true
-        }));
-      }, 100);
-    }
   };
 
   const filteredSkills = skills.find(skill => 
     skill.title.toLowerCase() === activeTab.toLowerCase()
   );
 
-  useEffect(() => {
-    // Animate cards when they appear
-    if (cardsRef.current.length > 0) {
-      gsap.fromTo(
-        cardsRef.current,
-        { 
-          opacity: 0, 
-          y: 20 
-        },
-        { 
-          opacity: 1, 
-          y: 0, 
-          stagger: 0.1, 
-          duration: 0.5,
-          ease: "power3.out"
-        }
-      );
-    }
-    
-    // Initialize animation for the first tab
-    if (!animatedSkills[activeTab]) {
-      setTimeout(() => {
-        setAnimatedSkills(prev => ({
-          ...prev,
-          [activeTab]: true
-        }));
-      }, 500);
-    }
-  }, [activeTab, filteredSkills]);
-
   return (
     <Container id="skills" ref={skillsRef}>
+      <ParallaxLineArt theme={theme} />
       <Wrapper>
         <SectionTitle>My Tech Stack</SectionTitle>
         <SectionSubtitle>
@@ -344,20 +235,14 @@ const Skills = () => {
         </TabsContainer>
         
         <SkillsGridContainer>
-          <SkillsGrid key={activeTab}>
-            {filteredSkills?.skills.map((skill, index) => (
-              <SkillCard
-                key={skill.name}
-                ref={el => cardsRef.current[index] = el}
-              >
+          <SkillsGrid>
+            {filteredSkills?.skills.map((skill) => (
+              <SkillCard key={skill.name}>
                 <SkillIcon>
                   <img src={skill.image} alt={skill.name} />
                 </SkillIcon>
                 <SkillName>{skill.name}</SkillName>
-                <SkillLevel 
-                  level={skill.level || 85}
-                  animated={animatedSkills[activeTab]}
-                />
+                <SkillLevel level={skill.level || 85} />
               </SkillCard>
             ))}
           </SkillsGrid>

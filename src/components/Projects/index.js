@@ -10,10 +10,16 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/navigation';
+import ParallaxLineArt from '../ParallaxLineArt';
 
 const Projects = () => {
     const [isMobileView, setIsMobileView] = useState(false);
     const navigate = useNavigate();
+    const [theme] = useState(() => {
+        // Get theme from localStorage or default to 'dark'
+        const savedTheme = localStorage.getItem('darkMode');
+        return savedTheme ? (JSON.parse(savedTheme) ? 'dark' : 'light') : 'dark';
+    });
 
     useEffect(() => {
         const handleResize = () => setIsMobileView(window.innerWidth <= 768);
@@ -28,6 +34,7 @@ const Projects = () => {
 
     return (
         <Container id="projects">
+            <ParallaxLineArt theme={theme} />
             <Wrapper>
                 <Title>Projects</Title>
                 <TimelineContainer>
