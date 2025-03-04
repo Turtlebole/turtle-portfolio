@@ -206,6 +206,8 @@ export const Role = styled.div`
     .Typewriter {
         margin-left: 8px;
         color: ${({ theme }) => theme.primary};
+        font-weight: 600;
+        text-shadow: 0 0 2px rgba(0, 0, 0, 0.2);
     }
     
     @media screen and (max-width: 768px) {
@@ -307,7 +309,7 @@ export const PrimaryButton = styled.button`
 
 export const SecondaryButton = styled.button`
     padding: 14px 32px;
-    background: ${({ theme }) => theme.bg};
+    background: transparent;
     color: ${({ theme }) => theme.primary};
     border: 2px solid ${({ theme }) => theme.primary};
     border-radius: 50px;
@@ -324,9 +326,11 @@ export const SecondaryButton = styled.button`
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
     
     &:hover {
-        color: #fff;
+        background: transparent;
+        color: ${({ theme }) => theme.primary};
         transform: translateY(-5px);
         box-shadow: 0 8px 20px ${({ theme }) => theme.primary}40;
+        border-color: ${({ theme }) => theme.primary};
     }
     
     &:active {

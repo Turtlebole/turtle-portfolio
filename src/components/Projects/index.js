@@ -10,7 +10,6 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/navigation';
-import ParallaxLineArt from '../ParallaxLineArt';
 
 const Projects = () => {
     const [isMobileView, setIsMobileView] = useState(false);
@@ -34,7 +33,6 @@ const Projects = () => {
 
     return (
         <Container id="projects">
-            <ParallaxLineArt theme={theme} />
             <Wrapper>
                 <Title>Projects</Title>
                 <TimelineContainer>

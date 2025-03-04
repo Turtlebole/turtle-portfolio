@@ -2,7 +2,6 @@ import React, { useRef, useState, useCallback } from 'react';
 import styled from 'styled-components';
 import emailjs from '@emailjs/browser';
 import { Snackbar, Alert } from '@mui/material';
-import ParallaxLineArt from '../ParallaxLineArt';
 
 const Container = styled.div`
     display: flex;
@@ -224,7 +223,6 @@ const Contact = () => {
 
     return (
         <Container id="contact">
-            <ParallaxLineArt theme={theme} />
             <Wrapper>
                 <LeftSection>
                     <Title>Contact me</Title>

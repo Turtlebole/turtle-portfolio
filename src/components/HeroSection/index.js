@@ -79,7 +79,7 @@ const HeroSection = ({ theme }) => {
             
             <HeroContent>
                 <LeftColumn>
-                    <Greeting className="hero-element">Hello, I'm</Greeting>
+                    <Greeting className="hero-element">{Bio.title}</Greeting>
                     <Name className="hero-element">{Bio.name}</Name>
                     <RoleWrapper className="hero-element">
                         <Role>

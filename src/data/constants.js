@@ -168,7 +168,7 @@ export const projects = [
     date: "2023",
     description: "A comprehensive fullstack clone of Airbnb...",
     images: [
-      "https://assets.ppy.sh/beatmaps/2297262/covers/card@2x.jpg?1740330923",
+      "https://i.imgur.com/um67xkT.png",
       "https://i.imgur.com/example2.png",
       "https://i.imgur.com/example3.png"
     ],

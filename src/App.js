@@ -15,7 +15,6 @@ import PostList from "./pages/BlogPage/PostList";
 import PostPage from "./pages/BlogPage/PostPage";
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import ParallaxLineArt from "./components/ParallaxLineArt";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -100,7 +99,6 @@ function Home({ darkMode, toggleTheme, sectionsRef }) {
 
     return (
         <Wrapper>
-            <ParallaxLineArt theme={darkMode ? 'dark' : 'light'} />
             
             <HeroSection theme={darkMode ? 'dark' : 'light'} />
             

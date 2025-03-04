@@ -113,10 +113,14 @@ const ViewButton = styled.button`
     border: none;
     cursor: pointer;
     background: ${({ isActive, theme }) => 
-        isActive ? theme.primary : theme.card};
+        isActive ? theme.primary : (theme.bgLight || '#2D1B4A')};
     color: ${({ isActive, theme }) => 
         isActive ? theme.white : theme.text_secondary};
     transition: all 0.3s ease;
+    box-shadow: ${({ isActive }) => 
+        isActive ? 'none' : '0 4px 8px rgba(0, 0, 0, 0.1)'};
+    border: ${({ isActive, theme }) => 
+        isActive ? 'none' : `1px solid ${theme.card_border || 'rgba(255, 255, 255, 0.1)'}`};
 
     &:hover {
         background: ${({ theme }) => theme.primary};
