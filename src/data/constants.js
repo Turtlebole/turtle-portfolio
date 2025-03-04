@@ -150,7 +150,7 @@ export const projects = [
       "REST API",
       "Entity Framework"
     ],
-    category: "web",
+    category: "Web",
     github: "https://github.com/ProjectLaplacia",
     webapp: "#",
     type: "Full Stack Application",
@@ -168,7 +168,7 @@ export const projects = [
     date: "2023",
     description: "A comprehensive fullstack clone of Airbnb...",
     images: [
-      "https://i.imgur.com/um67xkT.png",
+      "https://assets.ppy.sh/beatmaps/2297262/covers/card@2x.jpg?1740330923",
       "https://i.imgur.com/example2.png",
       "https://i.imgur.com/example3.png"
     ],
@@ -182,7 +182,7 @@ export const projects = [
       "REST API",
       "JWT Auth"
     ],
-    category: "web",
+    category: "Web",
     github: "https://github.com/Turtlebole/airbnb-msa-mockup",
     webapp: "#",
     type: "Microservices Application",
@@ -213,7 +213,7 @@ export const projects = [
       "LINQ",
       "Repository Pattern"
     ],
-    category: "desktop",
+    category: "Desktop",
     github: "https://github.com/Turtlebole/fitness-center-manager",
     webapp: "#",
     type: "Desktop Application",
@@ -229,19 +229,22 @@ export const projects = [
     id: 4,
     title: "Project 4", // Update with actual project
     date: "2023",
-    description: "Detailed description of the project goes here...",
+    description: "Detailed description of the project goes here...Detailed description of the project goes here...Detailed description of the project goes here...Detailed description of the project goes here...Detailed description of the project goes here...Detailed description of the project goes here...Detailed description of the project goes here...Detailed description of the project goes here...Detailed description of the project goes here...Detailed description of the project goes here...Detailed description of the project goes here...Detailed description of the project goes here...Detailed description of the project goes here...Detailed description of the project goes here...Detailed description of the project goes here...Detailed description of the project goes here...Detailed description of the project goes here...",
     images: [
       "https://i.imgur.com/um67xkT.png",
       "https://i.imgur.com/example2.png",
       "https://i.imgur.com/example3.png"
     ],
     tags: [
-      "React",
-      "Node.js",
-      "MongoDB",
-      "Express"
+      "C#",
+      ".NET",
+      "MicrosoftSQL",
+      "Windows Forms",
+      "Entity Framework",
+      "LINQ",
+      "Repository Pattern"
     ],
-    category: "web",
+    category: "Web",
     github: "https://github.com/yourusername/project4",
     webapp: "#",
     type: "Full Stack Application",
@@ -264,12 +267,15 @@ export const projects = [
       "https://i.imgur.com/example3.png"
     ],
     tags: [
-      "Vue.js",
-      "Python",
-      "Django",
-      "PostgreSQL"
+     "C#",
+      ".NET",
+      "MicrosoftSQL",
+      "Windows Forms",
+      "Entity Framework",
+      "LINQ",
+      "Repository Pattern"
     ],
-    category: "web",
+    category: "Web",
     github: "https://github.com/yourusername/project5",
     webapp: "#",
     type: "Web Application",

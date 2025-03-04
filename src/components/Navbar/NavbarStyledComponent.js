@@ -2,19 +2,19 @@ import { Link as LinkR } from 'react-router-dom';
 import styled from 'styled-components';
 
 export const Nav = styled.div`
-    background-color: ${({ theme }) => theme.card_light};
+    background-color: ${({ theme }) => theme.bg};
     height: 60px;
     display: flex;
     align-items: center;
     justify-content: center;
     user-select: none;
     font-size: 1rem;
-    position: absolute;
-    width: 100%; /* Ensure it spans the full width */
+    position: fixed;
+    width: 100%;
     top: 0;
     z-index: 10;
     transition: 0.8s all ease;
-    border-bottom: 1px solid ${({ theme }) => theme.text_secondary};
+    border-bottom: 1px solid ${({ theme }) => theme.text_secondary + '20'};
 `;
 
 export const NavbarContainer = styled.div`
@@ -174,7 +174,7 @@ export const MobileMenu = styled.div`
     right: 0;
     width: 100%;
     padding: 12px 20px;
-    background: ${({ theme }) => theme.card_light+99};
+    background: ${({ theme }) => theme.bg};
     transition: all 0.6s ease-in-out;
     transform: ${({ isOpen }) => (isOpen ? 'translateY(0)' : 'translateY(-100%)')};
     border-radius: 0 0 20px 20px;

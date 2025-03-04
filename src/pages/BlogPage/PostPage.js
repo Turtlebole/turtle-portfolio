@@ -3,19 +3,55 @@ import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import styled from 'styled-components';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
-import { oneDark, oneLight } from 'react-syntax-highlighter/src/styles/prism';
+import { oneDark, oneLight } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import avatar from '../../images/avatar.jpg';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
+import { FaCalendar, FaArrowLeft } from 'react-icons/fa';
 
 const Container = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 40px 20px;
-    margin-top: 8vh;
+    padding: 80px 20px 40px;
     min-height: 100vh;
     background-color: ${({ theme }) => theme.bg};
     color: ${({ theme }) => theme.text_primary};
+    position: relative;
+`;
+
+const BackButton = styled(Link)`
+    position: absolute;
+    top: 100px;
+    left: 40px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: ${({ theme }) => theme.card};
+    color: ${({ theme }) => theme.text_primary};
+    border: none;
+    padding: 10px 16px;
+    border-radius: 50px;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    z-index: 10;
+    text-decoration: none;
+
+    &:hover {
+        transform: translateY(-3px);
+        background: ${({ theme }) => theme.primary};
+        color: white;
+        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+    }
+
+    @media (max-width: 768px) {
+        top: 80px;
+        left: 20px;
+        font-size: 14px;
+        padding: 8px 12px;
+    }
 `;
 
 const Wrapper = styled.div`
@@ -23,12 +59,17 @@ const Wrapper = styled.div`
     width: 100%;
     background-color: ${({ theme }) => theme.card};
     border-radius: 20px;
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
     color: ${({ theme }) => theme.text_primary};
     margin-bottom: 40px;
     padding: 40px;
     transition: all 0.3s ease;
-    border: 1px solid ${({ theme }) => theme.card_border};
+    border: 1px solid ${({ theme }) => theme.primary}30;
+
+    &:hover {
+        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+        border-color: ${({ theme }) => theme.primary}60;
+    }
 
     @media (max-width: 768px) {
         padding: 20px;
@@ -46,10 +87,18 @@ const Header = styled.header`
 const Title = styled.h1`
     font-size: 3rem;
     font-weight: 700;
-    color: ${({ theme }) => theme.text_primary};
     margin-bottom: 20px;
     text-align: center;
     line-height: 1.3;
+    background: linear-gradient(
+        135deg,
+        ${({ theme }) => theme.text_primary} 0%,
+        ${({ theme }) => theme.primary} 50%,
+        ${({ theme }) => theme.text_primary} 100%
+    );
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 
     @media (max-width: 768px) {
         font-size: 2rem;
@@ -64,7 +113,7 @@ const Meta = styled.div`
     color: ${({ theme }) => theme.text_secondary};
     margin-bottom: 30px;
     padding: 12px 24px;
-    background: ${({ theme }) => theme.card_light};
+    background: ${({ theme }) => theme.card_light || theme.bgLight};
     border-radius: 50px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
 `;
@@ -82,10 +131,20 @@ const AuthorName = styled.span`
     color: ${({ theme }) => theme.text_primary};
 `;
 
+const PostDate = styled.span`
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    
+    svg {
+        color: ${({ theme }) => theme.primary};
+    }
+`;
+
 const Divider = styled.hr`
     width: 100%;
     border: none;
-    border-top: 1px solid ${({ theme }) => theme.card_light};
+    border-top: 1px solid ${({ theme }) => theme.card_light || theme.bgLight};
     margin: 32px 0;
 `;
 
@@ -101,8 +160,23 @@ const Content = styled.div`
         font-weight: 600;
     }
 
-    h1 { font-size: 2.4rem; }
-    h2 { font-size: 2rem; }
+    h1 { 
+        font-size: 2.4rem; 
+        background: linear-gradient(
+            90deg,
+            ${({ theme }) => theme.text_primary},
+            ${({ theme }) => theme.primary}
+        );
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+    
+    h2 { 
+        font-size: 2rem; 
+        border-bottom: 2px solid ${({ theme }) => theme.card_light || theme.bgLight};
+        padding-bottom: 0.5rem;
+    }
+    
     h3 { font-size: 1.8rem; }
     h4 { font-size: 1.6rem; }
     h5 { font-size: 1.4rem; }
@@ -137,7 +211,7 @@ const Content = styled.div`
         margin: 2rem 0;
         padding: 1rem 2rem;
         border-left: 4px solid ${({ theme }) => theme.primary};
-        background: ${({ theme }) => theme.card_light};
+        background: ${({ theme }) => theme.card_light || theme.bgLight};
         border-radius: 0 12px 12px 0;
         font-style: italic;
         color: ${({ theme }) => theme.text_secondary};
@@ -157,7 +231,7 @@ const Content = styled.div`
         width: 100%;
         border-collapse: collapse;
         margin: 2rem 0;
-        background: ${({ theme }) => theme.card_light};
+        background: ${({ theme }) => theme.card_light || theme.bgLight};
         border-radius: 12px;
         overflow: hidden;
     }
@@ -169,9 +243,18 @@ const Content = styled.div`
     }
 
     th {
-        background: ${({ theme }) => theme.card_light};
+        background: ${({ theme }) => theme.card_light || theme.bgLight};
         font-weight: 600;
         color: ${({ theme }) => theme.text_primary};
+    }
+    
+    code:not([class*="language-"]) {
+        background: ${({ theme }) => theme.card_light || theme.bgLight};
+        color: ${({ theme }) => theme.primary};
+        padding: 0.2em 0.4em;
+        border-radius: 4px;
+        font-size: 0.9em;
+        font-family: 'Fira Code', monospace;
     }
 `;
 
@@ -180,6 +263,7 @@ const CustomSyntaxHighlighter = styled(SyntaxHighlighter)`
     border-radius: 12px !important;
     padding: 20px !important;
     font-size: 0.9rem !important;
+    border: 1px solid ${({ theme }) => theme.primary}30 !important;
     
     ::-webkit-scrollbar {
         width: 8px;
@@ -192,7 +276,7 @@ const CustomSyntaxHighlighter = styled(SyntaxHighlighter)`
     }
 
     ::-webkit-scrollbar-track {
-        background-color: ${({ theme }) => theme.card_light};
+        background-color: ${({ theme }) => theme.card_light || theme.bgLight};
         border-radius: 4px;
     }
 `;
@@ -221,6 +305,25 @@ const PostPage = ({ theme }) => {
     const [content, setContent] = useState('');
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [postData, setPostData] = useState(null);
+
+    useEffect(() => {
+        const fetchPostData = async () => {
+            try {
+                const response = await fetch('/posts.json');
+                if (!response.ok) {
+                    throw new Error(`Failed to fetch post data: ${response.statusText}`);
+                }
+                const data = await response.json();
+                const post = data.find(p => p.filename === postName);
+                setPostData(post);
+            } catch (error) {
+                console.error("Error fetching post data:", error);
+            }
+        };
+
+        fetchPostData();
+    }, [postName]);
 
     useEffect(() => {
         const fetchMarkdownFile = async () => {
@@ -245,12 +348,21 @@ const PostPage = ({ theme }) => {
 
     return (
         <Container>
+            <BackButton to="/blog">
+                <FaArrowLeft /> Back to Blog
+            </BackButton>
             <Wrapper>
                 <Header>
                     <Title>{postName.replace('.md', '').replace(/-/g, ' ')}</Title>
                     <Meta>
                         <Avatar src={avatar} alt="Avatar" />
                         <AuthorName>Turtle</AuthorName>
+                        {postData && (
+                            <PostDate>
+                                <FaCalendar />
+                                {postData.date}
+                            </PostDate>
+                        )}
                     </Meta>
                 </Header>
                 {loading ? (

@@ -2,9 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
     Container, Wrapper, Title,
-    TimelineContainer, TimelineLine, SlideContent, Pin, PinDate, CardWrapper, ProjectCard,
-    Tags, Tag, ProjectContent, ProjectTitle, ProjectDescription
+    TimelineContainer, TimelineLine, SlideContent, Pin, PinDate, CardWrapper
 } from './ProjectsStyle'; 
+import ProjectCards from '../Cards/ProjectCards';
 import { projects } from '../../data/constants';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation } from 'swiper/modules';
@@ -21,6 +21,10 @@ const Projects = () => {
         handleResize();
         return () => window.removeEventListener('resize', handleResize);
     }, []);
+    
+    const handleProjectClick = (project) => {
+        navigate(`/project/${project.id}`, { state: { project } });
+    };
 
     return (
         <Container id="projects">
@@ -45,18 +49,10 @@ const Projects = () => {
                                     <PinDate>{project.date}</PinDate>
                                     <Pin />
                                     <CardWrapper>
-                                        <ProjectCard onClick={() => navigate(`/project/${project.id}`, { state: { project } })}>
-                                            <img src={project.image} alt={project.title} />
-                                            <ProjectContent>
-                                                <ProjectTitle>{project.title}</ProjectTitle>
-                                                <ProjectDescription>{project.description}</ProjectDescription>
-                                            </ProjectContent>
-                                            <Tags>
-                                                {project.tags?.map((tag, idx) => (
-                                                    <Tag key={idx}>{tag}</Tag>
-                                                ))}
-                                            </Tags>
-                                        </ProjectCard>
+                                        <ProjectCards 
+                                            project={project} 
+                                            handleProjectClick={handleProjectClick}
+                                        />
                                     </CardWrapper>
                                 </SlideContent>
                             </SwiperSlide>

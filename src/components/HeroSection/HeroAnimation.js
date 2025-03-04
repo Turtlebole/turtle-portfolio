@@ -13,6 +13,7 @@ const LightweightParticles = ({ theme }) => {
         const config = {
             particleCount: 80,
             particleColor: theme === 'light' ? '0, 0, 0' : '255, 255, 255',
+            primaryColor: theme === 'light' ? '212, 182, 117' : '212, 182, 117', // Gold color (D4B675)
             lineColor: theme === 'light' ? '0, 0, 0' : '255, 255, 255',
             particleRadius: 1.5,
             lineWidth: 0.8,
@@ -38,12 +39,14 @@ const LightweightParticles = ({ theme }) => {
                 this.vy = Math.random() * config.particleSpeed - config.particleSpeed/2;
                 this.radius = config.particleRadius;
                 this.connections = 0;
+                this.color = Math.random() > 0.85 ? config.primaryColor : config.particleColor;
+                this.opacity = Math.random() * 0.5 + 0.3;
             }
 
             draw() {
                 ctx.beginPath();
                 ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-                ctx.fillStyle = `rgba(${config.particleColor}, ${config.baseOpacity})`;
+                ctx.fillStyle = `rgba(${this.color}, ${this.opacity})`;
                 ctx.fill();
             }
 

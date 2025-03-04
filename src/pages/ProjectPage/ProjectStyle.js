@@ -4,15 +4,16 @@ import { Swiper } from 'swiper/react';
 export const PageContainer = styled.div`
     display: flex;
     flex-direction: column;
-    width: 100vw;
-    height: 100vh;
-    background: linear-gradient(343.07deg, hsla(231, 17%, 36%, 0.06) 5.71%, hsla(231, 17%, 36%, 0) 64.83%);
+    width: 100%;
+    min-height: 100vh;
+    background: ${({ theme }) => theme.bg};
     justify-content: center;
     align-items: center;
     padding: 20px;
     padding-top: 100px;
     box-sizing: border-box;
     overflow-x: hidden;
+    position: relative;
 
     @media (min-width: 961px) {
         padding: 40px;
@@ -20,81 +21,122 @@ export const PageContainer = styled.div`
     }
 `;
 
+export const BackButton = styled.button`
+    position: absolute;
+    top: 100px;
+    left: 40px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: ${({ theme }) => theme.card};
+    color: ${({ theme }) => theme.text_primary};
+    border: none;
+    padding: 10px 16px;
+    border-radius: 50px;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    z-index: 10;
+
+    &:hover {
+        transform: translateY(-3px);
+        background: ${({ theme }) => theme.primary};
+        color: white;
+        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+    }
+
+    @media (max-width: 768px) {
+        top: 80px;
+        left: 20px;
+        font-size: 14px;
+        padding: 8px 12px;
+    }
+`;
+
 export const InnerContainer = styled.div`
     display: flex;
     flex-direction: column;
-    align-items: center;
-    max-width: 1600px;
+    align-items: stretch;
+    max-width: 1400px;
     width: 100%;
-    height: 80vh;
-    gap: 20px;
+    gap: 30px;
+    margin-top: 40px;
 
     @media (min-width: 961px) {
         flex-direction: row;
-        gap: 0;
+        gap: 40px;
         justify-content: center;
+        height: auto;
     }
 `;
 
 export const LeftContainer = styled.div`
     background-color: ${({ theme }) => theme.card};
     padding: 32px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
     display: flex;
     flex-direction: column;
     gap: 24px;
-    height: 100%;
-    overflow-y: auto;
-    min-width: 300px;
-    max-width: 400px;
+    width: 100%;
+    max-width: 500px;
+    border-radius: 20px;
+    border: 1px solid ${({ theme }) => theme.primary}30;
+    transition: all 0.3s ease;
+
+    &:hover {
+        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+        border-color: ${({ theme }) => theme.primary}60;
+    }
 
     @media (min-width: 961px) {
-        flex: 0.3;
+        flex: 0.4;
         order: 1;
-        border-radius: 16px 0 0 16px;
     }
 
     @media (max-width: 960px) {
         order: 2;
         padding: 24px;
-        border-radius: 16px;
-        width: 100%;
         max-width: none;
     }
 `;
 
 export const RightContainer = styled.div`
     width: 100%;
-    height: 100%;
     display: flex;
-    justify-content: flex-start;
+    align-self: stretch;
     
     @media (min-width: 961px) {
-        flex: 0.7;
+        flex: 0.6;
         order: 2;
-        max-width: 1000px;
+        max-width: 800px;
     }
 
     @media (max-width: 960px) {
         order: 1;
-        height: auto;
+        height: 400px;
     }
 `;
 
 export const ImageContainer = styled.div`
     width: 100%;
-    height: 100%;
+    flex: 1;
     overflow: hidden;
     background: ${({ theme }) => theme.card};
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    border-radius: 20px;
+    border: 1px solid ${({ theme }) => theme.primary}30;
+    transition: all 0.3s ease;
+    display: flex;
     
-    @media (min-width: 961px) {
-        border-radius: 0 16px 16px 0;
+    &:hover {
+        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+        border-color: ${({ theme }) => theme.primary}60;
     }
 
     @media (max-width: 960px) {
-        border-radius: 16px;
-        height: auto;
+        height: 100%;
     }
 `;
 
@@ -107,8 +149,8 @@ export const StyledSwiper = styled(Swiper)`
 
     .swiper-button-next,
     .swiper-button-prev {
-        color: ${({ theme }) => theme.primary};
-        background: ${({ theme }) => theme.card + 'CC'};
+        color: white;
+        background: ${({ theme }) => theme.primary}CC;
         width: 40px;
         height: 40px;
         border-radius: 50%;
@@ -117,16 +159,18 @@ export const StyledSwiper = styled(Swiper)`
         }
         &:hover {
             background: ${({ theme }) => theme.primary};
-            color: white;
+            transform: scale(1.1);
         }
     }
 
     .swiper-pagination-bullet {
-        background: ${({ theme }) => theme.primary};
+        background: white;
+        opacity: 0.7;
     }
 
     .swiper-pagination-bullet-active {
         background: ${({ theme }) => theme.primary};
+        opacity: 1;
     }
 `;
 
@@ -146,32 +190,44 @@ export const ProjectTitle = styled.h1`
     color: ${({ theme }) => theme.text_primary};
     margin-bottom: 8px;
     line-height: 1.2;
+    background: linear-gradient(
+        135deg,
+        ${({ theme }) => theme.text_primary} 0%,
+        ${({ theme }) => theme.primary} 50%,
+        ${({ theme }) => theme.text_primary} 100%
+    );
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 `;
 
 export const ProjectSubtitle = styled.p`
-    color: ${({ theme }) => theme.text_secondary};
+    color: ${({ theme }) => theme.primary};
     font-size: 16px;
     font-weight: 500;
-    opacity: 0.8;
+    background: ${({ theme }) => theme.primary}15;
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 20px;
 `;
 
 export const Divider = styled.div`
     height: 1px;
     background: ${({ theme }) => theme.text_secondary + '20'};
-    margin: 16px 0;
+    margin: 8px 0;
 `;
 
 export const InfoSection = styled.div`
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 24px;
-    margin-bottom: 24px;
+    margin-bottom: 8px;
 `;
 
 export const InfoItem = styled.div`
     display: flex;
     flex-direction: column;
-    gap: 4px;
+    gap: 6px;
 `;
 
 export const InfoLabel = styled.span`
@@ -179,42 +235,63 @@ export const InfoLabel = styled.span`
     font-size: 14px;
     display: flex;
     align-items: center;
-    opacity: 0.8;
+    gap: 8px;
+    
+    svg {
+        color: ${({ theme }) => theme.primary};
+    }
 `;
 
 export const InfoValue = styled.span`
     color: ${({ theme }) => theme.text_primary};
     font-size: 16px;
     font-weight: 500;
-    opacity: 0.9;
 `;
 
 export const Description = styled.div`
     color: ${({ theme }) => theme.text_primary};
     font-size: 16px;
     line-height: 1.7;
-    margin-bottom: 24px;
-    opacity: 0.9;
+    margin-bottom: 16px;
+    
+    /* Limit to 5 rows with ellipsis */
+    display: -webkit-box;
+    -webkit-line-clamp: 5;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-height: calc(1.7em * 5); /* line-height * number of lines */
 `;
 
 export const Tags = styled.div`
     display: flex;
     flex-wrap: wrap;
-    gap: 12px;
+    gap: 10px;
     margin-bottom: 24px;
 `;
 
 export const Tag = styled.span`
-    font-size: 14px;
+    font-size: 13px;
     font-weight: 500;
-    color: ${({ theme }) => theme.primary};
-    background-color: ${({ theme }) => theme.primary + '15'};
-    padding: 6px 16px;
-    border-radius: 100px;
+    color: ${({ theme }) => theme.text_secondary};
+    background-color: ${({ theme }) => theme.bgLight || 'rgba(255, 255, 255, 0.05)'};
+    padding: 5px 12px;
+    border-radius: 8px;
     transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    
+    &::before {
+        content: '#';
+        font-size: 12px;
+        color: ${({ theme }) => theme.primary};
+        margin-right: 4px;
+    }
 
     &:hover {
-        background-color: ${({ theme }) => theme.primary + '30'};
+        background-color: ${({ theme }) => theme.primary}15;
+        color: ${({ theme }) => theme.primary};
+        transform: translateY(-2px);
     }
 `;
 
@@ -222,6 +299,7 @@ export const Links = styled.div`
     display: flex;
     gap: 16px;
     margin-top: auto;
+    flex-wrap: wrap;
 `;
 
 export const GitHubLink = styled.a`
@@ -229,25 +307,24 @@ export const GitHubLink = styled.a`
     align-items: center;
     gap: 8px;
     text-decoration: none;
-    color: ${({ theme }) => theme.text_primary};
-    background: ${({ theme }) => theme.card_light};
+    color: ${({ primary, theme }) => primary ? 'white' : theme.text_primary};
+    background: ${({ primary, theme }) => primary ? theme.primary : theme.card_light};
     padding: 12px 20px;
-    border-radius: 100px;
+    border-radius: 50px;
     font-weight: 500;
     font-size: 16px;
     transition: all 0.3s ease;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 
     &:hover {
-        background: ${({ theme }) => theme.text_primary + '10'};
-        color: ${({ theme }) => theme.primary};
-        transform: translateY(-2px);
-        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+        transform: translateY(-4px);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        background: ${({ primary, theme }) => primary ? theme.primary : theme.primary + '20'};
+        color: ${({ primary, theme }) => primary ? 'white' : theme.primary};
     }
 
     svg {
         width: 20px;
         height: 20px;
-        fill: currentColor;
-        transition: all 0.3s ease;
     }
 `;

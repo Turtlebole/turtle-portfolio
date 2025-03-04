@@ -1,116 +1,75 @@
 import React from 'react';
+import {
+    ProjectCard,
+    ProjectImageContainer,
+    ProjectImage,
+    ProjectContent,
+    ProjectTitle,
+    ProjectDescription,
+    Tags,
+    Tag,
+    ProjectMeta,
+    ProjectCategory
+} from '../Projects/ProjectsStyle';
 import styled from 'styled-components';
 
-const Card = styled.div`
-    width: 330px;
-    height: 490px;
-    background: linear-gradient(343.07deg, hsla(231, 17%, 36%, 0.06) 5.71%, hsla(231, 17%, 36%, 0) 64.83%);
-    cursor: pointer;
-    border: 1px solid ${({ theme }) => theme.text_primary + 80};
-    border-radius: 12px;
-    box-shadow: 0 0 12px 4px rgba(0,0,0,0.4);
-    user-select: none;
-    overflow: hidden;
-    padding: 26px 20px;
-    display: flex;
-    flex-direction: column;
-    gap: 14px;
-    transition: all 0.5s ease-in-out;
-    &:hover {
-        transform: translateY(-10px);
-        filter: brightness(1.2);
-    }
-`;
-
-const Image = styled.img`
-    width: 75%;
-    height: 50%;
-    align-self: center;
-    border: 1px solid ${({ theme }) => theme.primary + 80};
-    border-radius: 10px;
-    box-shadow: 0 0 16px 2px rgba(0,0,0,0.3);
-    user-select: none;
-    -moz-user-select: -moz-none;
-    -webkit-user-select: none;
-    loading: lazy;
-`;
-
-const Tags = styled.div`
-    width: 100%;
+const ViewOverlay = styled.div`
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(to top, 
+        ${({ theme }) => theme.primary}CC, 
+        ${({ theme }) => theme.primary}00);
+    height: 60px;
     display: flex;
     align-items: center;
-    flex-wrap: wrap;
-    gap: 8px;
-    margin-top: 4px;
-`;
-
-const Tag = styled.span`
-    font-size: 12px;
-    font-weight: 400;
-    color: ${({ theme }) => theme.text_secondary};
-    background-color: ${({ theme }) => theme.primary + 15};
-    padding: 2px 8px;
-    border-radius: 10px;
-`;
-
-const Details = styled.div`
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    gap: 0px;
-    padding: 0px 2px;
-`;
-
-const EllipsisText = styled.div`
-    overflow: hidden;
-    display: -webkit-box;
-    max-width: 100%;
-    -webkit-line-clamp: ${({ lines }) => lines || 1};
-    -webkit-box-orient: vertical;
-    text-overflow: ellipsis;
-`;
-
-const Title = styled(EllipsisText)`
-    font-size: 20px;
-    font-weight: 600;
-    align-self: center;
-    color: ${({ theme }) => theme.text_secondary};
-`;
-
-const Date = styled.div`
-    font-size: 12px;
-    margin-left: 2px;
-    font-weight: 400;
-    color: ${({ theme }) => theme.text_secondary + 80};
-    @media only screen and (max-width: 768px){
-        font-size: 10px;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    color: white;
+    font-weight: 500;
+    font-size: 16px;
+    
+    ${ProjectCard}:hover & {
+        opacity: 1;
     }
-`;
-
-const Description = styled(EllipsisText)`
-    font-weight: 400;
-    color: ${({ theme }) => theme.text_secondary + 99};
-    margin-top: 8px;
-    -webkit-line-clamp: 3;
 `;
 
 const ProjectCards = React.memo(({ project, handleProjectClick }) => {
     const handleClick = () => handleProjectClick(project);
+    
+    const mainCategory = project.category || "Project";
+    
+    const imageUrl = project.images && project.images.length > 0 
+        ? project.images[0] 
+        : 'https://i.imgur.com/um67xkT.png';
+
+    const projectTags = project.tags || [];
+    
+    const displayTags = projectTags.slice(0, 4);
+    const hasMoreTags = projectTags.length > 4;
 
     return (
-        <Card onClick={handleClick}>
-            <Image src={project.image} />
-            <Details>
-                <Title>{project.title}</Title>
-                <Date>{project.date}</Date>
-                <Description>{project.description}</Description>
-            </Details>
-            <Tags>
-                {project.tags?.map((tag, index) => (
-                    <Tag key={index}>{tag}</Tag>
-                ))}
-            </Tags>
-        </Card>
+        <ProjectCard onClick={handleClick}>
+            <ProjectImageContainer>
+                <ProjectImage src={imageUrl} alt={project.title} loading="lazy" />
+            </ProjectImageContainer>
+            <ProjectContent>
+                <ProjectMeta>
+                    <ProjectCategory>{mainCategory}</ProjectCategory>
+                </ProjectMeta>
+                <ProjectTitle>{project.title}</ProjectTitle>
+                <ProjectDescription>{project.description}</ProjectDescription>
+                <Tags>
+                    {displayTags.map((tag, index) => (
+                        <Tag key={index}>{tag}</Tag>
+                    ))}
+                    {hasMoreTags && <Tag>+{projectTags.length - 4}</Tag>}
+                </Tags>
+            </ProjectContent>
+            <ViewOverlay>View details</ViewOverlay>
+        </ProjectCard>
     );
 });
 

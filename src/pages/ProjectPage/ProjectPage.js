@@ -1,6 +1,6 @@
 import React from 'react';
-import { useLocation } from 'react-router-dom';
-import { FaGithub, FaCalendar, FaCode, FaTools } from 'react-icons/fa';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { FaGithub, FaCalendar, FaCode, FaTools, FaArrowLeft } from 'react-icons/fa';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination, Autoplay } from 'swiper/modules';
 import 'swiper/css';
@@ -26,44 +26,65 @@ import {
     Tags,
     Tag,
     Links,
-    GitHubLink
+    GitHubLink,
+    BackButton
 } from './ProjectStyle';
 
 const ProjectPage = () => {
     const { state } = useLocation();
+    const navigate = useNavigate();
     const project = state?.project;
 
     if (!project) {
-        return <div>No project data available.</div>;
+        return (
+            <PageContainer>
+                <InnerContainer>
+                    <div style={{ textAlign: 'center', padding: '40px' }}>
+                        <h2>No project data available.</h2>
+                        <BackButton onClick={() => navigate('/')}>
+                            <FaArrowLeft /> Back to Home
+                        </BackButton>
+                    </div>
+                </InnerContainer>
+            </PageContainer>
+        );
     }
+
+    const handleBack = () => {
+        navigate('/');
+    };
 
     return (
         <PageContainer>
+            <BackButton onClick={handleBack}>
+                <FaArrowLeft /> Back
+            </BackButton>
+            
             <InnerContainer>
                 <LeftContainer>
                     <ProjectHeader>
                         <ProjectTitle>{project.title}</ProjectTitle>
-                        <ProjectSubtitle>Full Stack Development Project</ProjectSubtitle>
+                        <ProjectSubtitle>{project.category || 'Full Stack Development Project'}</ProjectSubtitle>
                     </ProjectHeader>
 
                     <InfoSection>
                         <InfoItem>
                             <InfoLabel>
-                                <FaCalendar style={{ marginRight: '8px' }} />
+                                <FaCalendar />
                                 Timeline
                             </InfoLabel>
                             <InfoValue>{project.date || '2024'}</InfoValue>
                         </InfoItem>
                         <InfoItem>
                             <InfoLabel>
-                                <FaCode style={{ marginRight: '8px' }} />
+                                <FaCode />
                                 Type
                             </InfoLabel>
                             <InfoValue>{project.type || 'Web Application'}</InfoValue>
                         </InfoItem>
                         <InfoItem>
                             <InfoLabel>
-                                <FaTools style={{ marginRight: '8px' }} />
+                                <FaTools />
                                 Role
                             </InfoLabel>
                             <InfoValue>{project.role || 'Full Stack Developer'}</InfoValue>
@@ -79,13 +100,13 @@ const ProjectPage = () => {
                     <Description>{project.description}</Description>
 
                     <Tags>
-                        {project.tags.map((tag, index) => (
+                        {project.tags?.map((tag, index) => (
                             <Tag key={index}>{tag}</Tag>
                         ))}
                     </Tags>
 
-                    {project.github && (
-                        <Links>
+                    <Links>
+                        {project.github && (
                             <GitHubLink 
                                 href={project.github} 
                                 target="_blank" 
@@ -93,8 +114,18 @@ const ProjectPage = () => {
                             >
                                 <FaGithub /> View Source Code
                             </GitHubLink>
-                        </Links>
-                    )}
+                        )}
+                        {project.webapp && (
+                            <GitHubLink 
+                                href={project.webapp} 
+                                target="_blank" 
+                                rel="noopener noreferrer"
+                                primary
+                            >
+                                <FaCode /> Live Demo
+                            </GitHubLink>
+                        )}
+                    </Links>
                 </LeftContainer>
 
                 <RightContainer>
@@ -107,13 +138,18 @@ const ProjectPage = () => {
                                 delay: 3500,
                                 disableOnInteraction: false,
                             }}
-                            loop={true}
+                            loop={project.images?.length > 1}
                         >
-                            {project.images.map((image, index) => (
+                            {project.images?.map((image, index) => (
                                 <SwiperSlide key={index}>
                                     <ProjectImage src={image} alt={`${project.title} ${index + 1}`} />
                                 </SwiperSlide>
                             ))}
+                            {(!project.images || project.images.length === 0) && (
+                                <SwiperSlide>
+                                    <ProjectImage src="https://i.imgur.com/um67xkT.png" alt="Default Project Image" />
+                                </SwiperSlide>
+                            )}
                         </StyledSwiper>
                     </ImageContainer>
                 </RightContainer>

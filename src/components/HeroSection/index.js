@@ -1,31 +1,87 @@
-import React from 'react';
-import HeroAnimation from './HeroAnimation';
+import React, { useEffect, useRef } from 'react';
 import {
     HeroContainer,
-    HeroLeftContainer,
-    Img,
-    HeroRightContainer,
-    HeroInnerContainer,
-    TextLoop,
-    Title,
-    Span,
-    SubTitle,
-    ResumeButtonComponent
+    HeroContent,
+    LeftColumn,
+    RightColumn,
+    Greeting,
+    Name,
+    RoleWrapper,
+    Role,
+    Description,
+    ButtonGroup,
+    PrimaryButton,
+    SecondaryButton,
+    ProfileImageContainer,
+    ProfileImage,
+    BackgroundDecoration,
+    SocialLinks,
+    SocialIcon,
+    ScrollIndicator,
+    ScrollText,
+    ScrollArrow,
+    HighlightSpan
 } from './HeroStyle';
-import HeroImg from '../../images/avatar.jpg';
+import { FaGithub, FaLinkedin, FaTwitter } from 'react-icons/fa';
+import { HiDownload, HiArrowDown } from 'react-icons/hi';
 import Typewriter from 'typewriter-effect';
 import { Bio } from '../../data/constants';
+import HeroImg from '../../images/avatar.jpg';
 
 const HeroSection = ({ theme }) => {
+    const heroRef = useRef(null);
+    
+    useEffect(() => {
+        const observer = new IntersectionObserver(
+            ([entry]) => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            },
+            { threshold: 0.1 }
+        );
+        
+        if (heroRef.current) {
+            observer.observe(heroRef.current);
+        }
+        
+        return () => {
+            if (heroRef.current) {
+                observer.unobserve(heroRef.current);
+            }
+        };
+    }, []);
+
+    const handleDownload = () => {
+        const fileUrl = '/CV/CV.pdf';
+        const fileName = 'CV.pdf';
+
+        const link = document.createElement('a');
+        link.href = fileUrl;
+        link.download = fileName;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    };
+
+    const scrollToProjects = () => {
+        const projectsSection = document.querySelector('#projects');
+        if (projectsSection) {
+            projectsSection.scrollIntoView({ behavior: 'smooth' });
+        }
+    };
+
     return (
-        <HeroContainer id="about">
-            <HeroAnimation theme={theme} />
-            <HeroInnerContainer>
-                <HeroLeftContainer>
-                    <Title>{Bio.title}</Title>
-                    <TextLoop>
-                        I enjoy
-                        <Span>
+        <HeroContainer id="about" ref={heroRef}>
+            <BackgroundDecoration />
+            
+            <HeroContent>
+                <LeftColumn>
+                    <Greeting>Hello, I'm</Greeting>
+                    <Name>{Bio.name}</Name>
+                    
+                    <RoleWrapper>
+                        <Role>
                             <Typewriter
                                 options={{
                                     strings: Bio.roles,
@@ -35,16 +91,52 @@ const HeroSection = ({ theme }) => {
                                     deleteSpeed: 50,
                                 }}
                             />
-                        </Span>
-                    </TextLoop>
-                    <SubTitle>{Bio.description}</SubTitle>
-                    <ResumeButtonComponent>Download CV</ResumeButtonComponent>
-                </HeroLeftContainer>
-
-                <HeroRightContainer>
-                    <Img src={HeroImg} alt="hero-image" loading="eager" />
-                </HeroRightContainer>
-            </HeroInnerContainer>
+                        </Role>
+                    </RoleWrapper>
+                    
+                    <Description>
+                        {Bio.description.split(' ').map((word, index) => {
+                            return word.startsWith('#') ? 
+                                <HighlightSpan key={index}>{word.substring(1)} </HighlightSpan> : 
+                                word + ' ';
+                        })}
+                    </Description>
+                    
+                    <ButtonGroup>
+                        <PrimaryButton onClick={scrollToProjects}>
+                            View Projects
+                        </PrimaryButton>
+                        <SecondaryButton onClick={handleDownload}>
+                            <HiDownload /> Download CV
+                        </SecondaryButton>
+                    </ButtonGroup>
+                    
+                    <SocialLinks>
+                        <SocialIcon href={Bio.github} target="_blank" aria-label="GitHub">
+                            <FaGithub />
+                        </SocialIcon>
+                        <SocialIcon href={Bio.linkedin} target="_blank" aria-label="LinkedIn">
+                            <FaLinkedin />
+                        </SocialIcon>
+                        <SocialIcon href={Bio.twitter} target="_blank" aria-label="Twitter">
+                            <FaTwitter />
+                        </SocialIcon>
+                    </SocialLinks>
+                </LeftColumn>
+                
+                <RightColumn>
+                    <ProfileImageContainer>
+                        <ProfileImage src={HeroImg} alt={Bio.name} loading="eager" />
+                    </ProfileImageContainer>
+                </RightColumn>
+            </HeroContent>
+            
+            <ScrollIndicator onClick={scrollToProjects}>
+                <ScrollText>Scroll Down</ScrollText>
+                <ScrollArrow>
+                    <HiArrowDown />
+                </ScrollArrow>
+            </ScrollIndicator>
         </HeroContainer>
     );
 };
