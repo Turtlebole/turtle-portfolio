@@ -279,10 +279,18 @@ export const PrimaryButton = styled.button`
     cursor: pointer;
     transition: all 0.3s ease;
     box-shadow: 0 6px 20px ${({ theme }) => theme.primary}40;
+    position: relative;
+    z-index: 5;
     
     &:hover {
         transform: translateY(-5px);
-        box-shadow: 0 10px 25px ${({ theme }) => theme.primary}60;
+        box-shadow: 0 10px 25px ${({ theme }) => theme.primary}80;
+        background: ${({ theme }) => theme.primary_dark || theme.primary};
+    }
+    
+    &:active {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px ${({ theme }) => theme.primary}60;
     }
     
     @media screen and (max-width: 768px) {
@@ -299,7 +307,7 @@ export const PrimaryButton = styled.button`
 
 export const SecondaryButton = styled.button`
     padding: 14px 32px;
-    background: transparent;
+    background: ${({ theme }) => theme.bg};
     color: ${({ theme }) => theme.primary};
     border: 2px solid ${({ theme }) => theme.primary};
     border-radius: 50px;
@@ -311,10 +319,19 @@ export const SecondaryButton = styled.button`
     align-items: center;
     justify-content: center;
     gap: 8px;
+    position: relative;
+    z-index: 5;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
     
     &:hover {
-        background: ${({ theme }) => theme.primary}15;
+        color: #fff;
         transform: translateY(-5px);
+        box-shadow: 0 8px 20px ${({ theme }) => theme.primary}40;
+    }
+    
+    &:active {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 10px ${({ theme }) => theme.primary}30;
     }
     
     @media screen and (max-width: 768px) {

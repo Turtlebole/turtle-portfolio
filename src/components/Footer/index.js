@@ -179,7 +179,7 @@ const Footer = ({ toggleTheme }) => {
                         </SocialMediaIcon>
                     </SocialMediaIcons>
                     <Copyright>
-                        <ColoredSpan>© 2024</ColoredSpan> Bojan Babić
+                        <ColoredSpan>© 2024</ColoredSpan> Bojan
                     </Copyright>
                 </FooterWrapper>
             </FooterContainer>

@@ -28,7 +28,6 @@ import { HiDownload, HiArrowDown } from 'react-icons/hi';
 import Typewriter from 'typewriter-effect';
 import { Bio } from '../../data/constants';
 import HeroImg from '../../images/avatar.jpg';
-import LightweightParticles from './HeroAnimation';
 
 const HeroSection = ({ theme }) => {
     const heroRef = useRef(null);
@@ -65,24 +64,24 @@ const HeroSection = ({ theme }) => {
         link.click();
         document.body.removeChild(link);
     };
-
+    
     const scrollToProjects = () => {
-        const projectsSection = document.querySelector('#projects');
+        const projectsSection = document.getElementById('projects');
         if (projectsSection) {
             projectsSection.scrollIntoView({ behavior: 'smooth' });
         }
     };
 
     return (
-        <HeroContainer id="about" ref={heroRef}>
+        <HeroContainer ref={heroRef}>
+            <HeroAnimation theme={theme} />
             <BackgroundDecoration />
-            <LightweightParticles theme={theme} />
             
             <HeroContent>
                 <LeftColumn>
-                    <Greeting>Hello, I'm {Bio.name}</Greeting>
-                    
-                    <RoleWrapper>
+                    <Greeting className="hero-element">Hello, I'm</Greeting>
+                    <Name className="hero-element">{Bio.name}</Name>
+                    <RoleWrapper className="hero-element">
                         <Role>
                             Interested in{" "}
                             <Typewriter
@@ -97,7 +96,7 @@ const HeroSection = ({ theme }) => {
                         </Role>
                     </RoleWrapper>
                     
-                    <Description>
+                    <Description className="hero-element">
                         {Bio.description.split(' ').map((word, index) => {
                             return word.startsWith('#') ? 
                                 <HighlightSpan key={index}>{word.substring(1)} </HighlightSpan> : 
@@ -105,7 +104,7 @@ const HeroSection = ({ theme }) => {
                         })}
                     </Description>
                     
-                    <ButtonGroup>
+                    <ButtonGroup className="hero-element">
                         <PrimaryButton onClick={scrollToProjects}>
                             View Projects
                         </PrimaryButton>
@@ -114,7 +113,7 @@ const HeroSection = ({ theme }) => {
                         </SecondaryButton>
                     </ButtonGroup>
                     
-                    <SocialLinks>
+                    <SocialLinks className="hero-element">
                         <SocialIcon href={Bio.github} target="_blank" aria-label="GitHub">
                             <FaGithub />
                         </SocialIcon>
@@ -128,13 +127,13 @@ const HeroSection = ({ theme }) => {
                 </LeftColumn>
                 
                 <RightColumn>
-                    <ProfileImageContainer>
+                    <ProfileImageContainer className="hero-element">
                         <ProfileImage src={HeroImg} alt={Bio.name} loading="eager" />
                     </ProfileImageContainer>
                 </RightColumn>
             </HeroContent>
             
-            <ScrollIndicator onClick={scrollToProjects}>
+            <ScrollIndicator onClick={scrollToProjects} className="hero-element">
                 <ScrollText>Scroll Down</ScrollText>
                 <ScrollArrow>
                     <HiArrowDown />
