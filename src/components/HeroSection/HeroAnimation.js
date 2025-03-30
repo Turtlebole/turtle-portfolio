@@ -3,13 +3,15 @@ import { gsap } from 'gsap';
 
 const HeroAnimation = ({ theme }) => {
     const canvasRef = useRef(null);
+    const animationRef = useRef(null);
+    const wavesRef = useRef([]);
+    const lastTimeRef = useRef(0);
 
     useEffect(() => {
         const canvas = canvasRef.current;
         if (!canvas) return; // Safety check
         
         const ctx = canvas.getContext('2d');
-        let animationFrameId;
         
         // Configuration
         const config = {
@@ -74,26 +76,18 @@ const HeroAnimation = ({ theme }) => {
                 // Phase offset for varied wave patterns
                 this.phaseOffset = index * Math.PI * 0.5;
                 
-                // GSAP animation for the amplitude
-                this.amplitudeVariation = { value: 0.9 + Math.random() * 0.2 };
-                gsap.to(this.amplitudeVariation, {
-                    value: 1.1 + Math.random() * 0.3,
-                    duration: 2 + index * 0.7 + Math.random() * 2,
-                    ease: "sine.inOut",
-                    repeat: -1,
-                    yoyo: true
-                });
+                // Store animation properties as regular values instead of objects
+                this.amplitudeVariation = 0.9 + Math.random() * 0.2;
+                this.targetAmplitude = 1.1 + Math.random() * 0.3;
+                this.amplitudeDuration = 2 + index * 0.7 + Math.random() * 2;
+                this.amplitudeProgress = 0;
+                this.amplitudeDirection = 1;
                 
-                // GSAP animation for vertical position to create subtle floating effect
-                this.verticalShift = { value: 0 };
-                gsap.to(this.verticalShift, {
-                    value: 10 * (1 - depthFactor),
-                    duration: 4 + Math.random() * 3,
-                    ease: "sine.inOut",
-                    repeat: -1,
-                    yoyo: true,
-                    delay: index * 0.2
-                });
+                this.verticalShift = 0;
+                this.targetVerticalShift = 10 * (1 - depthFactor);
+                this.verticalShiftDuration = 4 + Math.random() * 3;
+                this.verticalShiftProgress = 0;
+                this.verticalShiftDirection = 1;
             }
             
             generatePoints(width, height) {
@@ -114,6 +108,34 @@ const HeroAnimation = ({ theme }) => {
             }
             
             update(width, height, deltaTime) {
+                // Manual animation for amplitude variation
+                this.amplitudeProgress += deltaTime / this.amplitudeDuration * this.amplitudeDirection;
+                if (this.amplitudeProgress >= 1) {
+                    this.amplitudeProgress = 1;
+                    this.amplitudeDirection = -1;
+                } else if (this.amplitudeProgress <= 0) {
+                    this.amplitudeProgress = 0;
+                    this.amplitudeDirection = 1;
+                }
+                
+                // Easing function (sine in-out)
+                const easeInOut = t => -(Math.cos(Math.PI * t) - 1) / 2;
+                const amplitudeFactor = easeInOut(this.amplitudeProgress);
+                const currentAmplitude = this.amplitudeVariation + (this.targetAmplitude - this.amplitudeVariation) * amplitudeFactor;
+                
+                // Manual animation for vertical shift
+                this.verticalShiftProgress += deltaTime / this.verticalShiftDuration * this.verticalShiftDirection;
+                if (this.verticalShiftProgress >= 1) {
+                    this.verticalShiftProgress = 1;
+                    this.verticalShiftDirection = -1;
+                } else if (this.verticalShiftProgress <= 0) {
+                    this.verticalShiftProgress = 0;
+                    this.verticalShiftDirection = 1;
+                }
+                
+                const verticalFactor = easeInOut(this.verticalShiftProgress);
+                const currentVerticalShift = this.verticalShift + (this.targetVerticalShift - this.verticalShift) * verticalFactor;
+                
                 // Update scroll offset
                 this.scrollOffset += this.speed * deltaTime;
                 
@@ -123,7 +145,7 @@ const HeroAnimation = ({ theme }) => {
                 }
                 
                 // Calculate center Y with vertical shift for floating effect
-                const centerY = height * this.verticalPosition + this.verticalShift.value;
+                const centerY = height * this.verticalPosition + currentVerticalShift;
                 
                 this.points.forEach((point, i) => {
                     // Apply scrolling
@@ -139,7 +161,7 @@ const HeroAnimation = ({ theme }) => {
                     
                     // Primary wave
                     let y = Math.sin(normalizedX + this.phaseOffset) * 
-                            this.amplitude * this.amplitudeVariation.value;
+                            this.amplitude * currentAmplitude;
                     
                     // Secondary wave with different frequency
                     y += Math.sin(normalizedX * 1.5 + this.phaseOffset * 0.8) * 
@@ -211,54 +233,78 @@ const HeroAnimation = ({ theme }) => {
             }
         }
         
-        let waves = [];
-        let lastTime = 0;
-        
         const init = () => {
-            // Clear any existing GSAP animations
-            gsap.killTweensOf("*");
+            // Clear any existing waves
+            wavesRef.current = [];
             
-            waves = [];
             for (let i = 0; i < config.waveCount; i++) {
                 const wave = new Wave(i, config.waveCount);
                 wave.generatePoints(canvas.width, canvas.height);
-                waves.push(wave);
+                wavesRef.current.push(wave);
             }
             
-            lastTime = performance.now();
+            lastTimeRef.current = performance.now();
         };
 
         const animate = (currentTime) => {
-            const deltaTime = (currentTime - lastTime) / 1000; // Convert to seconds
-            lastTime = currentTime;
+            const deltaTime = Math.min((currentTime - lastTimeRef.current) / 1000, 0.1); // Convert to seconds, cap at 0.1s
+            lastTimeRef.current = currentTime;
             
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             
             // Draw waves from back to front for proper layering
-            for (let i = waves.length - 1; i >= 0; i--) {
-                waves[i].update(canvas.width, canvas.height, deltaTime);
-                waves[i].draw(ctx, canvas.width, canvas.height);
+            for (let i = wavesRef.current.length - 1; i >= 0; i--) {
+                wavesRef.current[i].update(canvas.width, canvas.height, deltaTime);
+                wavesRef.current[i].draw(ctx, canvas.width, canvas.height);
             }
             
-            animationFrameId = requestAnimationFrame(animate);
+            animationRef.current = requestAnimationFrame(animate);
         };
 
+        // Initial setup
         resize();
         init();
-        animationFrameId = requestAnimationFrame(animate);
+        
+        // Start animation
+        if (animationRef.current) {
+            cancelAnimationFrame(animationRef.current);
+        }
+        animationRef.current = requestAnimationFrame(animate);
 
+        // Set up resize listener
         window.addEventListener('resize', () => {
             resize();
             init();
         });
 
-        // Clean up function to ensure proper cleanup
+        // Visibility change handler to pause/resume animation
+        const handleVisibilityChange = () => {
+            if (document.hidden) {
+                // Page is hidden, cancel animation
+                if (animationRef.current) {
+                    cancelAnimationFrame(animationRef.current);
+                    animationRef.current = null;
+                }
+            } else {
+                // Page is visible again, restart animation
+                if (!animationRef.current) {
+                    lastTimeRef.current = performance.now();
+                    animationRef.current = requestAnimationFrame(animate);
+                }
+            }
+        };
+        
+        document.addEventListener('visibilitychange', handleVisibilityChange);
+
+        // Clean up function
         return () => {
             window.removeEventListener('resize', resize);
-            if (animationFrameId) {
-                cancelAnimationFrame(animationFrameId);
+            document.removeEventListener('visibilitychange', handleVisibilityChange);
+            
+            if (animationRef.current) {
+                cancelAnimationFrame(animationRef.current);
+                animationRef.current = null;
             }
-            gsap.killTweensOf("*"); // Clean up GSAP animations
         };
     }, [theme]);
 
