@@ -13,18 +13,27 @@ const HeroAnimation = ({ theme }) => {
         
         const ctx = canvas.getContext('2d');
         
-        // Configuration
+        // Configuration with exact theme colors
         const config = {
-            // Enhanced color palette for light theme
-            baseColor: theme === 'light' ? '70, 80, 100' : '220, 220, 220', // Soft blue-gray for light theme
-            accentColor: theme === 'light' ? '212, 182, 117' : '212, 182, 117', // Gold color (D4B675)
-            secondaryColor: theme === 'light' ? '120, 140, 180' : '180, 180, 200', // Soft periwinkle for light theme
-            tertiaryColor: theme === 'light' ? '90, 110, 140' : '150, 150, 170', // Deeper blue-gray for light theme
+            // Dark theme colors
+            darkColors: {
+                primary: '212, 163, 115',     // #D4A373
+                detail: '232, 146, 66',       // #E89242
+                text1: '230, 200, 156',       // #E6C89C
+                text2: '191, 164, 139'        // #BFA48B
+            },
+            // Light theme colors
+            lightColors: {
+                primary: '212, 163, 115',     // #D4A373
+                detail: '232, 146, 66',       // #E89242
+                text1: '60, 42, 42',          // #3C2A2A
+                text2: '92, 74, 74'           // #5C4A4A
+            },
             
             waveCount: 5,
             waveAmplitude: 35,
             waveFrequency: 0.008,
-            opacity: theme === 'light' ? 0.6 : 0.7, // Slightly reduced opacity for light theme
+            opacity: theme === 'light' ? 0.4 : 0.6,
             scrollSpeed: 0.5,
             parallaxFactor: 0.4,
             verticalOffset: 0.08
@@ -43,37 +52,32 @@ const HeroAnimation = ({ theme }) => {
                 this.index = index;
                 this.total = total;
                 
-                // Enhanced color selection for more visual interest
-                if (index % 3 === 0) {
-                    this.color = config.baseColor;
-                } else if (index % 3 === 1) {
-                    this.color = config.accentColor;
+                const colors = theme === 'light' ? config.lightColors : config.darkColors;
+                
+                // Color selection based on wave index
+                if (index === 0) {
+                    this.color = colors.primary;      // Primary gold
+                } else if (index === 1) {
+                    this.color = colors.detail;       // Orange gold detail
+                } else if (index === 2) {
+                    this.color = colors.text1;        // Text primary
                 } else {
-                    this.color = index % 2 === 0 ? config.secondaryColor : config.tertiaryColor;
+                    this.color = colors.text2;        // Text secondary
                 }
                 
                 this.points = [];
                 
-                // Parallax factors - waves in front are more opaque and move faster
                 const depthFactor = index / total;
                 
-                // Adjusted opacity for light theme
+                // Adjusted opacity for better theme visibility
                 this.opacity = theme === 'light' 
-                    ? 0.08 + (1 - depthFactor) * 0.35 // Lower base opacity for light theme
-                    : 0.1 + (1 - depthFactor) * 0.4;
+                    ? 0.03 + (1 - depthFactor) * 0.25  // More subtle in light theme
+                    : 0.08 + (1 - depthFactor) * 0.35; // More visible in dark theme
                 
-                // Amplitude varies with depth - front waves have larger amplitude
                 this.amplitude = config.waveAmplitude * (0.6 + (1 - depthFactor) * 0.7);
-                
                 this.scrollOffset = 0;
-                
-                // Parallax effect - front waves move faster than back waves
                 this.speed = config.scrollSpeed * (0.6 + (1 - depthFactor) * 0.8);
-                
-                // Vertical position - create overlapping effect with parallax
                 this.verticalPosition = 0.5 + (index - total / 2) * config.verticalOffset;
-                
-                // Phase offset for varied wave patterns
                 this.phaseOffset = index * Math.PI * 0.5;
                 
                 // Store animation properties as regular values instead of objects
@@ -317,7 +321,7 @@ const HeroAnimation = ({ theme }) => {
                 left: 0,
                 width: '100%',
                 height: '100%',
-                opacity: theme === 'light' ? 0.7 : 0.8,
+                opacity: theme === 'light' ? 0.5 : 0.7,
                 pointerEvents: 'none',
                 zIndex: 0,
                 transition: 'all 0.3s ease'

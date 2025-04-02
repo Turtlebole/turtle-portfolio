@@ -173,34 +173,6 @@ const SkillName = styled.h3`
   }
 `;
 
-const SkillLevel = styled.div`
-  width: 100%;
-  height: 5px;
-  background: ${({ theme }) => theme.text_primary + '20'};
-  border-radius: 8px;
-  margin-top: 10px;
-  position: relative;
-  overflow: hidden;
-  z-index: 1;
-  
-  &::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 100%;
-    width: ${({ level, animated }) => animated ? `${level}%` : '0'};
-    background: ${({ theme }) => theme.primary};
-    border-radius: 8px;
-    transition: width 1s ease;
-  }
-  
-  @media (max-width: 600px) {
-    height: 4px;
-    margin-top: 8px;
-  }
-`;
-
 const SkillCard = styled.div`
   display: flex;
   flex-direction: column;
@@ -249,15 +221,6 @@ const SkillCard = styled.div`
     ${SkillName} {
       color: ${({ theme }) => theme.primary};
       transform: translateY(-2px);
-    }
-    
-    ${SkillLevel}::after {
-      background: linear-gradient(
-        90deg,
-        ${({ theme }) => theme.primary},
-        ${({ theme }) => theme.primary}CC
-      );
-      animation: none;
     }
   }
   
@@ -354,10 +317,6 @@ const Skills = () => {
                   <img src={skill.image} alt={skill.name} />
                 </SkillIcon>
                 <SkillName>{skill.name}</SkillName>
-                <SkillLevel 
-                  level={skill.level || 85}
-                  animated={animatedSkills[activeTab]}
-                />
               </SkillCard>
             ))}
           </SkillsGrid>
