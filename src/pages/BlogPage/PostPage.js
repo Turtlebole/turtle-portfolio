@@ -6,7 +6,7 @@ import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { oneDark, oneLight } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import avatar from '../../images/avatar.jpg';
 import { useParams, Link } from 'react-router-dom';
-import { FaCalendar, FaArrowLeft } from 'react-icons/fa';
+import { FaCalendar, FaArrowLeft, FaCircle } from 'react-icons/fa';
 
 const Container = styled.div`
     display: flex;
@@ -17,6 +17,32 @@ const Container = styled.div`
     background-color: ${({ theme }) => theme.bg};
     color: ${({ theme }) => theme.text_primary};
     position: relative;
+    overflow: hidden;
+    
+    @media (max-width: 768px) {
+        padding: 70px 16px 30px;
+    }
+    
+    @media (max-width: 480px) {
+        padding: 60px 12px 24px;
+    }
+`;
+
+// Floating decorative elements
+const FloatingElement = styled.div`
+    position: absolute;
+    width: ${props => props.size || '60px'};
+    height: ${props => props.size || '60px'};
+    border-radius: 50%;
+    background: ${props => props.bg || 'rgba(255, 255, 255, 0.03)'};
+    filter: blur(${props => props.blur || '15px'});
+    opacity: ${props => props.opacity || '0.5'};
+    top: ${props => props.top};
+    left: ${props => props.left};
+    right: ${props => props.right};
+    bottom: ${props => props.bottom};
+    z-index: 0;
+    pointer-events: none;
 `;
 
 const BackButton = styled(Link)`
@@ -52,6 +78,13 @@ const BackButton = styled(Link)`
         font-size: 14px;
         padding: 8px 12px;
     }
+    
+    @media (max-width: 480px) {
+        top: 70px;
+        left: 16px;
+        font-size: 13px;
+        padding: 6px 10px;
+    }
 `;
 
 const Wrapper = styled.div`
@@ -65,6 +98,8 @@ const Wrapper = styled.div`
     padding: 40px;
     transition: all 0.3s ease;
     border: 1px solid ${({ theme }) => theme.primary}30;
+    position: relative;
+    z-index: 1;
 
     &:hover {
         box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
@@ -72,7 +107,14 @@ const Wrapper = styled.div`
     }
 
     @media (max-width: 768px) {
-        padding: 20px;
+        padding: 30px 25px;
+        margin-bottom: 30px;
+    }
+    
+    @media (max-width: 480px) {
+        padding: 24px 18px;
+        margin-bottom: 24px;
+        border-radius: 16px;
     }
 `;
 
@@ -82,6 +124,14 @@ const Header = styled.header`
     align-items: center;
     margin-bottom: 40px;
     position: relative;
+    
+    @media (max-width: 768px) {
+        margin-bottom: 30px;
+    }
+    
+    @media (max-width: 480px) {
+        margin-bottom: 24px;
+    }
 `;
 
 const Title = styled.h1`
@@ -99,9 +149,23 @@ const Title = styled.h1`
     background-size: 200% auto;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
+    animation: gradientText 6s ease infinite;
+    
+    @keyframes gradientText {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+    }
 
     @media (max-width: 768px) {
-        font-size: 2rem;
+        font-size: 2.3rem;
+        margin-bottom: 16px;
+    }
+    
+    @media (max-width: 480px) {
+        font-size: 1.8rem;
+        margin-bottom: 14px;
+        line-height: 1.25;
     }
 `;
 
@@ -116,6 +180,22 @@ const Meta = styled.div`
     background: ${({ theme }) => theme.card_light || theme.bgLight};
     border-radius: 50px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    
+    @media (max-width: 768px) {
+        padding: 10px 20px;
+        margin-bottom: 24px;
+        font-size: 0.9rem;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    
+    @media (max-width: 480px) {
+        padding: 8px 16px;
+        margin-bottom: 20px;
+        font-size: 0.85rem;
+        gap: 8px;
+        border-radius: 40px;
+    }
 `;
 
 const Avatar = styled.img`
@@ -124,6 +204,11 @@ const Avatar = styled.img`
     border-radius: 50%;
     object-fit: cover;
     border: 2px solid ${({ theme }) => theme.primary};
+    
+    @media (max-width: 480px) {
+        width: 30px;
+        height: 30px;
+    }
 `;
 
 const AuthorName = styled.span`
@@ -139,6 +224,21 @@ const PostDate = styled.span`
     svg {
         color: ${({ theme }) => theme.primary};
     }
+    
+    @media (max-width: 480px) {
+        gap: 4px;
+    }
+`;
+
+const DotDivider = styled.span`
+    display: flex;
+    align-items: center;
+    color: ${({ theme }) => theme.text_secondary};
+    opacity: 0.6;
+    
+    @media (max-width: 480px) {
+        display: none;
+    }
 `;
 
 const Divider = styled.hr`
@@ -146,6 +246,14 @@ const Divider = styled.hr`
     border: none;
     border-top: 1px solid ${({ theme }) => theme.card_light || theme.bgLight};
     margin: 32px 0;
+    
+    @media (max-width: 768px) {
+        margin: 24px 0;
+    }
+    
+    @media (max-width: 480px) {
+        margin: 20px 0;
+    }
 `;
 
 const Content = styled.div`
@@ -169,22 +277,94 @@ const Content = styled.div`
         );
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
+        
+        @media (max-width: 768px) {
+            font-size: 2rem;
+        }
+        
+        @media (max-width: 480px) {
+            font-size: 1.7rem;
+            margin: 2rem 0 1.2rem 0;
+        }
     }
     
     h2 { 
         font-size: 2rem; 
         border-bottom: 2px solid ${({ theme }) => theme.card_light || theme.bgLight};
         padding-bottom: 0.5rem;
+        
+        @media (max-width: 768px) {
+            font-size: 1.7rem;
+        }
+        
+        @media (max-width: 480px) {
+            font-size: 1.5rem;
+            margin: 1.8rem 0 1rem 0;
+        }
     }
     
-    h3 { font-size: 1.8rem; }
-    h4 { font-size: 1.6rem; }
-    h5 { font-size: 1.4rem; }
-    h6 { font-size: 1.2rem; }
+    h3 { 
+        font-size: 1.8rem; 
+        
+        @media (max-width: 768px) {
+            font-size: 1.5rem;
+        }
+        
+        @media (max-width: 480px) {
+            font-size: 1.3rem;
+        }
+    }
+    
+    h4 { 
+        font-size: 1.6rem; 
+        
+        @media (max-width: 768px) {
+            font-size: 1.4rem;
+        }
+        
+        @media (max-width: 480px) {
+            font-size: 1.2rem;
+        }
+    }
+    
+    h5 { 
+        font-size: 1.4rem; 
+        
+        @media (max-width: 768px) {
+            font-size: 1.2rem;
+        }
+        
+        @media (max-width: 480px) {
+            font-size: 1.1rem;
+        }
+    }
+    
+    h6 { 
+        font-size: 1.2rem;
+        
+        @media (max-width: 768px) {
+            font-size: 1.1rem;
+        }
+        
+        @media (max-width: 480px) {
+            font-size: 1rem;
+        }
+    }
 
     p {
         margin: 1.5rem 0;
         color: ${({ theme }) => theme.text_secondary};
+        
+        @media (max-width: 768px) {
+            margin: 1.2rem 0;
+            font-size: 1rem;
+        }
+        
+        @media (max-width: 480px) {
+            margin: 1rem 0;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
     }
 
     a {
@@ -205,6 +385,16 @@ const Content = styled.div`
         margin: 2rem auto;
         display: block;
         box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        
+        @media (max-width: 768px) {
+            margin: 1.5rem auto;
+            border-radius: 10px;
+        }
+        
+        @media (max-width: 480px) {
+            margin: 1.2rem auto;
+            border-radius: 8px;
+        }
     }
 
     blockquote {
@@ -215,16 +405,42 @@ const Content = styled.div`
         border-radius: 0 12px 12px 0;
         font-style: italic;
         color: ${({ theme }) => theme.text_secondary};
+        
+        @media (max-width: 768px) {
+            margin: 1.5rem 0;
+            padding: 0.8rem 1.5rem;
+        }
+        
+        @media (max-width: 480px) {
+            margin: 1.2rem 0;
+            padding: 0.7rem 1.2rem;
+            font-size: 0.9rem;
+        }
     }
 
     ul, ol {
         margin: 1.5rem 0;
         padding-left: 2rem;
         color: ${({ theme }) => theme.text_secondary};
+        
+        @media (max-width: 768px) {
+            margin: 1.2rem 0;
+            padding-left: 1.8rem;
+        }
+        
+        @media (max-width: 480px) {
+            margin: 1rem 0;
+            padding-left: 1.5rem;
+            font-size: 0.95rem;
+        }
     }
 
     li {
         margin: 0.5rem 0;
+        
+        @media (max-width: 480px) {
+            margin: 0.4rem 0;
+        }
     }
 
     table {
@@ -234,12 +450,33 @@ const Content = styled.div`
         background: ${({ theme }) => theme.card_light || theme.bgLight};
         border-radius: 12px;
         overflow: hidden;
+        
+        @media (max-width: 768px) {
+            margin: 1.5rem 0;
+            display: block;
+            overflow-x: auto;
+            border-radius: 10px;
+        }
+        
+        @media (max-width: 480px) {
+            margin: 1.2rem 0;
+            border-radius: 8px;
+            font-size: 0.9rem;
+        }
     }
 
     th, td {
         padding: 1rem;
         text-align: left;
         border-bottom: 1px solid ${({ theme }) => theme.card};
+        
+        @media (max-width: 768px) {
+            padding: 0.8rem;
+        }
+        
+        @media (max-width: 480px) {
+            padding: 0.6rem;
+        }
     }
 
     th {
@@ -248,13 +485,14 @@ const Content = styled.div`
         color: ${({ theme }) => theme.text_primary};
     }
     
-    code:not([class*="language-"]) {
-        background: ${({ theme }) => theme.card_light || theme.bgLight};
-        color: ${({ theme }) => theme.primary};
-        padding: 0.2em 0.4em;
-        border-radius: 4px;
-        font-size: 0.9em;
-        font-family: 'Fira Code', monospace;
+    @media (max-width: 768px) {
+        font-size: 1rem;
+        line-height: 1.7;
+    }
+    
+    @media (max-width: 480px) {
+        font-size: 0.95rem;
+        line-height: 1.6;
     }
 `;
 
@@ -348,9 +586,15 @@ const PostPage = ({ theme }) => {
 
     return (
         <Container>
+            {/* Add decorative floating elements */}
+            <FloatingElement size="140px" blur="30px" opacity="0.3" top="15%" left="5%" bg="rgba(71, 7, 234, 0.2)" />
+            <FloatingElement size="160px" blur="25px" opacity="0.2" bottom="10%" right="8%" bg="rgba(71, 7, 234, 0.15)" />
+            <FloatingElement size="90px" blur="15px" opacity="0.2" top="30%" right="20%" bg="rgba(71, 7, 234, 0.1)" />
+            
             <BackButton to="/blog">
                 <FaArrowLeft /> Back to Blog
             </BackButton>
+            
             <Wrapper>
                 <Header>
                     <Title>{postName.replace('.md', '').replace(/-/g, ' ')}</Title>

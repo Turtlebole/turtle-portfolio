@@ -10,9 +10,15 @@ const Container = styled.div`
     padding: 80px 0;
     background: ${({ theme }) => theme.bg};
     position: relative;
+    overflow: hidden;
+    z-index: 1;
     
     @media (max-width: 960px) {
         padding: 60px 20px;
+    }
+    
+    @media (max-width: 480px) {
+        padding: 50px 16px;
     }
 `;
 
@@ -22,9 +28,15 @@ const Wrapper = styled.div`
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 60px;
+    position: relative;
+    z-index: 2;
 
     @media (max-width: 960px) {
         grid-template-columns: 1fr;
+        gap: 40px;
+    }
+    
+    @media (max-width: 480px) {
         gap: 30px;
     }
 `;
@@ -40,6 +52,10 @@ const LeftSection = styled.div`
         text-align: center;
         align-items: center;
     }
+    
+    @media (max-width: 480px) {
+        gap: 18px;
+    }
 `;
 
 const Title = styled.h2`
@@ -47,9 +63,29 @@ const Title = styled.h2`
     font-weight: 700;
     color: ${({ theme }) => theme.text_primary};
     line-height: 1.2;
+    background: linear-gradient(
+        135deg,
+        ${({ theme }) => theme.text_primary} 0%,
+        ${({ theme }) => theme.primary} 50%,
+        ${({ theme }) => theme.text_primary} 100%
+    );
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: gradientText 6s ease infinite;
+    
+    @keyframes gradientText {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+    }
 
     @media (max-width: 768px) {
         font-size: 32px;
+    }
+    
+    @media (max-width: 480px) {
+        font-size: 28px;
     }
 `;
 
@@ -61,6 +97,12 @@ const Desc = styled.p`
 
     @media (max-width: 768px) {
         font-size: 16px;
+        margin-bottom: 15px;
+    }
+    
+    @media (max-width: 480px) {
+        font-size: 15px;
+        line-height: 1.5;
     }
 `;
 
@@ -72,6 +114,10 @@ const ContactInfo = styled.div`
     @media (max-width: 960px) {
         align-items: center;
     }
+    
+    @media (max-width: 480px) {
+        gap: 12px;
+    }
 `;
 
 const InfoItem = styled.div`
@@ -80,9 +126,24 @@ const InfoItem = styled.div`
     gap: 12px;
     color: ${({ theme }) => theme.text_secondary};
     font-size: 16px;
+    transition: all 0.3s ease;
+    
+    &:hover {
+        color: ${({ theme }) => theme.primary};
+        transform: translateY(-2px);
+    }
+
+    svg {
+        color: ${({ theme }) => theme.primary};
+    }
 
     @media (max-width: 768px) {
+        font-size: 15px;
+    }
+    
+    @media (max-width: 480px) {
         font-size: 14px;
+        gap: 8px;
     }
 `;
 
@@ -93,11 +154,25 @@ const ContactForm = styled.form`
     background: ${({ theme }) => theme.card};
     padding: 32px;
     border-radius: 20px;
-    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
-    border: 1px solid ${({ theme }) => theme.card_border};
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+    border: 1px solid ${({ theme }) => theme.text_primary + '15'};
+    transition: all 0.3s ease;
+    transform: translateY(0);
+    
+    &:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+        border-color: ${({ theme }) => theme.primary + '60'};
+    }
 
     @media (max-width: 768px) {
+        padding: 24px;
+        gap: 16px;
+    }
+    
+    @media (max-width: 480px) {
         padding: 20px;
+        gap: 14px;
     }
 `;
 
@@ -111,13 +186,18 @@ const Label = styled.label`
     font-size: 14px;
     font-weight: 500;
     color: ${({ theme }) => theme.text_secondary};
+    transition: color 0.3s ease;
+    
+    ${InputGroup}:focus-within & {
+        color: ${({ theme }) => theme.primary};
+    }
 `;
 
 const Input = styled.input`
     width: 100%;
     padding: 12px 16px;
     background: ${({ theme }) => theme.bg};
-    border: 1px solid ${({ theme }) => theme.card_border};
+    border: 1px solid ${({ theme }) => theme.text_primary + '20'};
     border-radius: 12px;
     color: ${({ theme }) => theme.text_primary};
     font-size: 16px;
@@ -126,12 +206,21 @@ const Input = styled.input`
 
     &:focus {
         border-color: ${({ theme }) => theme.primary};
-        box-shadow: 0 0 0 2px ${({ theme }) => theme.primary}20;
+        box-shadow: 0 0 0 3px ${({ theme }) => theme.primary}20;
+    }
+    
+    &::placeholder {
+        color: ${({ theme }) => theme.text_secondary + '80'};
     }
 
     @media (max-width: 768px) {
-        font-size: 14px;
+        font-size: 15px;
         padding: 10px 14px;
+    }
+    
+    @media (max-width: 480px) {
+        font-size: 14px;
+        padding: 9px 12px;
     }
 `;
 
@@ -139,7 +228,7 @@ const TextArea = styled.textarea`
     width: 100%;
     padding: 12px 16px;
     background: ${({ theme }) => theme.bg};
-    border: 1px solid ${({ theme }) => theme.card_border};
+    border: 1px solid ${({ theme }) => theme.text_primary + '20'};
     border-radius: 12px;
     color: ${({ theme }) => theme.text_primary};
     font-size: 16px;
@@ -150,20 +239,30 @@ const TextArea = styled.textarea`
 
     &:focus {
         border-color: ${({ theme }) => theme.primary};
-        box-shadow: 0 0 0 2px ${({ theme }) => theme.primary}20;
+        box-shadow: 0 0 0 3px ${({ theme }) => theme.primary}20;
+    }
+    
+    &::placeholder {
+        color: ${({ theme }) => theme.text_secondary + '80'};
     }
 
     @media (max-width: 768px) {
-        font-size: 14px;
+        font-size: 15px;
         padding: 10px 14px;
         min-height: 100px;
+    }
+    
+    @media (max-width: 480px) {
+        font-size: 14px;
+        padding: 9px 12px;
+        min-height: 90px;
     }
 `;
 
 const SubmitButton = styled.button`
     width: 100%;
     padding: 16px 32px;
-    background: ${({ theme }) => theme.primary}15;
+    background: ${({ theme }) => `linear-gradient(135deg, ${theme.primary}15, ${theme.primary}30)`};
     color: ${({ theme }) => theme.primary};
     border: 1.8px solid ${({ theme }) => theme.primary};
     border-radius: 12px;
@@ -174,26 +273,80 @@ const SubmitButton = styled.button`
     align-items: center;
     justify-content: center;
     gap: 8px;
-    transition: all 0.2s ease;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+
+    &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+            90deg,
+            transparent,
+            rgba(255, 255, 255, 0.2),
+            transparent
+        );
+        transition: 0.5s;
+    }
 
     svg {
         font-size: 20px;
+        transition: transform 0.3s ease;
     }
 
     &:hover {
-        background: ${({ theme }) => theme.primary}30;
-        color: ${({ theme }) => theme.primary};
-        box-shadow: 0 5px 10px ${({ theme }) => theme.primary}15;
+        background: ${({ theme }) => theme.primary};
+        color: ${({ theme }) => '#fff'};
+        box-shadow: 0 8px 20px ${({ theme }) => theme.primary}40;
+        transform: translateY(-3px);
+        
+        &::before {
+            left: 100%;
+        }
+        
+        svg {
+            transform: translateX(3px);
+        }
     }
 
     @media screen and (max-width: 768px) {
-        padding: 12px 24px;
+        padding: 14px 24px;
         font-size: 16px;
         
         svg {
             font-size: 18px;
         }
     }
+    
+    @media screen and (max-width: 480px) {
+        padding: 12px 20px;
+        font-size: 15px;
+        
+        svg {
+            font-size: 16px;
+        }
+    }
+`;
+
+// Floating decorative elements
+const FloatingElement = styled.div`
+    position: absolute;
+    width: ${props => props.size || '60px'};
+    height: ${props => props.size || '60px'};
+    border-radius: 50%;
+    background: ${props => props.bg || 'rgba(255, 255, 255, 0.03)'};
+    filter: blur(${props => props.blur || '15px'});
+    opacity: ${props => props.opacity || '0.5'};
+    top: ${props => props.top};
+    left: ${props => props.left};
+    right: ${props => props.right};
+    bottom: ${props => props.bottom};
+    z-index: 0;
+    pointer-events: none;
 `;
 
 const Contact = () => {
@@ -223,6 +376,11 @@ const Contact = () => {
 
     return (
         <Container id="contact">
+            {/* Decorative floating elements */}
+            <FloatingElement size="140px" blur="30px" opacity="0.3" top="10%" left="10%" bg="rgba(71, 7, 234, 0.2)" />
+            <FloatingElement size="120px" blur="20px" opacity="0.2" bottom="15%" right="10%" bg="rgba(71, 7, 234, 0.15)" />
+            <FloatingElement size="80px" blur="15px" opacity="0.2" top="30%" right="30%" bg="rgba(71, 7, 234, 0.1)" />
+            
             <Wrapper>
                 <LeftSection>
                     <Title>Contact me</Title>
@@ -286,7 +444,7 @@ const Contact = () => {
                 <Alert 
                     onClose={() => setOpen(false)} 
                     severity={errorMessage ? "error" : "success"} 
-                    sx={{ width: '100%' }}
+                    sx={{ width: '100%', fontWeight: 500 }}
                 >
                     {errorMessage || "Message sent successfully!"}
                 </Alert>

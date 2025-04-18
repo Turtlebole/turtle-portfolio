@@ -27,7 +27,8 @@ import {
     Tag,
     Links,
     GitHubLink,
-    BackButton
+    BackButton,
+    FloatingElement
 } from './ProjectStyle';
 
 const ProjectPage = () => {
@@ -38,8 +39,11 @@ const ProjectPage = () => {
     if (!project) {
         return (
             <PageContainer>
+                <FloatingElement size="140px" blur="30px" opacity="0.3" top="15%" left="5%" bg="rgba(71, 7, 234, 0.2)" />
+                <FloatingElement size="160px" blur="25px" opacity="0.2" bottom="10%" right="8%" bg="rgba(71, 7, 234, 0.15)" />
+                
                 <InnerContainer>
-                    <div style={{ textAlign: 'center', padding: '40px' }}>
+                    <div style={{ textAlign: 'center', padding: '40px', position: 'relative', zIndex: 2 }}>
                         <h2>No project data available.</h2>
                         <BackButton onClick={() => navigate('/')}>
                             <FaArrowLeft /> Back to Home
@@ -56,6 +60,10 @@ const ProjectPage = () => {
 
     return (
         <PageContainer>
+            <FloatingElement size="140px" blur="30px" opacity="0.3" top="15%" left="5%" bg="rgba(71, 7, 234, 0.2)" />
+            <FloatingElement size="160px" blur="25px" opacity="0.2" bottom="10%" right="8%" bg="rgba(71, 7, 234, 0.15)" />
+            <FloatingElement size="90px" blur="15px" opacity="0.2" top="30%" right="20%" bg="rgba(71, 7, 234, 0.1)" />
+            
             <BackButton onClick={handleBack}>
                 <FaArrowLeft /> Back
             </BackButton>
@@ -142,12 +150,12 @@ const ProjectPage = () => {
                         >
                             {project.images?.map((image, index) => (
                                 <SwiperSlide key={index}>
-                                    <ProjectImage src={image} alt={`${project.title} ${index + 1}`} />
+                                    <ProjectImage src={image} alt={`${project.title} ${index + 1}`} loading="lazy" />
                                 </SwiperSlide>
                             ))}
                             {(!project.images || project.images.length === 0) && (
                                 <SwiperSlide>
-                                    <ProjectImage src="https://i.imgur.com/um67xkT.png" alt="Default Project Image" />
+                                    <ProjectImage src="https://i.imgur.com/um67xkT.png" alt="Default Project Image" loading="lazy" />
                                 </SwiperSlide>
                             )}
                         </StyledSwiper>

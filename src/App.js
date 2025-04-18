@@ -30,6 +30,11 @@ const GlobalStyle = createGlobalStyle`
     transition: background-color 0.3s ease, color 0.3s ease;
     margin: 0;
     padding: 0;
+    overflow-x: hidden;
+  }
+  
+  html {
+    scroll-behavior: smooth;
   }
 `;
 
@@ -47,12 +52,26 @@ const Wrapper = styled.div`
 `;
 
 const Section = styled.div`
-    padding: 50px 0; 
+    padding: 80px 0; 
     background-color: ${({ theme }) => theme.bg};
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    
     &:first-of-type {
         padding-top: 100px; 
     }
+    
     transition: all 0.3s ease;
+    
+    @media screen and (max-width: 768px) {
+        padding: 60px 0;
+    }
+    
+    @media screen and (max-width: 480px) {
+        padding: 50px 0;
+    }
 `;
 
 function Home({ darkMode, toggleTheme, sectionsRef }) {
@@ -102,15 +121,15 @@ function Home({ darkMode, toggleTheme, sectionsRef }) {
             
             <HeroSection theme={darkMode ? 'dark' : 'light'} />
             
-            <Section ref={el => sectionsRef.current[0] = el} theme={darkMode ? darkTheme : lightTheme}>
+            <Section id="skills" ref={el => sectionsRef.current[0] = el} theme={darkMode ? darkTheme : lightTheme}>
                 <Skills />
             </Section>
             
-            <Section ref={el => sectionsRef.current[1] = el} theme={darkMode ? darkTheme : lightTheme}>
+            <Section id="projects" ref={el => sectionsRef.current[1] = el} theme={darkMode ? darkTheme : lightTheme}>
                 <Projects />
             </Section>
             
-            <Section ref={el => sectionsRef.current[2] = el} theme={darkMode ? darkTheme : lightTheme}>
+            <Section id="contact" ref={el => sectionsRef.current[2] = el} theme={darkMode ? darkTheme : lightTheme}>
                 <Contact />
             </Section>
         </Wrapper>

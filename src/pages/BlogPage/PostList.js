@@ -12,6 +12,29 @@ const Container = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
+    overflow-x: hidden;
+    position: relative;
+    
+    @media (max-width: 768px) {
+        padding: 60px 16px;
+    }
+`;
+
+// Floating decorative elements
+const FloatingElement = styled.div`
+    position: absolute;
+    width: ${props => props.size || '60px'};
+    height: ${props => props.size || '60px'};
+    border-radius: 50%;
+    background: ${props => props.bg || 'rgba(255, 255, 255, 0.03)'};
+    filter: blur(${props => props.blur || '15px'});
+    opacity: ${props => props.opacity || '0.5'};
+    top: ${props => props.top};
+    left: ${props => props.left};
+    right: ${props => props.right};
+    bottom: ${props => props.bottom};
+    z-index: 0;
+    pointer-events: none;
 `;
 
 const Heading = styled.h1`
@@ -28,9 +51,22 @@ const Heading = styled.h1`
     background-size: 200% auto;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
+    animation: gradientText 6s ease infinite;
+    position: relative;
+    z-index: 1;
+    
+    @keyframes gradientText {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+    }
     
     @media (max-width: 768px) {
         font-size: 32px;
+    }
+    
+    @media (max-width: 480px) {
+        font-size: 28px;
     }
 `;
 
@@ -40,10 +76,18 @@ const Subtitle = styled.p`
     text-align: center;
     max-width: 600px;
     margin-bottom: 48px;
+    position: relative;
+    z-index: 1;
     
     @media (max-width: 768px) {
         font-size: 16px;
-        margin-bottom: 32px;
+        margin-bottom: 36px;
+        max-width: 90%;
+    }
+    
+    @media (max-width: 480px) {
+        font-size: 15px;
+        margin-bottom: 30px;
     }
 `;
 
@@ -55,10 +99,14 @@ const ControlsContainer = styled.div`
     align-items: center;
     margin-bottom: 2rem;
     gap: 20px;
+    position: relative;
+    z-index: 1;
     
     @media (max-width: 768px) {
         flex-direction: column;
         align-items: stretch;
+        margin-bottom: 1.5rem;
+        gap: 16px;
     }
 `;
 
@@ -74,6 +122,15 @@ const SearchContainer = styled.div`
         transform: translateY(-50%);
         color: ${({ theme }) => theme.text_secondary};
         font-size: 1.2rem;
+        transition: color 0.3s ease;
+    }
+    
+    &:focus-within svg {
+        color: ${({ theme }) => theme.primary};
+    }
+    
+    @media (max-width: 768px) {
+        max-width: 100%;
     }
 `;
 
@@ -90,7 +147,16 @@ const SearchInput = styled.input`
     &:focus {
         outline: none;
         border-color: ${({ theme }) => theme.primary};
-        box-shadow: 0 0 0 2px ${({ theme }) => theme.primary}30;
+        box-shadow: 0 0 0 3px ${({ theme }) => theme.primary}30;
+    }
+    
+    &::placeholder {
+        color: ${({ theme }) => theme.text_secondary + '80'};
+    }
+    
+    @media (max-width: 480px) {
+        padding: 10px 16px 10px 40px;
+        font-size: 0.9rem;
     }
 `;
 
@@ -113,19 +179,20 @@ const ViewButton = styled.button`
     border: none;
     cursor: pointer;
     background: ${({ isActive, theme }) => 
-        isActive ? theme.primary : (theme.bgLight || '#2D1B4A')};
+        isActive ? `linear-gradient(135deg, ${theme.primary}, ${theme.colored_detail || theme.primary})` : (theme.bgLight || '#2D1B4A')};
     color: ${({ isActive, theme }) => 
         isActive ? theme.white : theme.text_secondary};
     transition: all 0.3s ease;
-    box-shadow: ${({ isActive }) => 
-        isActive ? 'none' : '0 4px 8px rgba(0, 0, 0, 0.1)'};
+    box-shadow: ${({ isActive, theme }) => 
+        isActive ? `0 5px 15px ${theme.primary}40` : '0 4px 8px rgba(0, 0, 0, 0.1)'};
     border: ${({ isActive, theme }) => 
         isActive ? 'none' : `1px solid ${theme.card_border || 'rgba(255, 255, 255, 0.1)'}`};
 
     &:hover {
-        background: ${({ theme }) => theme.primary};
+        background: ${({ theme }) => `linear-gradient(135deg, ${theme.primary}, ${theme.colored_detail || theme.primary})`};
         color: ${({ theme }) => theme.white};
         transform: translateY(-2px);
+        box-shadow: 0 5px 15px ${({ theme }) => theme.primary}40;
     }
 
     svg {
@@ -140,9 +207,19 @@ const GridContainer = styled.div`
     width: 100%;
     max-width: 1200px;
     padding: 0 10px;
+    position: relative;
+    z-index: 1;
 
     @media (max-width: 768px) {
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 20px;
+        padding: 0 5px;
+    }
+    
+    @media (max-width: 480px) {
         grid-template-columns: 1fr;
+        gap: 16px;
+        padding: 0;
     }
 `;
 
@@ -181,6 +258,12 @@ const PostCard = styled.div`
     &:hover::before {
         opacity: 1;
     }
+    
+    @media (max-width: 480px) {
+        &:hover {
+            transform: translateY(-8px);
+        }
+    }
 `;
 
 const PostImage = styled.div`
@@ -200,6 +283,10 @@ const PostImage = styled.div`
         height: 50%;
         background: linear-gradient(to top, rgba(0,0,0,0.5), transparent);
     }
+    
+    @media (max-width: 480px) {
+        height: 180px;
+    }
 `;
 
 const PostContent = styled.div`
@@ -209,6 +296,10 @@ const PostContent = styled.div`
     flex-direction: column;
     position: relative;
     z-index: 1;
+    
+    @media (max-width: 480px) {
+        padding: 20px 16px;
+    }
 `;
 
 const PostTitle = styled.h2`
@@ -217,6 +308,10 @@ const PostTitle = styled.h2`
     color: ${({ theme }) => theme.text_primary};
     margin-bottom: 8px;
     line-height: 1.4;
+    
+    @media (max-width: 480px) {
+        font-size: 1.3rem;
+    }
 `;
 
 const PostMeta = styled.div`
@@ -224,6 +319,12 @@ const PostMeta = styled.div`
     align-items: center;
     gap: 12px;
     margin-bottom: 16px;
+    flex-wrap: wrap;
+    
+    @media (max-width: 480px) {
+        gap: 8px;
+        margin-bottom: 12px;
+    }
 `;
 
 const PostDate = styled.div`
@@ -236,6 +337,10 @@ const PostDate = styled.div`
     svg {
         color: ${({ theme }) => theme.primary};
         font-size: 0.9rem;
+    }
+    
+    @media (max-width: 480px) {
+        font-size: 0.8rem;
     }
 `;
 
@@ -251,7 +356,12 @@ const PostDescription = styled.p`
     -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
     overflow: hidden;
-    text-overflow: ellipsis;
+    
+    @media (max-width: 480px) {
+        font-size: 0.9rem;
+        line-height: 1.5;
+        margin-bottom: 16px;
+    }
 `;
 
 const Tags = styled.div`
@@ -520,8 +630,15 @@ const PostList = () => {
 
     return (
         <Container>
+            {/* Add decorative floating elements */}
+            <FloatingElement size="140px" blur="30px" opacity="0.3" top="10%" left="5%" bg={`rgba(71, 7, 234, 0.2)`} />
+            <FloatingElement size="120px" blur="20px" opacity="0.2" bottom="20%" right="8%" bg={`rgba(71, 7, 234, 0.15)`} />
+            <FloatingElement size="90px" blur="15px" opacity="0.2" top="40%" right="25%" bg={`rgba(71, 7, 234, 0.1)`} />
+            
             <Heading>Blog Posts</Heading>
-            <Subtitle>Thoughts, tutorials, and insights from my journey as a developer</Subtitle>
+            <Subtitle>
+                Sharing my thoughts, experiences, and insights about web development, design, and technology.
+            </Subtitle>
             <ControlsContainer>
                 <SearchContainer>
                     <FaSearch />

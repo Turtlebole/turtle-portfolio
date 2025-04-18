@@ -36,18 +36,22 @@ export const HeroContainer = styled.div`
     justify-content: center;
     align-items: center;
     min-height: 100vh;
+    height: 100vh;
     padding: 0 24px;
     background: ${({ theme }) => theme.bg};
     overflow: hidden;
+    box-sizing: border-box;
     
     @media screen and (max-width: 768px) {
-        min-height: auto;
-        padding: 80px 20px 40px;
-        justify-content: flex-start;
+        height: 100vh;
+        min-height: 100vh;
+        padding: 120px 20px 40px;
+        justify-content: center;
     }
     
     @media screen and (max-width: 480px) {
-        padding: 80px 16px 40px;
+        padding: 130px 16px 40px;
+        justify-content: flex-start;
     }
     
     &.visible {
@@ -77,16 +81,20 @@ export const HeroContent = styled.div`
     width: 100%;
     gap: 60px;
     z-index: 1;
+    margin: auto 0;
     
     @media screen and (max-width: 960px) {
         grid-template-columns: 1fr;
         gap: 30px;
+        padding-top: 0;
     }
     
     @media screen and (max-width: 480px) {
         display: flex;
         flex-direction: column;
-        gap: 20px;
+        gap: 0;
+        padding-top: 0;
+        justify-content: center;
     }
 `;
 
@@ -103,6 +111,12 @@ export const LeftColumn = styled.div`
         align-items: center;
         text-align: center;
         order: 2;
+        padding: 0 20px;
+    }
+    
+    @media screen and (max-width: 480px) {
+        padding: 0;
+        margin-top: -20px;
     }
 `;
 
@@ -117,10 +131,15 @@ export const RightColumn = styled.div`
     
     @media screen and (max-width: 960px) {
         order: 1;
+        margin-top: -40px;
+    }
+    
+    @media screen and (max-width: 768px) {
+        margin-top: -20px;
     }
     
     @media screen and (max-width: 480px) {
-        margin-bottom: 10px;
+        margin-bottom: 0;
     }
 `;
 
@@ -238,6 +257,7 @@ export const Description = styled.p`
         font-size: 16px;
         margin-bottom: 24px;
         padding: 0 10px;
+        text-align: center;
     }
     
     @media screen and (max-width: 480px) {
@@ -259,14 +279,14 @@ export const ButtonGroup = styled.div`
     margin-bottom: 40px;
     
     @media screen and (max-width: 960px) {
-        margin-bottom: 80px;
+        margin-bottom: 30px;
     }
     
     @media screen and (max-width: 480px) {
         flex-direction: column;
         width: 100%;
         gap: 12px;
-        margin-bottom: 60px;
+        margin-bottom: 20px;
     }
 `;
 
@@ -386,9 +406,25 @@ export const ProfileImageContainer = styled.div`
         z-index: -1;
     }
     
+    @media screen and (max-width: 960px) {
+        width: 280px;
+        height: 280px;
+        margin-top: 0;
+        margin-bottom: 30px;
+        
+        &::before {
+            top: -15px;
+            left: -15px;
+            right: -15px;
+            bottom: -15px;
+        }
+    }
+    
     @media screen and (max-width: 768px) {
         width: 250px;
         height: 250px;
+        margin-top: 0;
+        margin-bottom: 20px;
         
         &::before {
             top: -15px;
@@ -399,8 +435,9 @@ export const ProfileImageContainer = styled.div`
     }
     
     @media screen and (max-width: 480px) {
-        width: 180px;
-        height: 180px;
+        width: 200px;
+        height: 200px;
+        margin: 0 auto 20px;
         
         &::before {
             top: -10px;
@@ -483,14 +520,15 @@ export const ScrollIndicator = styled.div`
     animation-delay: 1.2s;
     
     @media screen and (max-width: 960px) {
-        bottom: 30px;
+        bottom: 20px;
         position: absolute;
     }
     
     @media screen and (max-width: 480px) {
-        position: static;
+        bottom: 10px;
+        position: absolute;
         margin-top: 0;
-        margin-bottom: 20px;
+        margin-bottom: 0;
     }
 `;
 

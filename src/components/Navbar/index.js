@@ -1,9 +1,28 @@
 import React, { useState, useCallback } from 'react';
-import { Nav, NavLink, NavbarContainer, Span, ColoredSpan, NavLogo, NavItems, GitHubButton, ButtonContainer, MobileIcon, MobileMenu, MobileLink, ThemeButton } from './NavbarStyledComponent';
-import { FaBars } from 'react-icons/fa';
+import { 
+  Nav, 
+  NavLink, 
+  NavbarContainer, 
+  Span, 
+  ColoredSpan, 
+  NavLogo, 
+  NavItems, 
+  GitHubButton, 
+  ButtonContainer, 
+  MobileIcon, 
+  MobileMenu, 
+  MobileLink, 
+  ThemeButton,
+  MobileNavLogo,
+  MobileGitHubButton,
+  MobileThemeButton,
+  MobileButtonContainer
+} from './NavbarStyledComponent';
+import { FaBars, FaTimes } from 'react-icons/fa';
 import { Bio } from '../../data/constants';
 import { useTheme } from 'styled-components';
 import ThemeToggleIcon from '../Icons/ThemeToggleIcon';
+import AnnouncementBanner from './AnnouncementBanner';
 import { useNavigate } from 'react-router-dom';
 
 const Navbar = ({ toggleTheme }) => {
@@ -24,60 +43,65 @@ const Navbar = ({ toggleTheme }) => {
   }, [navigate, handleScroll]);
 
   return (
-    <Nav>
-      <NavbarContainer>
-        <NavLogo to='/'>
-          <Span>
-            Turtle<ColoredSpan>Bole</ColoredSpan>
-          </Span>
-        </NavLogo>
-        <MobileIcon onClick={() => setIsOpen(!isOpen)}>
-          <FaBars />
-        </MobileIcon>
+    <>
+      <Nav>
+        <NavbarContainer>
+          <NavLogo to='/'>
+            <Span>
+              Turtle<ColoredSpan>Bole</ColoredSpan>
+            </Span>
+          </NavLogo>
+          
+          <MobileIcon onClick={() => setIsOpen(!isOpen)}>
+            {isOpen ? <FaTimes /> : <FaBars />}
+          </MobileIcon>
 
-        <ButtonContainer>
           <NavItems>
             <NavLink onClick={() => handleNavigation('/', '#skills')}>Skills</NavLink>
             <NavLink onClick={() => handleNavigation('/', '#projects')}>Projects</NavLink>
             <NavLink href='/blog'>Blog</NavLink>
+          </NavItems>
+
+          <ButtonContainer>
             <GitHubButton href={Bio.github} target="_blank">Github</GitHubButton>
             <ThemeButton onClick={toggleTheme}>
               <ThemeToggleIcon />
             </ThemeButton>
-          </NavItems>
-        </ButtonContainer>
+          </ButtonContainer>
 
-        {isOpen && (
           <MobileMenu isOpen={isOpen}>
-            <MobileLink onClick={() => { handleNavigation('/', '#skills'); setIsOpen(!isOpen); }}>Skills</MobileLink>
-            <MobileLink onClick={() => { handleNavigation('/', '#projects'); setIsOpen(!isOpen); }}>Projects</MobileLink>
-            <MobileLink href='/blog' onClick={() => setIsOpen(!isOpen)}>Blog</MobileLink>
+            <MobileNavLogo to='/' onClick={() => setIsOpen(false)}>
+              <Span>
+                Turtle<ColoredSpan>Bole</ColoredSpan>
+              </Span>
+            </MobileNavLogo>
+            
+            <MobileThemeButton onClick={toggleTheme}>
+              <ThemeToggleIcon />
+            </MobileThemeButton>
+            
+            <MobileLink onClick={() => { handleNavigation('/', '#skills'); setIsOpen(false); }}>
+              Skills
+            </MobileLink>
+            
+            <MobileLink onClick={() => { handleNavigation('/', '#projects'); setIsOpen(false); }}>
+              Projects
+            </MobileLink>
+            
+            <MobileLink href='/blog' onClick={() => setIsOpen(false)}>
+              Blog
+            </MobileLink>
 
-            <div style={{ display: 'flex', gap: '12px', marginTop: '16px', alignItems: 'center' }}>
-              <GitHubButton 
-                style={{ 
-                  background: theme.bgLight, 
-                  color: theme.text_primary, 
-                  border: `1.8px solid ${theme.primary}` 
-                }} 
-                href={Bio.github} 
-                target="_blank"
-              >
+            <MobileButtonContainer>
+              <MobileGitHubButton href={Bio.github} target="_blank">
                 Github
-              </GitHubButton>
-              <ThemeButton 
-                onClick={() => { 
-                  toggleTheme(); 
-                  setIsOpen(!isOpen); 
-                }}
-              >
-                <ThemeToggleIcon />
-              </ThemeButton>
-            </div>
+              </MobileGitHubButton>
+            </MobileButtonContainer>
           </MobileMenu>
-        )}
-      </NavbarContainer>
-    </Nav>
+        </NavbarContainer>
+      </Nav>
+      <AnnouncementBanner />
+    </>
   );
 }
 
