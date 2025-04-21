@@ -13,6 +13,7 @@ const Container = styled.div`
     flex-direction: column;
     align-items: center;
     padding: 80px 20px 40px;
+    padding-top: 170px;
     min-height: 100vh;
     background-color: ${({ theme }) => theme.bg};
     color: ${({ theme }) => theme.text_primary};
@@ -21,10 +22,12 @@ const Container = styled.div`
     
     @media (max-width: 768px) {
         padding: 70px 16px 30px;
+        padding-top: 170px;
     }
     
     @media (max-width: 480px) {
         padding: 60px 12px 24px;
+        padding-top: 160px;
     }
 `;
 
@@ -47,7 +50,7 @@ const FloatingElement = styled.div`
 
 const BackButton = styled(Link)`
     position: absolute;
-    top: 100px;
+    top: 125px;
     left: 40px;
     display: flex;
     align-items: center;
@@ -62,7 +65,7 @@ const BackButton = styled(Link)`
     cursor: pointer;
     transition: all 0.3s ease;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    z-index: 10;
+    z-index: 8;
     text-decoration: none;
 
     &:hover {
@@ -73,14 +76,14 @@ const BackButton = styled(Link)`
     }
 
     @media (max-width: 768px) {
-        top: 80px;
+        top: 120px;
         left: 20px;
         font-size: 14px;
         padding: 8px 12px;
     }
     
     @media (max-width: 480px) {
-        top: 70px;
+        top: 120px;
         left: 16px;
         font-size: 13px;
         padding: 6px 10px;
