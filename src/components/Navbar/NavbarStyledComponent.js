@@ -160,30 +160,44 @@ export const ThemeButton = styled.button`
     border-radius: 50%;
     transition: all 0.3s ease;
     position: relative;
+    color: ${({ theme }) => theme.text_primary};
     
     &:hover {
         background: ${({ theme }) => theme.colored_detail + '20'};
         transform: translateY(-2px);
+        color: ${({ theme }) => theme.colored_detail};
     }
 
     svg {
         width: 20px;
         height: 20px;
-        fill: ${({ theme }) => theme.text_primary};
         transition: all 0.3s ease;
-        filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.2));  // Shadow for icon
-        
-        path {
-            stroke: ${({ theme }) => theme.text_primary};
-            stroke-width: 1;
-        }
+        filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.2));
     }
+`;
 
-    &:hover svg {
-        fill: ${({ theme }) => theme.colored_detail};
-        path {
-            stroke: ${({ theme }) => theme.colored_detail};
-        }
+export const SettingsButton = styled.button`
+    padding: 8px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    color: ${({ theme }) => theme.text_primary};
+    font-size: 18px;
+    transition: all 0.3s ease;
+    position: relative;
+    z-index: 11;
+    
+    &:hover {
+        color: ${({ theme }) => theme.colored_detail};
+        transform: translateY(-2px);
+    }
+    
+    svg {
+        filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.2));
     }
 `;
 

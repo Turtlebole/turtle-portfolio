@@ -13,17 +13,20 @@ const fadeIn = keyframes`
 `;
 
 export const Container = styled.div`
-    background: ${({ theme }) => theme.bg};
     display: flex;
     flex-direction: column;
     justify-content: center;
     position: relative;
     z-index: 1;
     align-items: center;
-    padding: 80px 0;
+    padding: 40px 0;
     
     @media (max-width: 768px) {
-        padding: 40px 0;
+        padding: 30px 0;
+    }
+    
+    @media (max-width: 480px) {
+        padding: 20px 0;
     }
 `;
 

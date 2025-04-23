@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import { 
   Nav, 
   NavLink, 
@@ -12,23 +12,59 @@ import {
   MobileIcon, 
   MobileMenu, 
   MobileLink, 
-  ThemeButton,
   MobileNavLogo,
   MobileGitHubButton,
-  MobileThemeButton,
-  MobileButtonContainer
+  MobileButtonContainer,
+  ThemeButton,
+  SettingsButton
 } from './NavbarStyledComponent';
-import { FaBars, FaTimes } from 'react-icons/fa';
+import { FaBars, FaTimes, FaMoon, FaSun, FaCog } from 'react-icons/fa';
 import { Bio } from '../../data/constants';
 import { useTheme } from 'styled-components';
-import ThemeToggleIcon from '../Icons/ThemeToggleIcon';
 import AnnouncementBanner from './AnnouncementBanner';
 import { useNavigate } from 'react-router-dom';
+import HamburgerMenu from '../HamburgerMenu/HamburgerMenu';
+import styled from 'styled-components';
 
-const Navbar = ({ toggleTheme }) => {
+const SettingsMenuContainer = styled.div`
+  position: fixed;
+  top: 0;
+  right: 0;
+  z-index: 1000;
+`;
+
+const Navbar = ({ toggleTheme, darkMode, currentTheme, setCurrentTheme }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const theme = useTheme();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (isOpen || isSettingsOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [isOpen, isSettingsOpen]);
+
+  const handleClickOutside = (event) => {
+    // Handle clicks outside the mobile menu to close it
+    if (isOpen && !event.target.closest('.mobile-menu') && 
+        !event.target.closest('.hamburger-icon')) {
+      setIsOpen(false);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [isOpen]);
 
   const handleScroll = useCallback((hash) => {
     const element = document.querySelector(hash);
@@ -52,7 +88,7 @@ const Navbar = ({ toggleTheme }) => {
             </Span>
           </NavLogo>
           
-          <MobileIcon onClick={() => setIsOpen(!isOpen)}>
+          <MobileIcon onClick={() => setIsOpen(!isOpen)} className="hamburger-icon">
             {isOpen ? <FaTimes /> : <FaBars />}
           </MobileIcon>
 
@@ -64,21 +100,29 @@ const Navbar = ({ toggleTheme }) => {
 
           <ButtonContainer>
             <GitHubButton href={Bio.github} target="_blank">Github</GitHubButton>
-            <ThemeButton onClick={toggleTheme}>
-              <ThemeToggleIcon />
+            <ThemeButton onClick={toggleTheme} aria-label="Toggle dark mode">
+              {darkMode ? <FaSun /> : <FaMoon />}
             </ThemeButton>
+            <SettingsButton className="settings-button" onClick={() => setIsSettingsOpen(true)}>
+              <FaCog />
+            </SettingsButton>
           </ButtonContainer>
 
-          <MobileMenu isOpen={isOpen}>
+          <MobileMenu isOpen={isOpen} className="mobile-menu">
             <MobileNavLogo to='/' onClick={() => setIsOpen(false)}>
               <Span>
                 Turtle<ColoredSpan>Bole</ColoredSpan>
               </Span>
             </MobileNavLogo>
             
-            <MobileThemeButton onClick={toggleTheme}>
-              <ThemeToggleIcon />
-            </MobileThemeButton>
+            <MobileButtonContainer>
+              <MobileGitHubButton href={Bio.github} target="_blank">
+                Github
+              </MobileGitHubButton>
+              <ThemeButton onClick={toggleTheme} aria-label="Toggle dark mode">
+                {darkMode ? <FaSun /> : <FaMoon />}
+              </ThemeButton>
+            </MobileButtonContainer>
             
             <MobileLink onClick={() => { handleNavigation('/', '#skills'); setIsOpen(false); }}>
               Skills
@@ -91,16 +135,22 @@ const Navbar = ({ toggleTheme }) => {
             <MobileLink href='/blog' onClick={() => setIsOpen(false)}>
               Blog
             </MobileLink>
-
-            <MobileButtonContainer>
-              <MobileGitHubButton href={Bio.github} target="_blank">
-                Github
-              </MobileGitHubButton>
-            </MobileButtonContainer>
           </MobileMenu>
         </NavbarContainer>
       </Nav>
       <AnnouncementBanner />
+      
+      {/* Settings Menu */}
+      <SettingsMenuContainer>
+        <HamburgerMenu 
+          isOpen={isSettingsOpen} 
+          setIsOpen={setIsSettingsOpen}
+          darkMode={darkMode}
+          toggleTheme={toggleTheme}
+          currentTheme={currentTheme}
+          setCurrentTheme={setCurrentTheme}
+        />
+      </SettingsMenuContainer>
     </>
   );
 }

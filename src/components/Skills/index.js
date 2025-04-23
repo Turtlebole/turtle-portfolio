@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import { skills } from '../../data/constants';
 import { gsap } from 'gsap';
+import { useTheme } from 'styled-components';
 
 const Container = styled.div`
   display: flex;
@@ -10,9 +11,18 @@ const Container = styled.div`
   align-items: center;
   position: relative;
   z-index: 1;
-  padding: 60px 0;
-  background: ${({ theme }) => theme.bg};
+  padding: 40px 0;
   overflow: hidden;
+  background-color: ${({ theme }) => theme.bg};
+  transition: background-color 0.3s ease, color 0.3s ease;
+  
+  @media (max-width: 768px) {
+    padding: 30px 0;
+  }
+  
+  @media (max-width: 480px) {
+    padding: 20px 0;
+  }
 `;
 
 const Wrapper = styled.div`
@@ -269,33 +279,12 @@ const SkillCard = styled.div`
 
 // Decorative background elements
 const BackgroundDecoration = styled.div`
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: 
-    radial-gradient(circle at 10% 20%, ${({ theme }) => theme.primary}05 0%, transparent 20%),
-    radial-gradient(circle at 85% 60%, ${({ theme }) => theme.colored_detail}05 0%, transparent 30%);
-  z-index: 0;
-  pointer-events: none;
+  display: none;
 `;
 
 // Floating design elements
 const FloatingElement = styled.div`
-  position: absolute;
-  width: ${props => props.size || '60px'};
-  height: ${props => props.size || '60px'};
-  border-radius: 50%;
-  background: ${props => props.bg || 'rgba(255, 255, 255, 0.03)'};
-  filter: blur(${props => props.blur || '15px'});
-  opacity: ${props => props.opacity || '0.5'};
-  top: ${props => props.top};
-  left: ${props => props.left};
-  right: ${props => props.right};
-  bottom: ${props => props.bottom};
-  z-index: 0;
-  pointer-events: none;
+  display: none;
 `;
 
 // Empty state when no skills are available
@@ -335,6 +324,13 @@ const Skills = () => {
   const [animatedSkills, setAnimatedSkills] = useState({});
   const skillsRef = useRef(null);
   const cardsRef = useRef([]);
+  const theme = useTheme();
+  const [isAnimating, setIsAnimating] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
+  const [windowDimensions, setWindowDimensions] = useState({
+    width: window.innerWidth,
+    height: window.innerHeight,
+  });
 
   const handleTabChange = (tab) => {
     setActiveTab(tab);
@@ -406,14 +402,21 @@ const Skills = () => {
     return () => window.removeEventListener('resize', handleResize);
   }, [activeTab, filteredSkills]);
 
+  // Force repaint on theme change
+  useEffect(() => {
+    if (skillsRef.current) {
+      skillsRef.current.classList.add('theme-updating');
+      setTimeout(() => {
+        if (skillsRef.current) {
+          skillsRef.current.classList.remove('theme-updating');
+        }
+      }, 10);
+    }
+  }, [theme]);
+
   return (
     <Container id="skills" ref={skillsRef}>
       <BackgroundDecoration />
-      
-      {/* Decorative floating elements */}
-      <FloatingElement size="120px" blur="25px" opacity="0.3" top="15%" left="5%" bg={`${({ theme }) => theme.primary}15`} />
-      <FloatingElement size="150px" blur="20px" opacity="0.2" bottom="20%" right="8%" bg={`${({ theme }) => theme.colored_detail}15`} />
-      <FloatingElement size="80px" blur="15px" opacity="0.2" top="40%" right="20%" bg={`${({ theme }) => theme.primary}10`} />
       
       <Wrapper>
         <SectionTitle>My Tech Stack</SectionTitle>
@@ -439,8 +442,11 @@ const Skills = () => {
             <SkillsGrid key={activeTab} className="skills-grid">
               {filteredSkills?.skills.map((skill, index) => (
                 <SkillCard
-                  key={skill.name}
+                  key={`skill-${index}`}
                   ref={el => cardsRef.current[index] = el}
+                  style={{
+                    animationDelay: `${index * 0.1}s`
+                  }}
                 >
                   <SkillIcon>
                     <img src={skill.image} alt={skill.name} loading="lazy" />

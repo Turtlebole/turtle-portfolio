@@ -59,6 +59,12 @@ const HeroSection = ({ theme }) => {
             setTimeout(() => {
                 heroElement.classList.remove('theme-updating');
             }, 10);
+            
+            // Apply transitions to child elements
+            const contentElements = heroElement.querySelectorAll('.hero-element, [class^="styled-"]');
+            contentElements.forEach(el => {
+                el.style.transition = 'all 0.3s ease';
+            });
         }
         
         return () => {
@@ -95,12 +101,12 @@ const HeroSection = ({ theme }) => {
     };
 
     return (
-        <HeroContainer ref={heroRef} id="hero">
+        <HeroContainer ref={heroRef} id="hero" style={{ backgroundColor: themeObject.bg, transition: 'background-color 0.3s ease, color 0.3s ease' }}>
             <HeroAnimation theme={theme} themeObject={themeObject} />
             <BackgroundDecoration />
             
-            <HeroContent>
-                <LeftColumn>
+            <HeroContent style={{ transition: 'all 0.3s ease' }}>
+                <LeftColumn style={{ transition: 'all 0.3s ease' }}>
                     <Greeting className="hero-element">{Bio.title}</Greeting>
                     <Name className="hero-element">{Bio.name}</Name>
                     <RoleWrapper className="hero-element">
@@ -148,8 +154,8 @@ const HeroSection = ({ theme }) => {
                     </SocialLinks>
                 </LeftColumn>
                 
-                <RightColumn>
-                    <ProfileImageContainer className="hero-element">
+                <RightColumn style={{ transition: 'all 0.3s ease' }}>
+                    <ProfileImageContainer className="hero-element" style={{ transition: 'all 0.3s ease' }}>
                         <ProfileImage src={HeroImg} alt={Bio.name} loading="eager" />
                     </ProfileImageContainer>
                 </RightColumn>

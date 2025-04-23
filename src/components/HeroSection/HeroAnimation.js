@@ -1,333 +1,268 @@
-import React, { useRef, useEffect } from 'react';
-import { gsap } from 'gsap';
+import React, { useEffect, useRef } from 'react';
+import styled from 'styled-components';
 
-const HeroAnimation = ({ theme }) => {
-    const canvasRef = useRef(null);
-    const animationRef = useRef(null);
-    const wavesRef = useRef([]);
-    const lastTimeRef = useRef(0);
+const AnimationContainer = styled.div`
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: 0;
+    pointer-events: none;
+    transition: all 0.3s ease;
+`;
 
+// SVG container styling
+const SVGContainer = styled.svg`
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.7;
+    transition: all 0.3s ease;
+`;
+
+// Animated gradient definition
+const AnimatedGradient = styled.linearGradient`
+    animation: moveGradient 15s ease infinite;
+    transition: all 0.3s ease;
+    
+    @keyframes moveGradient {
+        0% {
+            transform: rotate(0deg);
+        }
+        50% {
+            transform: rotate(180deg);
+        }
+        100% {
+            transform: rotate(360deg);
+        }
+    }
+`;
+
+// Animated shapes with custom animations
+const AnimatedCircle = styled.circle`
+    opacity: ${props => props.opacity || 0.2};
+    animation: float-${props => props.id} ${props => props.duration || 20}s ease-in-out infinite;
+    animation-delay: ${props => props.delay || 0}s;
+    transform-origin: center;
+    transition: fill 0.3s ease;
+    
+    @keyframes float-${props => props.id} {
+        0% {
+            transform: translate(0, 0) scale(1);
+        }
+        50% {
+            transform: translate(${props => props.moveX || 0}px, ${props => props.moveY || 0}px) scale(${props => props.scale || 1.2});
+        }
+        100% {
+            transform: translate(0, 0) scale(1);
+        }
+    }
+`;
+
+const AnimatedPath = styled.path`
+    opacity: ${props => props.opacity || 0.15};
+    animation: morph-${props => props.id} ${props => props.duration || 20}s ease-in-out infinite;
+    animation-delay: ${props => props.delay || 0}s;
+    transform-origin: center;
+    transition: fill 0.3s ease;
+    
+    @keyframes morph-${props => props.id} {
+        0% {
+            d: path("${props => props.pathStart}");
+        }
+        50% {
+            d: path("${props => props.pathEnd}");
+        }
+        100% {
+            d: path("${props => props.pathStart}");
+        }
+    }
+`;
+
+// Shape blur filter
+const BlurFilter = () => (
+    <filter id="blur-filter" x="-50%" y="-50%" width="200%" height="200%">
+        <feGaussianBlur stdDeviation="40" />
+    </filter>
+);
+
+const HeroAnimation = ({ theme, themeObject }) => {
+    const containerRef = useRef(null);
+    const svgRef = useRef(null);
+    
+    // Update gradients when theme changes
     useEffect(() => {
-        const canvas = canvasRef.current;
-        if (!canvas) return; // Safety check
+        if (!svgRef.current) return;
         
-        const ctx = canvas.getContext('2d');
-        
-        // Configuration with exact theme colors
-        const config = {
-            // Dark theme colors
-            darkColors: {
-                primary: '212, 163, 115',     // #D4A373
-                detail: '232, 146, 66',       // #E89242
-                text1: '230, 200, 156',       // #E6C89C
-                text2: '191, 164, 139'        // #BFA48B
-            },
-            // Light theme colors
-            lightColors: {
-                primary: '212, 163, 115',     // #D4A373
-                detail: '232, 146, 66',       // #E89242
-                text1: '60, 42, 42',          // #3C2A2A
-                text2: '92, 74, 74'           // #5C4A4A
-            },
+        // Force refresh of gradients on theme change
+        const gradients = svgRef.current.querySelectorAll('linearGradient');
+        gradients.forEach(gradient => {
+            // Trigger repaint by toggling a class
+            gradient.classList.add('theme-update');
+            setTimeout(() => gradient.classList.remove('theme-update'), 10);
             
-            waveCount: 5,
-            waveAmplitude: 35,
-            waveFrequency: 0.008,
-            opacity: theme === 'light' ? 0.4 : 0.6,
-            scrollSpeed: 0.5,
-            parallaxFactor: 0.4,
-            verticalOffset: 0.08
-        };
-
-        // Handle window resize
-        const resize = () => {
-            if (!canvas) return;
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        };
-        
-        // Wave class
-        class Wave {
-            constructor(index, total) {
-                this.index = index;
-                this.total = total;
-                
-                const colors = theme === 'light' ? config.lightColors : config.darkColors;
-                
-                // Color selection based on wave index
-                if (index === 0) {
-                    this.color = colors.primary;      // Primary gold
-                } else if (index === 1) {
-                    this.color = colors.detail;       // Orange gold detail
-                } else if (index === 2) {
-                    this.color = colors.text1;        // Text primary
-                } else {
-                    this.color = colors.text2;        // Text secondary
+            // Update stop colors
+            const stops = gradient.querySelectorAll('stop');
+            stops.forEach(stop => {
+                // Force attribute update to ensure colors repaint
+                if (stop.hasAttribute('offset')) {
+                    const offset = stop.getAttribute('offset');
+                    stop.setAttribute('offset', offset);
                 }
-                
-                this.points = [];
-                
-                const depthFactor = index / total;
-                
-                // Adjusted opacity for better theme visibility
-                this.opacity = theme === 'light' 
-                    ? 0.03 + (1 - depthFactor) * 0.25  // More subtle in light theme
-                    : 0.08 + (1 - depthFactor) * 0.35; // More visible in dark theme
-                
-                this.amplitude = config.waveAmplitude * (0.6 + (1 - depthFactor) * 0.7);
-                this.scrollOffset = 0;
-                this.speed = config.scrollSpeed * (0.6 + (1 - depthFactor) * 0.8);
-                this.verticalPosition = 0.5 + (index - total / 2) * config.verticalOffset;
-                this.phaseOffset = index * Math.PI * 0.5;
-                
-                // Store animation properties as regular values instead of objects
-                this.amplitudeVariation = 0.9 + Math.random() * 0.2;
-                this.targetAmplitude = 1.1 + Math.random() * 0.3;
-                this.amplitudeDuration = 2 + index * 0.7 + Math.random() * 2;
-                this.amplitudeProgress = 0;
-                this.amplitudeDirection = 1;
-                
-                this.verticalShift = 0;
-                this.targetVerticalShift = 10 * (1 - depthFactor);
-                this.verticalShiftDuration = 4 + Math.random() * 3;
-                this.verticalShiftProgress = 0;
-                this.verticalShiftDirection = 1;
-            }
-            
-            generatePoints(width, height) {
-                this.points = [];
-                // Create more points than needed to allow for scrolling
-                const segments = Math.ceil(width / 5) * 2; 
-                const totalWidth = width * 2; // Double the width for seamless scrolling
-                
-                for (let i = 0; i <= segments; i++) {
-                    const x = (i / segments) * totalWidth - width / 2; // Start before viewport
-                    this.points.push({
-                        x: x,
-                        y: height * this.verticalPosition,
-                        originalX: x, // Store original x position
-                        originalY: height * this.verticalPosition
-                    });
-                }
-            }
-            
-            update(width, height, deltaTime) {
-                // Manual animation for amplitude variation
-                this.amplitudeProgress += deltaTime / this.amplitudeDuration * this.amplitudeDirection;
-                if (this.amplitudeProgress >= 1) {
-                    this.amplitudeProgress = 1;
-                    this.amplitudeDirection = -1;
-                } else if (this.amplitudeProgress <= 0) {
-                    this.amplitudeProgress = 0;
-                    this.amplitudeDirection = 1;
-                }
-                
-                // Easing function (sine in-out)
-                const easeInOut = t => -(Math.cos(Math.PI * t) - 1) / 2;
-                const amplitudeFactor = easeInOut(this.amplitudeProgress);
-                const currentAmplitude = this.amplitudeVariation + (this.targetAmplitude - this.amplitudeVariation) * amplitudeFactor;
-                
-                // Manual animation for vertical shift
-                this.verticalShiftProgress += deltaTime / this.verticalShiftDuration * this.verticalShiftDirection;
-                if (this.verticalShiftProgress >= 1) {
-                    this.verticalShiftProgress = 1;
-                    this.verticalShiftDirection = -1;
-                } else if (this.verticalShiftProgress <= 0) {
-                    this.verticalShiftProgress = 0;
-                    this.verticalShiftDirection = 1;
-                }
-                
-                const verticalFactor = easeInOut(this.verticalShiftProgress);
-                const currentVerticalShift = this.verticalShift + (this.targetVerticalShift - this.verticalShift) * verticalFactor;
-                
-                // Update scroll offset
-                this.scrollOffset += this.speed * deltaTime;
-                
-                // Reset scroll when we've moved one full width
-                if (this.scrollOffset > width) {
-                    this.scrollOffset = 0;
-                }
-                
-                // Calculate center Y with vertical shift for floating effect
-                const centerY = height * this.verticalPosition + currentVerticalShift;
-                
-                this.points.forEach((point, i) => {
-                    // Apply scrolling
-                    point.x = point.originalX - this.scrollOffset;
-                    
-                    // Wrap points that go off-screen left back to the right
-                    if (point.x < -width / 2) {
-                        point.x += width * 2;
-                    }
-                    
-                    // Calculate wave height with phase offset for varied patterns
-                    const normalizedX = point.x * config.waveFrequency;
-                    
-                    // Primary wave
-                    let y = Math.sin(normalizedX + this.phaseOffset) * 
-                            this.amplitude * currentAmplitude;
-                    
-                    // Secondary wave with different frequency
-                    y += Math.sin(normalizedX * 1.5 + this.phaseOffset * 0.8) * 
-                         (this.amplitude * 0.4);
-                    
-                    // Third wave component for more complexity
-                    y += Math.sin(normalizedX * 0.6 - this.phaseOffset * 0.3) * 
-                         (this.amplitude * 0.3);
-                    
-                    point.y = centerY + y;
-                });
-            }
-            
-            draw(ctx, width, height) {
-                // Only draw points that are within or near the viewport
-                const visiblePoints = this.points.filter(point => 
-                    point.x >= -100 && point.x <= width + 100
-                );
-                
-                if (visiblePoints.length < 2) return;
-                
-                ctx.beginPath();
-                
-                // Start from bottom left
-                ctx.moveTo(0, height);
-                
-                // Draw to first point
-                ctx.lineTo(visiblePoints[0].x, visiblePoints[0].y);
-                
-                // Draw curve through all points
-                for (let i = 0; i < visiblePoints.length - 1; i++) {
-                    const currentPoint = visiblePoints[i];
-                    const nextPoint = visiblePoints[i + 1];
-                    
-                    // Calculate control points for smooth curve
-                    const controlX = (currentPoint.x + nextPoint.x) / 2;
-                    const controlY = (currentPoint.y + nextPoint.y) / 2;
-                    
-                    ctx.quadraticCurveTo(currentPoint.x, currentPoint.y, controlX, controlY);
-                }
-                
-                // Draw to last point
-                const lastPoint = visiblePoints[visiblePoints.length - 1];
-                ctx.lineTo(lastPoint.x, lastPoint.y);
-                
-                // Complete the shape
-                ctx.lineTo(width, height);
-                ctx.lineTo(0, height);
-                
-                // Enhanced gradient with more color stops for better blending
-                const gradient = ctx.createLinearGradient(width / 2, 0, width / 2, height);
-                
-                if (theme === 'light') {
-                    // More subtle gradient for light theme
-                    gradient.addColorStop(0, `rgba(${this.color}, 0)`);
-                    gradient.addColorStop(0.3, `rgba(${this.color}, ${this.opacity * 0.5})`);
-                    gradient.addColorStop(0.5, `rgba(${this.color}, ${this.opacity})`);
-                    gradient.addColorStop(0.7, `rgba(${this.color}, ${this.opacity * 0.5})`);
-                    gradient.addColorStop(1, `rgba(${this.color}, 0)`);
-                } else {
-                    // Original gradient for dark theme
-                    gradient.addColorStop(0, `rgba(${this.color}, 0)`);
-                    gradient.addColorStop(0.5, `rgba(${this.color}, ${this.opacity})`);
-                    gradient.addColorStop(1, `rgba(${this.color}, 0)`);
-                }
-                
-                ctx.fillStyle = gradient;
-                ctx.fill();
-            }
-        }
-        
-        const init = () => {
-            // Clear any existing waves
-            wavesRef.current = [];
-            
-            for (let i = 0; i < config.waveCount; i++) {
-                const wave = new Wave(i, config.waveCount);
-                wave.generatePoints(canvas.width, canvas.height);
-                wavesRef.current.push(wave);
-            }
-            
-            lastTimeRef.current = performance.now();
-        };
-
-        const animate = (currentTime) => {
-            const deltaTime = Math.min((currentTime - lastTimeRef.current) / 1000, 0.1); // Convert to seconds, cap at 0.1s
-            lastTimeRef.current = currentTime;
-            
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            
-            // Draw waves from back to front for proper layering
-            for (let i = wavesRef.current.length - 1; i >= 0; i--) {
-                wavesRef.current[i].update(canvas.width, canvas.height, deltaTime);
-                wavesRef.current[i].draw(ctx, canvas.width, canvas.height);
-            }
-            
-            animationRef.current = requestAnimationFrame(animate);
-        };
-
-        // Initial setup
-        resize();
-        init();
-        
-        // Start animation
-        if (animationRef.current) {
-            cancelAnimationFrame(animationRef.current);
-        }
-        animationRef.current = requestAnimationFrame(animate);
-
-        // Set up resize listener
-        window.addEventListener('resize', () => {
-            resize();
-            init();
+            });
         });
-
-        // Visibility change handler to pause/resume animation
-        const handleVisibilityChange = () => {
-            if (document.hidden) {
-                // Page is hidden, cancel animation
-                if (animationRef.current) {
-                    cancelAnimationFrame(animationRef.current);
-                    animationRef.current = null;
-                }
-            } else {
-                // Page is visible again, restart animation
-                if (!animationRef.current) {
-                    lastTimeRef.current = performance.now();
-                    animationRef.current = requestAnimationFrame(animate);
-                }
-            }
-        };
-        
-        document.addEventListener('visibilitychange', handleVisibilityChange);
-
-        // Clean up function
-        return () => {
-            window.removeEventListener('resize', resize);
-            document.removeEventListener('visibilitychange', handleVisibilityChange);
-            
-            if (animationRef.current) {
-                cancelAnimationFrame(animationRef.current);
-                animationRef.current = null;
-            }
-        };
-    }, [theme]);
+    }, [theme, themeObject]);
+    
+    // Define shapes for the animation
+    const shapes = [
+        // Morphing blobs
+        {
+            type: 'path',
+            id: 1,
+            pathStart: "M120,100 C150,60 280,80 290,110 C300,140 250,190 210,180 C170,170 90,140 120,100",
+            pathEnd: "M130,120 C180,80 270,100 280,130 C290,160 220,180 180,170 C140,160 80,160 130,120",
+            fill: "url(#gradient1)",
+            opacity: 0.12,
+            duration: 25,
+            delay: 0
+        },
+        {
+            type: 'path',
+            id: 2,
+            pathStart: "M300,200 C350,150 450,180 460,260 C470,340 390,380 330,360 C270,340 250,250 300,200",
+            pathEnd: "M320,220 C370,180 430,220 440,290 C450,360 370,360 310,340 C250,320 270,260 320,220",
+            fill: "url(#gradient2)",
+            opacity: 0.15,
+            duration: 28,
+            delay: 1.5
+        },
+        // Floating circles
+        {
+            type: 'circle',
+            id: 3,
+            cx: "65%",
+            cy: "30%",
+            r: 60,
+            fill: "url(#gradient3)",
+            opacity: 0.12,
+            moveX: -50,
+            moveY: 30,
+            scale: 1.3,
+            duration: 22,
+            delay: 2
+        },
+        {
+            type: 'circle',
+            id: 4,
+            cx: "20%",
+            cy: "70%",
+            r: 80,
+            fill: "url(#gradient4)",
+            opacity: 0.08,
+            moveX: 60,
+            moveY: -40,
+            scale: 1.4,
+            duration: 26,
+            delay: 1
+        },
+        {
+            type: 'circle',
+            id: 5,
+            cx: "75%",
+            cy: "60%",
+            r: 40,
+            fill: "url(#gradient5)",
+            opacity: 0.1,
+            moveX: -30,
+            moveY: -60,
+            scale: 1.2,
+            duration: 30,
+            delay: 0.5
+        }
+    ];
 
     return (
-        <canvas
-            ref={canvasRef}
-            style={{
-                position: 'absolute',
-                top: 0,
-                left: 0,
-                width: '100%',
-                height: '100%',
-                opacity: theme === 'light' ? 0.5 : 0.7,
-                pointerEvents: 'none',
-                zIndex: 0,
-                transition: 'all 0.3s ease'
-            }}
-            aria-hidden="true"
-        />
+        <AnimationContainer ref={containerRef}>
+            <SVGContainer 
+                ref={svgRef}
+                width="100%" 
+                height="100%" 
+                viewBox="0 0 800 600" 
+                preserveAspectRatio="xMidYMid slice"
+            >
+                <defs>
+                    <BlurFilter />
+                    
+                    {/* Dynamic gradients based on theme */}
+                    <AnimatedGradient id="gradient1" gradientTransform="rotate(45)">
+                        <stop offset="0%" stopColor={themeObject.primary} stopOpacity="0.5" />
+                        <stop offset="100%" stopColor={themeObject.colored_detail} stopOpacity="0.2" />
+                    </AnimatedGradient>
+                    
+                    <AnimatedGradient id="gradient2" gradientTransform="rotate(135)">
+                        <stop offset="0%" stopColor={themeObject.primary} stopOpacity="0.4" />
+                        <stop offset="100%" stopColor={themeObject.colored_detail} stopOpacity="0.1" />
+                    </AnimatedGradient>
+                    
+                    <AnimatedGradient id="gradient3" gradientTransform="rotate(90)">
+                        <stop offset="0%" stopColor={themeObject.primary} stopOpacity="0.6" />
+                        <stop offset="100%" stopColor={themeObject.text_primary} stopOpacity="0.1" />
+                    </AnimatedGradient>
+                    
+                    <AnimatedGradient id="gradient4" gradientTransform="rotate(180)">
+                        <stop offset="0%" stopColor={themeObject.colored_detail} stopOpacity="0.5" />
+                        <stop offset="100%" stopColor={themeObject.primary} stopOpacity="0.2" />
+                    </AnimatedGradient>
+                    
+                    <AnimatedGradient id="gradient5" gradientTransform="rotate(225)">
+                        <stop offset="0%" stopColor={themeObject.text_primary} stopOpacity="0.3" />
+                        <stop offset="100%" stopColor={themeObject.primary} stopOpacity="0.1" />
+                    </AnimatedGradient>
+                </defs>
+                
+                <g filter="url(#blur-filter)">
+                    {shapes.map((shape) => {
+                        if (shape.type === 'circle') {
+                            return (
+                                <AnimatedCircle
+                                    key={shape.id}
+                                    id={shape.id}
+                                    cx={shape.cx}
+                                    cy={shape.cy}
+                                    r={shape.r}
+                                    fill={shape.fill}
+                                    opacity={shape.opacity}
+                                    moveX={shape.moveX}
+                                    moveY={shape.moveY}
+                                    scale={shape.scale}
+                                    duration={shape.duration}
+                                    delay={shape.delay}
+                                />
+                            );
+                        } else if (shape.type === 'path') {
+                            return (
+                                <AnimatedPath
+                                    key={shape.id}
+                                    id={shape.id}
+                                    d={shape.pathStart}
+                                    fill={shape.fill}
+                                    opacity={shape.opacity}
+                                    pathStart={shape.pathStart}
+                                    pathEnd={shape.pathEnd}
+                                    duration={shape.duration}
+                                    delay={shape.delay}
+                                />
+                            );
+                        }
+                        return null;
+                    })}
+                </g>
+            </SVGContainer>
+        </AnimationContainer>
     );
 };
 

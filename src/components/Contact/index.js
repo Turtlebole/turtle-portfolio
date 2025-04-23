@@ -8,7 +8,6 @@ const Container = styled.div`
     justify-content: center;
     align-items: center;
     padding: 80px 0;
-    background: ${({ theme }) => theme.bg};
     position: relative;
     overflow: hidden;
     z-index: 1;
@@ -334,19 +333,7 @@ const SubmitButton = styled.button`
 
 // Floating decorative elements
 const FloatingElement = styled.div`
-    position: absolute;
-    width: ${props => props.size || '60px'};
-    height: ${props => props.size || '60px'};
-    border-radius: 50%;
-    background: ${props => props.bg || 'rgba(255, 255, 255, 0.03)'};
-    filter: blur(${props => props.blur || '15px'});
-    opacity: ${props => props.opacity || '0.5'};
-    top: ${props => props.top};
-    left: ${props => props.left};
-    right: ${props => props.right};
-    bottom: ${props => props.bottom};
-    z-index: 0;
-    pointer-events: none;
+    display: none;
 `;
 
 const Contact = () => {
@@ -376,11 +363,6 @@ const Contact = () => {
 
     return (
         <Container id="contact">
-            {/* Decorative floating elements */}
-            <FloatingElement size="140px" blur="30px" opacity="0.3" top="10%" left="10%" bg="rgba(71, 7, 234, 0.2)" />
-            <FloatingElement size="120px" blur="20px" opacity="0.2" bottom="15%" right="10%" bg="rgba(71, 7, 234, 0.15)" />
-            <FloatingElement size="80px" blur="15px" opacity="0.2" top="30%" right="30%" bg="rgba(71, 7, 234, 0.1)" />
-            
             <Wrapper>
                 <LeftSection>
                     <Title>Contact me</Title>

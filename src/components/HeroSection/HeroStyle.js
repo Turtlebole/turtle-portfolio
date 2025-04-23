@@ -38,9 +38,10 @@ export const HeroContainer = styled.div`
     min-height: 100vh;
     height: 100vh;
     padding: 0 24px;
-    background: ${({ theme }) => theme.bg};
     overflow: hidden;
     box-sizing: border-box;
+    transition: all 0.3s ease;
+    margin-bottom: 0;
     
     @media screen and (max-width: 768px) {
         height: 100vh;
@@ -63,15 +64,7 @@ export const HeroContainer = styled.div`
 `;
 
 export const BackgroundDecoration = styled.div`
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: radial-gradient(circle at 10% 20%, ${({ theme }) => theme.primary}10 0%, transparent 20%),
-                radial-gradient(circle at 90% 80%, ${({ theme }) => theme.primary}10 0%, transparent 20%),
-                radial-gradient(circle at 50% 50%, ${({ theme }) => theme.primary}05 0%, transparent 50%);
-    z-index: 0;
+    display: none;
 `;
 
 export const HeroContent = styled.div`
@@ -525,7 +518,7 @@ export const ScrollIndicator = styled.div`
     }
     
     @media screen and (max-width: 480px) {
-        bottom: 10px;
+        bottom: 15px;
         position: absolute;
         margin-top: 0;
         margin-bottom: 0;
